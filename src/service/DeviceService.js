@@ -447,7 +447,7 @@ module.exports = {
      * @param {String} lookupImage
      */
     imageExist: function (lookupImage) {
-        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.8});
+        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
         if (p) {
             return true;
         } else {
@@ -461,7 +461,7 @@ module.exports = {
      * @param {number} sleepTime
      */
     clickImage: function (lookupImage, sleepTime) {
-        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.8});
+        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);
             sleep(sleepTime);
