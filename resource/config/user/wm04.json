@@ -1,0 +1,56 @@
+{
+  "signSwitch": "off",
+  "signBrowseTaskList": [],
+  "babaFarmSwitch": "off",
+  "chickenTask": {
+    "taobaoSwitch": "off",
+    "donateEggSwitch": "off",
+    "plantWheatSwitch": "on",
+    "jingTanSwitch": "off",
+    "sleepPlace": "爱心小屋"
+  },
+  "chickenBrowseTaskList": [
+    "逛一逛芝麻粒",
+    "逛一逛芝麻粒攻略",
+    "逛一逛余额宝会场",
+    "逛一逛淘花岛",
+    "逛一逛商家积分",
+    "逛一逛阿克苏助农专场",
+    "逛逛花呗亲情卡",
+    "逛花花卡抽好礼",
+    "逛逛花呗花花卡",
+    "逛生活节免费抢红包",
+    "数字公仔小彩蛋",
+    "看看助农小视频",
+    "和小鸡说说心里话",
+    "小鸡盲盒上新啦",
+    "疯狂动物城新装扮",
+    "去天猫APP逛一逛",
+    "去菜鸟裹裹做公益",
+    "去神奇海洋逛一逛",
+    "去看看新村数字木兰项目",
+    "捐爱心蛋得福利卡啦",
+    "去饿了么会员频道逛逛",
+    "去森林种树挑战赛看一看",
+    "去医疗健康频道逛一逛",
+    "去蚂蚁森林逛一逛",
+    "限时解锁森林8周年奖励",
+    "庄园小鸡入驻小红书官号啦",
+    "庄园周年惊喜大揭秘",
+    "去看7周年回忆录",
+    "庄园家庭玩法揭秘",
+    "去我的家庭别墅",
+    "去看看你做的好事",
+    "去杂货铺逛一逛"
+  ],
+  "chickenAppJumpList": [],
+  "antNewVillageTask": {
+    "takeAwayVendors": "off"
+  },
+  "antForestTask": {
+    "takeEnergySwitch": "off"
+  },
+  "magicSeaTask": {
+    "jumpAppSwitch": "off"
+  }
+}
