@@ -16,7 +16,7 @@ module.exports = {
             deviceService.combinedClickText("免费领时长", 1000);
             deviceService.combinedClickText("提前领时长", 1000);
             deviceService.clickRate(1 / 2, 58 / 100, 5000);
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/ximalaya/看视频领30分钟时长.png", 5000);
+            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/ximalaya/看视频领30分钟时长.png"), 5000);
             if (text("点击后领取30分钟时长").exists()) {
                 deviceService.combinedClickText("点击后领取30分钟时长", 1000);
                 app.launchApp("喜马拉雅");

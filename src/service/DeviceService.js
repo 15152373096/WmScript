@@ -444,10 +444,9 @@ module.exports = {
 
     /**
      * 判断图片是否存在
-     * @param {String} imagePath
+     * @param {String} lookupImage
      */
-    imageExist: function (imagePath) {
-        let lookupImage = images.read(imagePath);
+    imageExist: function (lookupImage) {
         let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.8});
         if (p) {
             return true;
@@ -458,11 +457,10 @@ module.exports = {
 
     /**
      * 点击图片
-     * @param {String} imagePath
+     * @param {String} lookupImage
      * @param {number} sleepTime
      */
-    clickImage: function (imagePath, sleepTime) {
-        let lookupImage = images.read(imagePath);
+    clickImage: function (lookupImage, sleepTime) {
         let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.8});
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);
@@ -472,14 +470,13 @@ module.exports = {
 
     /**
      * 点击指定区域图片
-     * @param {String} imagePath
+     * @param {String} lookupImage
      * @param {number} sleepTime
      */
-    clickAreaImage: function (imagePath, x, y, sleepTime) {
-        let lookupImage = images.read(imagePath);
+    clickAreaImage: function (lookupImage, x, y, sleepTime) {
         let p = images.findImage(images.captureScreen(), lookupImage, {
             region: [x, y, device.width, device.height - y],
-            threshold: 0.9
+            threshold: 0.95
         });
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);

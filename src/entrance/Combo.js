@@ -163,15 +163,17 @@ module.exports = {
         deviceService.allowScreenCapture();
         // 启动支付宝
         deviceService.launch("支付宝");
+        // 加载图片
+        let imageObj = aliPayService.initRescueChickenImg();
         // 打排球
-        this.rescueChickenMission(1);
+        this.rescueChickenMission(0, imageObj);
         log("======starBallJob end======");
     },
 
     /**
      * 营救小鸡
      */
-    rescueChickenMission: function (count) {
+    rescueChickenMission: function (count, imageObj) {
         // 切换账号
         aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
         // 打开蚂蚁庄园
@@ -186,34 +188,29 @@ module.exports = {
         deviceService.combinedClickText("营救小鸡", 8000);
         // 消除营救
         deviceService.clickRate(720 / 1440, 2600 / 3200, 8000);
-        let unlockBox = "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/解锁盒子.png";
+        // 解锁盒子
         for (let i = 0; i < 2; i++) {
-            deviceService.clickImage(unlockBox, 500);
+            deviceService.clickImage(imageObj.unlockBox, 500);
             aliPayService.swipeViewTask(35000);
             deviceService.clickRate(1295 / 1440, 230 / 3200, 1000);
         }
-        let colorList = ["橙", "灰", "粉", "红", "黄", "紫", "绿", "蓝", "棕",]
-        for (let i = 0; i < 1000; i++) {
-            for (let color of colorList) {
-                for (let j = 0; j < 3; j++) {
-                    let requestColor = "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/" + color + j + ".png";
-                    // 螺丝
+        for (let i = 0; i < 4500; i++) {
+            let index = i % 9;
+            for (let j = 0; j < 3; j++) {
+                if (deviceService.imageExist(imageObj["needScrew" + index + "_" + j])) {
                     for (let k = 0; k < 3; k++) {
-                        if (deviceService.imageExist(requestColor)) {
-                            let screw = "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/" + color + "螺丝" + k + ".png";
-                            deviceService.clickAreaImage(screw, 0, 910, 50);
-                        }
+                        deviceService.clickAreaImage(imageObj["offerScrew" + index + "_" + k], 0, 910, 200);
                     }
                 }
             }
-            let revive = "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/免费复活.png";
-            if (deviceService.imageExist(revive)) {
+            // 广告复活
+            if (deviceService.imageExist(imageObj.revive)) {
                 deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
                 aliPayService.swipeViewTask(35000)
                 deviceService.clickRate(1295 / 1440, 230 / 3200, 100);
             }
-            let finish = "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/营救成功.png";
-            if (deviceService.imageExist(finish)) {
+            // 结束跳出
+            if (deviceService.imageExist(imageObj.finish)) {
                 break;
             }
         }
@@ -224,7 +221,7 @@ module.exports = {
         // 计数
         count++;
         if (count < accountList.length) {
-            this.rescueChickenMission(count);
+            this.rescueChickenMission(count, imageObj);
         } else {
             // 复原账号
             aliPayService.switchAccount(accountList[0].userAccount);
@@ -734,9 +731,7 @@ module.exports = {
         // 时间
         sleep(3000);
         deviceService.combinedClickDesc("88VIP", 5000);
-        if (deviceService.imageExist("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png")) {
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png", 3000);
-        }
+        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
         toast("芭芭农场任务");
         // 清除后台任务
         deviceService.clearBackground();

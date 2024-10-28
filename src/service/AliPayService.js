@@ -3,10 +3,10 @@ let deviceService = require('./DeviceService.js');
 
 // 图片路径
 let imagePath = {
-    "chickenFodder": "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-fodder.png", // 蚂蚁庄园-喂食饲料
-    "chickenReward": "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-reward.png", // 蚂蚁庄园-打赏喂食
-    "chickenSleep": "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep.png", // 蚂蚁庄园-打赏喂食
-    "chickenSleep1": "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep1.png", // 蚂蚁庄园-打赏喂食
+    "chickenFodder": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-fodder.png"), // 蚂蚁庄园-喂食饲料
+    "chickenReward": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-reward.png"), // 蚂蚁庄园-打赏喂食
+    "chickenSleep": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep.png"), // 蚂蚁庄园-小鸡睡觉
+    "chickenSleep1": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep1.png"), // 蚂蚁庄园-小鸡睡觉
 };
 // 用户配置
 let userConfig = {};
@@ -847,6 +847,26 @@ module.exports = {
     },
 
     /**
+     * 点击小鸡饲料
+     */
+    initRescueChickenImg: function () {
+        let imageObj = {};
+        imageObj["unlockBox"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/解锁盒子.png");
+        imageObj["revive"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/免费复活.png");
+        imageObj["finish"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/营救成功.png");
+        let colorList = ["橙", "灰", "粉", "红", "黄", "紫", "绿", "蓝", "棕",]
+        let index = 0;
+        for (let color of colorList) {
+            for (let i = 0; i < 3; i++) {
+                imageObj["needScrew" + index + "_" + i] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/" + color + i + ".png");
+                imageObj["offerScrew" + index + "_" + i] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/" + color + "螺丝" + i + ".png");
+            }
+            index++;
+        }
+        return imageObj;
+    },
+
+    /**
      * 芭芭农场操作
      */
     babaFarmOption: function () {
@@ -999,18 +1019,27 @@ module.exports = {
     antForestOption: function () {
         // 打开蚂蚁新村
         this.launchSubApp("蚂蚁森林");
-        if (deviceService.imageExist("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png")) {
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png", 3000);
+        let imageObj = {};
+        imageObj["newBook"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png");
+        imageObj["lottery"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png");
+        imageObj["gift"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png");
+        imageObj["revive"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/forest-revive.png");
+
+        // 开启新图鉴
+        if (deviceService.imageExist(imageObj.newBook)) {
+            deviceService.clickImage(imageObj.newBook, 3000);
             back();
             sleep(1000);
         }
-        if (deviceService.imageExist("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png")) {
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png", 3000);
+        // 抽取物种卡
+        if (deviceService.imageExist(imageObj.lottery)) {
+            deviceService.clickImage(imageObj.lottery, 3000);
             back();
             sleep(1000);
         }
-        while (deviceService.imageExist("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png")) {
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png", 800);
+        // 赠送能量
+        while (deviceService.imageExist(imageObj.gift)) {
+            deviceService.clickImage(imageObj.gift, 800);
         }
         if ("on" == userConfig.antForestTask.takeEnergySwitch) {
             // 主账号收能量
@@ -1018,7 +1047,7 @@ module.exports = {
         } else {
             // deviceService.clickRate(85 / 100, 24 / 100, 100);
             // 小号接受复活能量
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/forest-revive.png", 3000);
+            deviceService.clickImage(imageObj.revive, 3000);
             // 立即收取
             deviceService.combinedClickText("立即收取", 1000);
         }
@@ -1161,11 +1190,12 @@ module.exports = {
             }
         } else {
             // 别人的用一键收
-            while (deviceService.imageExist("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/一键收.png")) {
-                deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/一键收.png", 800);
+            let oneTake = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/一键收.png");
+            while (deviceService.imageExist(oneTake)) {
+                deviceService.clickImage(oneTake, 800);
             }
             // 种植礼包
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/gift.png", 2000);
+            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/gift.png"), 2000);
             deviceService.combinedClickText("知道了", 2000);
             // 周一，14点前不帮别人激活
             let now = new Date();
@@ -1293,8 +1323,8 @@ module.exports = {
             sleep(1000);
             deviceService.combinedClickText("重新走", 5000);
             deviceService.combinedClickText("立即开走", 2000);
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/立即打开.png", 2000);
-            deviceService.clickImage("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/打开.png", 2000);
+            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/立即打开.png"), 2000);
+            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/打开.png"), 2000);
             deviceService.combinedClickText("开心收下", 2000);
             // 收集宝箱
             this.collectTreasure();
@@ -1324,7 +1354,13 @@ module.exports = {
      */
     collectTreasure: function () {
         log("------收集宝箱 start------");
-        let treasureArray = ["/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasure.png", "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasureC.png", "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasure.png", "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasureC.png", "/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-greenTreasure.png"];
+        let treasureArray = [
+            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasure.png"),
+            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasureC.png"),
+            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasure.png"),
+            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasureC.png"),
+            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-greenTreasure.png")
+        ];
         while (!this.finishCollect(treasureArray)) {
             for (let i = 0; i < treasureArray.length; i++) {
                 deviceService.clickImage(treasureArray[i], 3000);
@@ -1406,27 +1442,6 @@ module.exports = {
      */
     closeSubApp: function () {
         deviceService.combinedClickDesc("关闭", 2000);
-    },
-
-    /**
-     * 古树保护
-     */
-    ancientTree: function () {
-        let wishArray = ["福气满到溢出来", "工资翻番", "马上脱单", "环游世界", "水逆退散", "坚持运动", "坚持早起", "坚持学习 保持热爱", "早日暴富 锦鲤附体", "桃花朵朵 人气爆棚", "好运天天有 事业步步高", "赚到第一桶金"];
-        let index = 0;
-        while (text("支持保护").exists()) {
-            deviceService.combinedClickText("支持保护", 2000);
-            deviceService.clickRate(1 / 2, 95 / 100, 800);
-            deviceService.combinedClickText("支持保护", 800);
-            deviceService.combinedClickText("去许愿", 800);
-            deviceService.combinedClickText("许下心愿", 800);
-            let wishIndex = (index++) % wishArray.length;
-            deviceService.combinedClickText(wishArray[wishIndex], 800);
-            deviceService.combinedClickText("完成", 800);
-            deviceService.combinedClickText("许下心愿", 800);
-            back();
-            sleep(1500);
-        }
     },
 
     /**
