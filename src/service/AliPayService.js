@@ -169,7 +169,6 @@ module.exports = {
                     sleep(800);
                     deviceService.combinedClickText("去完成", 2000);
                     // 等等机器人验证
-                    this.robotCheck();
                     this.swipeViewTask(18000);
                     back();
                     sleep(3000);
@@ -466,6 +465,7 @@ module.exports = {
                 sleep(2000);
                 for (let i = 5; i > 0; i--) {
                     deviceService.combinedClickText("鱼食(" + i + "/5)", 2000);
+                    deviceService.combinedClickText("继续喂鱼", 500);
                 }
                 for (let i = 0; i < 88; i++) {
                     deviceService.clickRate(0.5, 0.5, 200);
@@ -616,8 +616,6 @@ module.exports = {
         for (let i = 0; i < 3; i++) {
             if (text("去杂货铺逛一逛 (" + i + "/3)").exists()) {
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + i + "/3)", "去完成", 5000);
-                // 等等机器人验证
-                this.robotCheck();
                 this.swipeViewTask(18000);
                 back();
                 sleep(1000);
@@ -648,7 +646,6 @@ module.exports = {
             log("------饲料任务-去杂货铺逛一逛------");
             deviceService.clickNearBy("去杂货铺逛一逛", "去完成", 5000);
             // 等等机器人验证
-            this.robotCheck();
             this.swipeViewTask(18000);
             back();
             sleep(1000);
@@ -945,8 +942,6 @@ module.exports = {
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
                 deviceService.clickBrotherIndex(browseTaskList[i], 2, 5000);
-                // 等等机器人验证
-                this.robotCheck();
                 if (className("android.widget.TextView").text("去浏览").exists()) {
                     className("android.widget.TextView").text("去浏览").findOne().click();
                     this.swipeViewTask(16000);

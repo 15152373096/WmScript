@@ -4,7 +4,7 @@ ui.layout(
         <vertical>
             <Switch w="360" h="40" margin="10" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChicken"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="一系列签到" id="allSign"/>
             </horizontal>
             <horizontal>
@@ -16,7 +16,7 @@ ui.layout(
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChicken"/>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="庄园星星球" id="ballJob"/>
             </horizontal>
             <horizontal>
