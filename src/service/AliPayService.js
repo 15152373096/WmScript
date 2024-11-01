@@ -752,6 +752,7 @@ module.exports = {
         }
         // 点击去捐蛋
         deviceService.clickRate(885 / 1440, 2975 / 3200, 1500);
+        text("去捐蛋").waitFor();
         deviceService.combinedClickText("去捐蛋", 5000);
         if (!text("爱心蛋不足1颗").exists()) {
             deviceService.comboTextClick(["立即捐蛋", "立即捐蛋"], 5000);

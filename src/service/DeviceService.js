@@ -118,7 +118,10 @@ module.exports = {
                     allowFlag = true;
                 } else if (text("要开始使用Autox.js v6录制或投放内容吗？").exists() && className("android.widget.Button").text("取消").exists()) {
                     let bounds = className("android.widget.Button").text("取消").findOne().bounds();
-                    click(bounds.centerX() + device.width * 5 / 10, bounds.centerY())
+                    click(bounds.centerX() + device.width * 5 / 10, bounds.centerY());
+                    allowFlag = true;
+                } else if (text("允许").exists()) {
+                    text("允许").click();
                     allowFlag = true;
                 }
                 sleep(2000)
