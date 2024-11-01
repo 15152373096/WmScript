@@ -754,15 +754,16 @@ module.exports = {
         deviceService.clickRate(885 / 1440, 2975 / 3200, 1500);
         text("去捐蛋").waitFor();
         deviceService.combinedClickText("去捐蛋", 5000);
-        if (!text("爱心蛋不足1颗").exists()) {
-            deviceService.comboTextClick(["立即捐蛋", "立即捐蛋"], 5000);
-            sleep(10000);
+        text("立即捐蛋").waitFor();
+        deviceService.comboTextClick(["立即捐蛋", "立即捐蛋"], 8000);
+        sleep(10000);
+        back();
+        sleep(1000);
+        if (!text("去捐蛋").exists()) {
+            // 回到庄园
             back();
             sleep(1000);
         }
-        // 回到庄园
-        back();
-        sleep(1000);
         deviceService.combinedClickText("关闭", 800);
     },
 
