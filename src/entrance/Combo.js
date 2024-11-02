@@ -408,6 +408,9 @@ module.exports = {
      * 发发日任务
      */
     fafaJob: function () {
+        if (!"23013RK75C" == device.model) {
+            return;
+        }
         log("======fafaJob start======");
         this.beforeOpt();
         this.openFaFaRi();
