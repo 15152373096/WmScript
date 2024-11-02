@@ -5,7 +5,7 @@ ui.layout(
             <Switch w="360" h="40" margin="10" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSign"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
             </horizontal>
             <horizontal>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
@@ -96,7 +96,7 @@ ui.plantWheatTask.click(function () {
         combo.plantWheatJob();
     });
 });
-ui.allSign.click(function () {
+ui.allSignTask.click(function () {
     threads.start(function () {
         combo.allSignJob();
     });
