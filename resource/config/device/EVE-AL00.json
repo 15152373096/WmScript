@@ -1,5 +1,5 @@
 {
-  "globalSwitch": true,
+  "globalSwitch": false,
   "energyRainConfig": {
     "fixRunTime": [
     ]
