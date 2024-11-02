@@ -439,10 +439,8 @@ module.exports = {
         // 开红包
         for (let i = 100; i > 0; i--) {
             if (text("剩" + i + "次").exists()) {
-                text("剩" + i + "次").findOne().click();
-                sleep(5000);
-                deviceService.clickDIP("android.widget.TextView", 18, 1, 3000);
-                deviceService.clickRate(1 / 2, 3 / 5, 800);
+                deviceService.combinedClickText("剩" + i + "次", 5000);
+                deviceService.clickRate(720 / 1440, 2395 / 3200, 800);
             }
         }
         deviceService.clickDIP("android.view.View", 17, 3, 3000);
