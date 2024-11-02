@@ -6,7 +6,6 @@ let combo = require('../entrance/Combo.js');
 // 入口
 run();
 
-
 function run() {
     let globalConfig = deviceService.getGlobalConfig()
     if (!globalConfig.globalSwitch) {
@@ -20,7 +19,7 @@ function run() {
     if (deviceService.containsInArray(globalConfig.weLinkConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
             // 上班签到
-            combo.weLinkSignJob();
+            combo.weLinkSignIn();
         });
     } else if (deviceService.containsInArray(globalConfig.energyRainConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
@@ -32,16 +31,12 @@ function run() {
             // 星星球任务
             combo.starBallJob();
         });
-    }  else if (deviceService.containsInArray(globalConfig.allSignConfig.fixRunTime, currentTime.hourMinute)) {
+    } else if (deviceService.containsInArray(globalConfig.allSignConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
             // 一系列签到
             combo.allSignJob();
         });
     } else {
-        // 如果设备是开着的，跳过
-        if (device.isScreenOn()) {
-            return;
-        }
         // 上次运行时间
         let lastRunTime = globalConfig.mainJobConfig.lastRunTime;
         // 任务间隔
@@ -59,5 +54,4 @@ function run() {
             });
         }
     }
-
 }

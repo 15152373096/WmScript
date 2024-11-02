@@ -2,8 +2,6 @@
   "globalSwitch": true,
   "energyRainConfig": {
     "fixRunTime": [
-      "00:35",
-      "01:35"
     ]
   },
   "allSignConfig": {
@@ -27,13 +25,11 @@
     ]
   },
   "mainJobConfig": {
-    "lastRunTime": "2024-05-13 21:55:00",
+    "lastRunTime": "2024-11-02 21:55:00",
     "timeInterval": 60
   },
   "starBallJobConfig": {
     "fixRunTime": [
-      "22:45",
-      "23:45"
     ]
   },
   "accountList": [

@@ -57,18 +57,27 @@ module.exports = {
         let deviceHeight = device.height;
         swipe(deviceWidth / 2, deviceHeight * 4 / 5, deviceWidth / 2, deviceHeight / 8, 1000);
         sleep(2000);
-        // unlock 
-        let xLeft = 250;
-        let yBottom = 1785;
-        let yMiddle = 1500;
-        let yTop = 1215;
-        if ("23013RK75C" == device.model) {
-            xLeft = 365;
-            yBottom = 2645;
-            yMiddle = 2290;
-            yTop = 1935;
+        // 畅享50Z
+        if ("EVE-AL00" == device.model) {
+            this.comboTextClick(["5", "9", "4", "6", "0", "6"], 80);
         }
-        gesture(1000, [xLeft, yBottom], [xLeft, yTop], [deviceWidth / 2, yMiddle], [deviceWidth - xLeft, yTop], [deviceWidth - xLeft, yBottom]);
+        // K20
+        if ("Redmi K20 Pro" == device.model) {
+            // unlock
+            let xLeft = 250;
+            let yBottom = 1785;
+            let yMiddle = 1500;
+            let yTop = 1215;
+            gesture(1000, [xLeft, yBottom], [xLeft, yTop], [deviceWidth / 2, yMiddle], [deviceWidth - xLeft, yTop], [deviceWidth - xLeft, yBottom]);
+        }
+        // K60
+        if ("23013RK75C" == device.model) {
+            let xLeft = 365;
+            let yBottom = 2645;
+            let yMiddle = 2290;
+            let yTop = 1935;
+            gesture(1000, [xLeft, yBottom], [xLeft, yTop], [deviceWidth / 2, yMiddle], [deviceWidth - xLeft, yTop], [deviceWidth - xLeft, yBottom]);
+        }
         sleep(2000);
     },
 

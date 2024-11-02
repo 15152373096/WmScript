@@ -2,6 +2,7 @@
 let deviceService = require('../service/DeviceService.js');
 let aliPayService = require('../service/AliPayService.js');
 let taoBaoService = require('../service/TaoBaoService.js');
+let chinaMobileService = require('../service/ChinaMobileService.js');
 let himalayanService = require('../service/HimalayanService.js');
 
 // 设备参数
@@ -30,6 +31,9 @@ module.exports = {
      * 入口
      */
     mainJob: function () {
+        if (!deviceService.appExists("支付宝")) {
+            return;
+        }
         log("======mainJob start======");
         this.beforeOpt();
         // 允许截图
@@ -596,22 +600,7 @@ module.exports = {
     },
 
     /**
-     * 上班签到
-     */
-    weLinkSignJob: function () {
-        if (deviceService.appExists("WeLink")) {
-            this.beforeOpt();
-            // 启动welink
-            deviceService.launch("WeLink");
-            toast("======上下班签到======");
-            // 业务、打卡
-            deviceService.comboTextClick(["业务", "打卡"], 3000);
-            this.afterOpt();
-        }
-    },
-
-    /**
-     * 上班签到
+     * 喜马拉雅赚取时间
      */
     himalayanTimeJob: function () {
         log("======himalayanTimeJob start======");
@@ -697,51 +686,93 @@ module.exports = {
         this.beforeOpt();
         // 允许截图
         deviceService.allowScreenCapture();
-        toast("星空内网传递签到");
-        // 浏览器
-        deviceService.launch("浏览器");
-        // 赚取时间
-        sleep(2000);
-        deviceService.combinedClickText("每日签到", 6000);
-        if (text("登录").exists()) {
-            if ("23013RK75C" == device.model) {
-                setText(1, "15152373096");
-                sleep(800);
-                setText(2, "SF@ming0935");
-                sleep(800);
-            } else {
-                setText(0, "15152373096");
-                sleep(800);
-                setText(1, "SF@ming0935");
-                sleep(800);
-            }
-            deviceService.comboTextClick(["登录", "OK"], 6000);
-        }
-        deviceService.comboTextClick(["立即签到", "OK"], 3000);
-        // 拼多多
-        deviceService.launch("拼多多");
-        back();
-        sleep(200);
-        deviceService.combinedClickText("多多视频", 1000);
-        deviceService.clickRate(720 / 1440, 2020 / 3200, 1000);
-
-        toast("88VIP抽茅台");
-        // 淘宝
-        deviceService.launch("淘宝");
-        // 时间
-        sleep(3000);
-        deviceService.combinedClickDesc("88VIP", 5000);
-        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
-        toast("芭芭农场任务");
-        // 清除后台任务
-        deviceService.clearBackground();
-        // 启动淘宝
-        deviceService.launch("淘宝");
+        // 星空内网传递签到
+        this.starryFrpSignIn();
+        // 拼多多签到
+        this.pddSignIn();
+        // 中国移动签到
+        chinaMobileService.signIn();
+        // 88VIP抽茅台
+        this.mtLotvcfghjnnnnnnnnnntery();
         // 芭芭农场任务
-        taoBaoService.babaFarmOption();
+        if (deviceService.appExists("淘宝")) {
+            toastLog("芭芭农场任务");
+            // 清除后台任务
+            deviceService.clearBackground();
+            // 启动淘宝
+            deviceService.launch("淘宝");
+            // 芭芭农场任务
+            taoBaoService.babaFarmOption();
+        }
         this.afterOpt();
     },
 
+    /**
+     * 星空内网穿透签到
+     */
+    starryFrpSignIn: function () {
+        toastLog("星空内网传递签到");
+        // 星空内网穿透
+        let url = "https://frp.starryfrp.com/console/Sign";
+        // 打开网页
+        app.openUrl(url);
+        sleep(5000);
+        if (text("登录").exists()) {
+            let index = "23013RK75C" == device.model ? 1 : 0;
+            setText(index++, "15152373096");
+            sleep(800);
+            setText(index, "SF@ming0935");
+            sleep(800);
+            deviceService.comboTextClick(["登录", "OK"], 6000);
+        }
+        deviceService.comboTextClick(["立即签到", "OK"], 3000);
+    },
+
+    /**
+     * 拼多多签到
+     */
+    pddSignIn: function () {
+        if (deviceService.appExists("拼多多")) {
+            toastLog("拼多多签到");
+            // 拼多多
+            deviceService.launch("拼多多");
+            back();
+            sleep(200);
+            deviceService.combinedClickText("多多视频", 1000);
+            deviceService.clickRate(720 / 1440, 2020 / 3200, 1000);
+        }
+    },
+
+    /**
+     * 88VIP抽茅台
+     */
+    mtLottery: function () {
+        if ("23013RK75C" == device.model) {
+            toastLog("88VIP抽茅台");
+            // 淘宝
+            deviceService.launch("淘宝");
+            // 时间
+            sleep(3000);
+            deviceService.combinedClickDesc("88VIP", 5000);
+            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
+        }
+    },
+
+    /**
+     * 上班签到
+     */
+    weLinkSignIn: function () {
+        if (deviceService.appExists("WeLink")) {
+            this.beforeOpt();
+            // 启动welink
+            deviceService.launch("WeLink");
+            toast("======上下班签到======");
+            text("业务").waitFor();
+            // 业务、打卡
+            deviceService.comboTextClick(["业务", "打卡"], 3000);
+            this.afterOpt();
+        }
+    },
 
     /**
      * 淘宝芭芭农场任务
