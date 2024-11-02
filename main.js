@@ -2,33 +2,33 @@
 ui.layout(
     <frame>
         <vertical>
-            <Switch w="360" h="40" margin="10" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
+            <Switch w="{{Math.floor(device.width*0.98)}}px" h="{{Math.floor(device.width*0.1)}}px" margin="{{Math.floor(device.width*0.01)}}px" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="验证码任务" id="verifyTask"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="验证码任务" id="verifyTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="庄园种小麦" id="plantWheatTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园种小麦" id="plantWheatTask"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="庄园星星球" id="ballJob"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园星星球" id="ballJob"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChickenTask"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChickenTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="网商一零五" id="netBank"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="森林能量雨" id="energyRain"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商一零五" id="netBank"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="森林能量雨" id="energyRain"/>
             </horizontal>
             <horizontal>
-                <button w="380" h="80" margin="10" textSize="20sp" bg="#90EE90" text="一整套连招" id="comboTask"/>
+                <button w="{{Math.floor(device.width*0.98)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="一整套连招" id="comboTask"/>
             </horizontal>
             <horizontal>
-                <text w="140" textSize="20sp"  text="上次运行时间:"/>
-                <text w="220" id="lastRunTime" text="上次运行时间" textSize="20sp"/>
+                <text w="{{Math.floor(device.width*0.36)}}px" text="上次运行时间:" textSize="20sp" margin="{{Math.floor(device.width*0.01)}}px"/>
+                <text w="{{Math.floor(device.width*0.60)}}px" text="上次运行时间" textSize="20sp" margin="{{Math.floor(device.width*0.01)}}px" id="lastRunTime" />
             </horizontal>
         </vertical>
     </frame>

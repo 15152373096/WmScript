@@ -408,7 +408,7 @@ module.exports = {
      * 发发日任务
      */
     fafaJob: function () {
-        if (!"23013RK75C" == device.model) {
+        if ("23013RK75C" != device.model) {
             return;
         }
         log("======fafaJob start======");
@@ -476,7 +476,7 @@ module.exports = {
      */
     monthEarnJob: function () {
         // 只有主号做任务
-        if (!"23013RK75C" == device.model) {
+        if ("23013RK75C" != device.model) {
             return;
         }
         log("======monthEarnJob start======");
@@ -740,15 +740,16 @@ module.exports = {
      * 88VIP抽茅台
      */
     mtLottery: function () {
-        if ("23013RK75C" == device.model) {
-            toastLog("88VIP抽茅台");
-            // 淘宝
-            deviceService.launch("淘宝");
-            // 时间
-            sleep(3000);
-            deviceService.combinedClickDesc("88VIP", 5000);
-            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
+        if ("23013RK75C" != device.model) {
+            return;
         }
+        toastLog("88VIP抽茅台");
+        // 淘宝
+        deviceService.launch("淘宝");
+        // 时间
+        sleep(3000);
+        deviceService.combinedClickDesc("88VIP", 5000);
+        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
     },
 
     /**
