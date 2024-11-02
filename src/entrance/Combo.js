@@ -2,8 +2,11 @@
 let deviceService = require('../service/DeviceService.js');
 let aliPayService = require('../service/AliPayService.js');
 let taoBaoService = require('../service/TaoBaoService.js');
-let chinaMobileService = require('../service/ChinaMobileService.js');
+let wyMusicService = require('../service/WYMusicService.js');
+let pddService = require('../service/PDDService.js');
+let aDriveService = require('../service/ADriveService.js');
 let himalayanService = require('../service/HimalayanService.js');
+let chinaMobileService = require('../service/ChinaMobileService.js');
 
 // 设备参数
 let deviceWidth = device.width;
@@ -409,7 +412,6 @@ module.exports = {
         this.beforeOpt();
         this.openFaFaRi();
         this.FaFaBrowse();
-        this.afterOpt()
         log("======fafaJob end======");
     },
 
@@ -472,6 +474,10 @@ module.exports = {
      * 月月赚任务
      */
     monthEarnJob: function () {
+        // 只有主号做任务
+        if (!"23013RK75C" == device.model) {
+            return;
+        }
         log("======monthEarnJob start======");
         this.openMonthRich();
         for (let i = 0; i < 5; i++) {
@@ -481,7 +487,6 @@ module.exports = {
                 sleep(2000);
             }
         }
-        this.afterOpt();
         log("======monthEarnJob end======");
     },
 
@@ -554,6 +559,13 @@ module.exports = {
     },
 
     /**
+     * 验证码任务
+     */
+    verifyJob: function () {
+        this.mainJob()
+    },
+
+    /**
      * 循环送道具
      */
     sendOutTools: function (count) {
@@ -597,19 +609,6 @@ module.exports = {
         } else {
             this.afterOpt();
         }
-    },
-
-    /**
-     * 喜马拉雅赚取时间
-     */
-    himalayanTimeJob: function () {
-        log("======himalayanTimeJob start======");
-        this.beforeOpt();
-        // 启动喜马拉雅
-        deviceService.launch("喜马拉雅");
-        // 赚取时间
-        himalayanService.earnTime();
-        this.afterOpt();
     },
 
     /**
@@ -679,21 +678,29 @@ module.exports = {
     },
 
     /**
-     * 一系列签到
+     * 天天来签到
      */
     allSignJob: function () {
         log("======allSignJob start======");
         this.beforeOpt();
         // 允许截图
         deviceService.allowScreenCapture();
-        // 星空内网传递签到
-        this.starryFrpSignIn();
         // 拼多多签到
-        this.pddSignIn();
+        pddService.signIn();
         // 中国移动签到
         chinaMobileService.signIn();
+        // 网易云音乐签到
+        wyMusicService.signIn();
+        // 阿里云盘签到
+        aDriveService.signIn();
+        // 星空内网传递签到
+        this.starryFrpSignIn();
         // 88VIP抽茅台
-        this.mtLotvcfghjnnnnnnnnnntery();
+        this.mtLottery();
+        // 月月赚任务
+        this.monthEarnJob();
+        // 发发日任务
+        this.fafaJob();
         // 芭芭农场任务
         if (deviceService.appExists("淘宝")) {
             toastLog("芭芭农场任务");
@@ -726,21 +733,6 @@ module.exports = {
             deviceService.comboTextClick(["登录", "OK"], 6000);
         }
         deviceService.comboTextClick(["立即签到", "OK"], 3000);
-    },
-
-    /**
-     * 拼多多签到
-     */
-    pddSignIn: function () {
-        if (deviceService.appExists("拼多多")) {
-            toastLog("拼多多签到");
-            // 拼多多
-            deviceService.launch("拼多多");
-            back();
-            sleep(200);
-            deviceService.combinedClickText("多多视频", 1000);
-            deviceService.clickRate(720 / 1440, 2020 / 3200, 1000);
-        }
     },
 
     /**

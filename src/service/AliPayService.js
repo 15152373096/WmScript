@@ -61,6 +61,7 @@ module.exports = {
      * 签到
      */
     signIn: function () {
+        // 配置不签到
         if ("off" == userConfig.signSwitch || this.laterThan(10, 0)) {
             return;
         }
@@ -884,19 +885,12 @@ module.exports = {
         deviceService.combinedClickText("取消", 2000);
         // 领取肥料
         deviceService.clickRate(1265 / 1440, 2325 / 3200, 800);
-        // 通知申请
-        deviceService.combinedClickText("取消", 2000);
-        // 关闭明日可领取
-        deviceService.combinedClickText("关闭", 800);
-        // 通知申请
-        deviceService.combinedClickText("取消", 2000);
+        // 通知申请、关闭明日可领取、通知申请
+        deviceService.comboTextClick(["取消", "关闭","取消"], 2000);
         // 施肥
         deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
         // 好的
-        deviceService.combinedClickText("好的", 800);
-        deviceService.combinedClickText("关闭", 800);
-        // 通知申请
-        deviceService.combinedClickText("取消", 2000);
+        deviceService.comboTextClick(["好的", "关闭","取消"], 800);
         // 收食材
         deviceService.clickRate(175 / 1440, 1960 / 3200, 3600);
         if (className("android.widget.Button").text("去小鸡厨房").exists()) {

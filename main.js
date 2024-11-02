@@ -5,18 +5,18 @@ ui.layout(
             <Switch w="360" h="40" margin="10" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="一系列签到" id="allSign"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSign"/>
             </horizontal>
             <horizontal>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="庄园种小麦" id="plantWheat"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="庄园种小麦" id="plantWheatTask"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="月月赚任务" id="monthEarn"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="验证码任务" id="verifyTask"/>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
-                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChicken"/>
+                <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChickenTask"/>
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="庄园星星球" id="ballJob"/>
             </horizontal>
             <horizontal>
@@ -24,7 +24,7 @@ ui.layout(
                 <button w="180" h="80" margin="10" textSize="20sp" bg="#90EE90" text="森林能量雨" id="energyRain"/>
             </horizontal>
             <horizontal>
-                <button w="380" h="80" margin="10" textSize="20sp" bg="#90EE90" text="一整套连招" id="combo"/>
+                <button w="380" h="80" margin="10" textSize="20sp" bg="#90EE90" text="一整套连招" id="comboTask"/>
             </horizontal>
             <horizontal>
                 <text w="140" textSize="20sp"  text="上次运行时间:"/>
@@ -51,7 +51,7 @@ function init() {
 
 
 //指定确定按钮点击时要执行的动作
-ui.combo.click(function () {
+ui.comboTask.click(function () {
     threads.start(function () {
         combo.mainJob();
     });
@@ -76,14 +76,14 @@ ui.fafa.click(function () {
         combo.fafaJob();
     });
 });
-ui.rescueChicken.click(function () {
+ui.rescueChickenTask.click(function () {
     threads.start(function () {
         combo.rescueChicken();
     });
 });
-ui.monthEarn.click(function () {
+ui.verifyTask.click(function () {
     threads.start(function () {
-        combo.monthEarnJob();
+        combo.verifyJob();
     });
 });
 ui.giveTool.click(function () {
@@ -91,12 +91,7 @@ ui.giveTool.click(function () {
         combo.giveToolJob();
     });
 });
-// ui.himalayanTime.click(function () {
-//     threads.start(function () {
-//         combo.himalayanTimeJob();
-//     });
-// });
-ui.plantWheat.click(function () {
+ui.plantWheatTask.click(function () {
     threads.start(function () {
         combo.plantWheatJob();
     });
