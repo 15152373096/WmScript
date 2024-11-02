@@ -37,6 +37,10 @@ function run() {
             combo.allSignJob();
         });
     } else {
+        // 睡觉时间免打扰
+        if (deviceService.earlierThan(7, 25)) {
+            return;
+        }
         // 上次运行时间
         let lastRunTime = globalConfig.mainJobConfig.lastRunTime;
         // 任务间隔

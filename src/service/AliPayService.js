@@ -62,7 +62,7 @@ module.exports = {
      */
     signIn: function () {
         // 配置不签到
-        if ("off" == userConfig.signSwitch || this.laterThan(10, 0)) {
+        if ("off" == userConfig.signSwitch || deviceService.laterThan(10, 0)) {
             return;
         }
         toastLog("====== 支付宝签到 ======");
@@ -671,7 +671,7 @@ module.exports = {
      * 小鸡睡觉
      */
     chickenSleep: function () {
-        if (this.laterThan(20, 0) && text("让小鸡去睡觉").exists() && text("让小鸡去睡觉").findOne().parent().findOne(text("去完成"))) {
+        if (deviceService.laterThan(20, 0) && text("让小鸡去睡觉").exists() && text("让小鸡去睡觉").findOne().parent().findOne(text("去完成"))) {
             log("------饲料任务-小鸡睡觉------");
             deviceService.clickNearBy("让小鸡去睡觉", "去完成", 5000);
             // 点击睡觉
@@ -748,7 +748,7 @@ module.exports = {
      * 捐蛋
      */
     donateEgg: function () {
-        if (this.laterThan(7, 0)) {
+        if (deviceService.laterThan(7, 0)) {
             return;
         }
         // 点击去捐蛋
@@ -1111,7 +1111,7 @@ module.exports = {
         // 背包
         deviceService.clickRate(370 / 1440, 2100 / 3200, 1000);
         // 7点到9点，使用加速器
-        if (this.laterThan(7, 0) && this.earlierThan(8, 0)) {
+        if (deviceService.laterThan(7, 0) && deviceService.earlierThan(8, 0)) {
             if (text("限时加速器").exists()) {
                 text("限时加速器").findOne().parent().findOne(text("使用")).click();
                 sleep(1000);
@@ -1125,7 +1125,7 @@ module.exports = {
             }
         }
         // 0点到1点，7点到8点。使用双击卡
-        if (this.earlierThan(1, 0) || (this.laterThan(7, 0) && this.earlierThan(8, 0))) {
+        if (deviceService.earlierThan(1, 0) || (deviceService.laterThan(7, 0) && deviceService.earlierThan(8, 0))) {
             // 使用能量双击卡
             if (text("限时双击卡").exists()) {
                 // 使用限时能量雨机会
@@ -1190,11 +1190,11 @@ module.exports = {
             deviceService.combinedClickText("知道了", 2000);
             // 周一，14点前不帮别人激活
             let now = new Date();
-            if (1 == now.getDay() && this.earlierThan(14, 0) && !this.isSubAccount()) {
+            if (1 == now.getDay() && deviceService.earlierThan(14, 0) && !this.isSubAccount()) {
                 return;
             }
             // 8:00 -22:00 才能复活能量
-            if (this.laterThan(22, 0) || this.earlierThan(8, 0)) {
+            if (deviceService.laterThan(22, 0) || deviceService.earlierThan(8, 0)) {
                 return;
             }
             // 补充点1
@@ -1433,36 +1433,5 @@ module.exports = {
      */
     closeSubApp: function () {
         deviceService.combinedClickDesc("关闭", 2000);
-    },
-
-    /**
-     * 是否早于hour时minute分
-     * @param {number} hour
-     * @param {number} minute
-     * @returns boolean
-     */
-    earlierThan: function (hour, minute) {
-        let now = new Date();
-        let compareTime = new Date();
-        compareTime.setHours(hour);
-        compareTime.setMinutes(minute);
-        compareTime.setSeconds(0);
-        return now < compareTime;
-    },
-
-    /**
-     * 是否晚于hour时minute分
-     * @param {number} hour
-     * @param {number} minute
-     * @returns boolean
-     */
-    laterThan: function (hour, minute) {
-        let now = new Date();
-        let compareTime = new Date();
-        compareTime.setHours(hour);
-        compareTime.setMinutes(minute);
-        compareTime.setSeconds(0);
-        return now > compareTime;
-    },
-
+    }
 }

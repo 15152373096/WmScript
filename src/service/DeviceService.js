@@ -569,6 +569,36 @@ module.exports = {
     },
 
     /**
+     * 是否早于hour时minute分
+     * @param {number} hour
+     * @param {number} minute
+     * @returns boolean
+     */
+    earlierThan: function (hour, minute) {
+        let now = new Date();
+        let compareTime = new Date();
+        compareTime.setHours(hour);
+        compareTime.setMinutes(minute);
+        compareTime.setSeconds(0);
+        return now < compareTime;
+    },
+
+    /**
+     * 是否晚于hour时minute分
+     * @param {number} hour
+     * @param {number} minute
+     * @returns boolean
+     */
+    laterThan: function (hour, minute) {
+        let now = new Date();
+        let compareTime = new Date();
+        compareTime.setHours(hour);
+        compareTime.setMinutes(minute);
+        compareTime.setSeconds(0);
+        return now > compareTime;
+    },
+
+    /**
      * 获取时间差
      * @param date1
      * @param date2
