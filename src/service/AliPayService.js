@@ -1015,11 +1015,12 @@ module.exports = {
     antForestOption: function () {
         // 打开蚂蚁新村
         this.launchSubApp("蚂蚁森林");
-        let imageObj = {};
-        imageObj["newBook"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png");
-        imageObj["lottery"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png");
-        imageObj["gift"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png");
-        imageObj["revive"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/forest-revive.png");
+        let imageObj = {
+            "newBook": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png"),
+            "lottery": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png"),
+            "gift": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png"),
+            "revive": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/forest-revive.png")
+        };
 
         // 开启新图鉴
         if (deviceService.imageExist(imageObj.newBook)) {
