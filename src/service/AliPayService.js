@@ -1019,7 +1019,7 @@ module.exports = {
             "newBook": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png"),
             "lottery": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png"),
             "gift": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png"),
-            "revive": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/forest-revive.png")
+            "revive": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/已复活.png")
         };
 
         // 开启新图鉴
