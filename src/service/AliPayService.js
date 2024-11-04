@@ -78,6 +78,9 @@ module.exports = {
         deviceService.combinedClickText("每日签到", 10000);
         // 等等机器人验证
         this.robotCheck();
+        deviceService.combinedClickText("逛一逛赚积分", 1000);
+        this.swipeViewTask(3600);
+        deviceService.combinedClickText("做任务赚积分", 1000);
         // 积分任务
         this.scoreMission();
         // 关闭签到
@@ -609,8 +612,8 @@ module.exports = {
         // 兑换饲料
         for (let i = 0; i < 2; i++) {
             if (text("消耗饲料换机会 (" + i + "/2)").exists()) {
-                deviceService.clickNearBy("消耗饲料换机会 (" + i + "/2)", "去完成", 2000);
-                deviceService.combinedClickText("确认兑换", 3500)
+                deviceService.clickNearBy("消耗饲料换机会 (" + i + "/2)", "去完成", 3000);
+                deviceService.combinedClickText("确认兑换", 5000)
             }
         }
         // 逛一逛
@@ -776,10 +779,12 @@ module.exports = {
         if (deviceService.imageExist(imagePath.chickenSleep) || deviceService.imageExist(imagePath.chickenSleep1)) {
             return;
         }
-        // 如果是其他零食，没有显示鸡饲料
-        while (!deviceService.imageExist(imagePath.chickenFodder)) {
+        let count = 0;
+        // 如果是其他零食，没有显示鸡饲料，或者超过20次
+        while (!deviceService.imageExist(imagePath.chickenFodder) && count < 20) {
             // 点击小鸡饲料
             this.clickChickenFodder();
+            count ++;
         }
         // 零食吃完，吃饲料
         this.clickChickenFodder();
