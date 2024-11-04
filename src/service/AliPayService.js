@@ -1074,6 +1074,9 @@ module.exports = {
             // 浇水
             deviceService.combinedClickText("浇水送祝福", 4500);
         }
+        // 种植礼包
+        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/gift.png"), 2000);
+        deviceService.combinedClickText("知道了", 2000);
         // 回退到排行榜
         back();
         sleep(800);
@@ -1116,7 +1119,7 @@ module.exports = {
     useTools: function () {
         // 背包
         deviceService.clickRate(370 / 1440, 2100 / 3200, 1000);
-        // 7点到9点，使用加速器
+        // 7点到8点，使用加速器
         if (deviceService.laterThan(7, 0) && deviceService.earlierThan(8, 0)) {
             if (text("限时加速器").exists()) {
                 text("限时加速器").findOne().parent().findOne(text("使用")).click();
@@ -1130,8 +1133,8 @@ module.exports = {
                 deviceService.combinedClickText("知道了", 800);
             }
         }
-        // 0点到1点，7点到8点。使用双击卡
-        if (deviceService.earlierThan(1, 0) || (deviceService.laterThan(7, 0) && deviceService.earlierThan(8, 0))) {
+        // 0点到1点，7点到10点。使用双击卡
+        if (deviceService.earlierThan(2, 0) || (deviceService.laterThan(7, 0) && deviceService.earlierThan(10, 0))) {
             // 使用能量双击卡
             if (text("限时双击卡").exists()) {
                 // 使用限时能量雨机会

@@ -750,6 +750,7 @@ module.exports = {
         sleep(3000);
         deviceService.combinedClickDesc("88VIP", 5000);
         deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
+        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
     },
 
     /**
