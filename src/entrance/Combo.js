@@ -24,8 +24,6 @@ module.exports = {
     beforeOpt: function () {
         // 唤醒设备
         deviceService.wakeUpDevice();
-        // 停止其他任务
-        deviceService.stopOtherJob();
         // 清除后台任务
         deviceService.clearBackground();
     },

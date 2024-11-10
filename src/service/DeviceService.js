@@ -79,6 +79,7 @@ module.exports = {
             gesture(1000, [xLeft, yBottom], [xLeft, yTop], [deviceWidth / 2, yMiddle], [deviceWidth - xLeft, yTop], [deviceWidth - xLeft, yBottom]);
         }
         sleep(2000);
+        this.stopOtherJob();
     },
 
     /**

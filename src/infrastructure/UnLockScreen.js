@@ -1,6 +1,5 @@
 // 加载设备操作公共方法
 let deviceService = require('../service/DeviceService.js');
 
-// 每次锁屏，确保开关打开
+// 解锁成功后，关闭定时任务
 deviceService.changeSwitch(false);
-// engines.stopAll();
