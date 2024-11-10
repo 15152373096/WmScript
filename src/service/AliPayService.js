@@ -78,8 +78,10 @@ module.exports = {
         deviceService.combinedClickText("每日签到", 10000);
         // 等等机器人验证
         this.robotCheck();
-        deviceService.combinedClickText("逛一逛赚积分", 1000);
-        this.swipeViewTask(3600);
+        if (text("逛一逛赚积分").exists()) {
+            deviceService.combinedClickText("逛一逛赚积分", 1000);
+            this.swipeViewTask(3600);
+        }
         deviceService.combinedClickText("做任务赚积分", 1000);
         // 积分任务
         this.scoreMission();
@@ -586,7 +588,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】秋日限定装扮来啦";
+        let lotteryName = "【抽抽乐】冬日限定装扮来啦";
         if (text(lotteryName).exists() && text(lotteryName).findOne().parent().findOne(text("去完成"))) {
             // 任务
             this.lotteryTask(lotteryName);

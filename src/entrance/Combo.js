@@ -553,17 +553,51 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
-        // 收集能量雨
+        // 循环送道具
         this.sendOutTools(0);
         this.afterOpt();
         log("======giveToolJob end======");
     },
 
     /**
-     * 验证码任务
+     * 同步手环步数
      */
-    verifyJob: function () {
-        this.mainJob()
+    syncStepJob: function () {
+        if (!deviceService.appExists("支付宝") || !deviceService.appExists("Zepp Life")) {
+            return;
+        }
+        log("======syncStepJob start======");
+        this.beforeOpt();
+        // 遍历账号
+        for (let i = 0; i < accountList.length; i++) {
+            // 启动支付宝
+            deviceService.launch("支付宝");
+            // 账号切换
+            aliPayService.switchAccount(accountList[i].userAccount);
+            // 切回Zepp Life
+            deviceService.launch("Zepp Life");
+            // 同步数据
+            sleep(3000);
+            // 我的
+            deviceService.clickRate(1200 / 1440, 3150 / 3200, 1000);
+            deviceService.comboTextClick(["第三方接入", "支付宝", "解除绑定", "确定", "绑定"], 2000);
+            sleep(4000);
+            back();
+            sleep(800);
+            back();
+            sleep(800);
+            deviceService.combinedClickText("首页", 2000);
+            // 下拉刷新同步
+            deviceService.swipeDown(device.height);
+            // 下拉刷新同步
+            deviceService.swipeDown(device.height);
+            // 下拉刷新同步
+            deviceService.swipeDown(device.height);
+        }
+        // 切回主账号
+        aliPayService.switchAccount(accountList[0].userAccount);
+        this.afterOpt();
+        log("======syncStepJob end======");
     },
 
     /**
@@ -583,7 +617,7 @@ module.exports = {
         // 上滑
         deviceService.swipeUp(device.height / 2);
         // 新版本收能量
-        deviceService.comboTextClick(["查看更多好友", "王明"], 2000);
+        deviceService.comboTextClick(["查看更多好友", "王明"], 5000);
         deviceService.clickRate(1120 / 1440, 2475 / 3200, 1800);
         let finish = false;
         while (!finish) {
@@ -750,7 +784,7 @@ module.exports = {
         sleep(3000);
         deviceService.combinedClickDesc("88VIP", 5000);
         deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
-        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
+        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢茅台.png"), 3000);
     },
 
     /**

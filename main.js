@@ -4,7 +4,7 @@ ui.layout(
         <vertical>
             <Switch w="{{Math.floor(device.width*0.98)}}px" h="{{Math.floor(device.width*0.1)}}px" margin="{{Math.floor(device.width*0.01)}}px" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="验证码任务" id="verifyTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="手环计步器" id="syncStepTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
             </horizontal>
             <horizontal>
@@ -81,9 +81,9 @@ ui.rescueChickenTask.click(function () {
         combo.rescueChicken();
     });
 });
-ui.verifyTask.click(function () {
+ui.syncStepTask.click(function () {
     threads.start(function () {
-        combo.verifyJob();
+        combo.syncStepJob();
     });
 });
 ui.giveTool.click(function () {
