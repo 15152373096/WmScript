@@ -5,7 +5,7 @@ ui.layout(
             <Switch w="{{Math.floor(device.width*0.98)}}px" h="{{Math.floor(device.width*0.1)}}px" margin="{{Math.floor(device.width*0.01)}}px" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="手环计步器" id="syncStepTask"/>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafa"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商发发日" id="fafaTask"/>
             </horizontal>
             <horizontal>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
@@ -71,7 +71,7 @@ ui.netBank.click(function () {
         combo.netBankJob();
     });
 });
-ui.fafa.click(function () {
+ui.fafaTask.click(function () {
     threads.start(function () {
         combo.fafaJob();
     });

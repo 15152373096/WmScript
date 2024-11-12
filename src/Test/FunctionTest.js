@@ -1,4 +1,4 @@
-let deviceService = require('/sdcard/脚本/WmScript/src/service/DeviceService.js');
+let combo = require('/sdcard/脚本/WmScript/src/entrance/combo.js');
 
 
-toastLog(engines.myEngine());
+combo.FaFaBrowse();

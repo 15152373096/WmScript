@@ -32,11 +32,11 @@ module.exports = {
      * 入口
      */
     mainJob: function () {
+        log("======mainJob start======");
+        this.beforeOpt();
         if (!deviceService.appExists("支付宝")) {
             return;
         }
-        log("======mainJob start======");
-        this.beforeOpt();
         // 允许截图
         deviceService.allowScreenCapture();
         // 启动支付宝
@@ -566,10 +566,10 @@ module.exports = {
         }
         log("======syncStepJob start======");
         this.beforeOpt();
+        // 启动支付宝
+        deviceService.launch("支付宝");
         // 遍历账号
         for (let i = 0; i < accountList.length; i++) {
-            // 启动支付宝
-            deviceService.launch("支付宝");
             // 账号切换
             aliPayService.switchAccount(accountList[i].userAccount);
             // 切回Zepp Life
@@ -587,10 +587,15 @@ module.exports = {
             deviceService.combinedClickText("首页", 2000);
             // 下拉刷新同步
             deviceService.swipeDown(device.height);
+            sleep(5000);
             // 下拉刷新同步
             deviceService.swipeDown(device.height);
+            sleep(5000);
             // 下拉刷新同步
             deviceService.swipeDown(device.height);
+            sleep(5000);
+            // 启动支付宝
+            deviceService.launch("支付宝");
         }
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
