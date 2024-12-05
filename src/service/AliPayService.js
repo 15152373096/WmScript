@@ -130,9 +130,7 @@ module.exports = {
         // 刷新滑块
         deviceService.clickDIP("android.widget.TextView", 13, 0, 1000)
         log("===== 开始滑动 START =====");
-        let slideBounds = className("android.widget.Button").text("滑块").exists() ?
-            className("android.widget.Button").text("滑块").findOne().bounds()
-            : className("android.widget.TextView").text("滑块").findOne().bounds();
+        let slideBounds = className("android.widget.Button").text("滑块").exists() ? className("android.widget.Button").text("滑块").findOne().bounds() : className("android.widget.TextView").text("滑块").findOne().bounds();
         // 最左边X坐标
         let xLeft = slideBounds.centerX();
         let bounds = className("android.widget.TextView").text("向右滑动验证").findOne().bounds();
@@ -786,7 +784,7 @@ module.exports = {
         while (!deviceService.imageExist(imagePath.chickenFodder) && count < 20) {
             // 点击小鸡饲料
             this.clickChickenFodder();
-            count ++;
+            count++;
         }
         // 零食吃完，吃饲料
         this.clickChickenFodder();
@@ -893,11 +891,11 @@ module.exports = {
         // 领取肥料
         deviceService.clickRate(1265 / 1440, 2325 / 3200, 800);
         // 通知申请、关闭明日可领取、通知申请
-        deviceService.comboTextClick(["取消", "关闭","取消"], 2000);
+        deviceService.comboTextClick(["取消", "关闭", "取消"], 2000);
         // 施肥
         deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
         // 好的
-        deviceService.comboTextClick(["好的", "关闭","取消"], 800);
+        deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
         // 收食材
         deviceService.clickRate(175 / 1440, 1960 / 3200, 3600);
         if (className("android.widget.Button").text("去小鸡厨房").exists()) {
@@ -1109,6 +1107,10 @@ module.exports = {
             // 如果找完了，返回森林
             if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("返回蚂蚁森林 >").exists()) {
                 deviceService.clickDIP("android.view.View", 14, 9, 1000);
+                while (text("兑换并铺设").exists()) {
+                    deviceService.combinedClickText("兑换并铺设", 1000);
+                    deviceService.clickDIP("android.widget.TextView", 20, 10, 1000);
+                }
                 finishFlag = true;
             }
         }
@@ -1340,7 +1342,7 @@ module.exports = {
         // 去捐步
         if (text("捐步做公益").exists()) {
             deviceService.combinedClickText("捐步做公益", 1000);
-            text("今日步数").waitFor();
+            text("大家都在捐").waitFor();
             sleep(1000);
             deviceService.combinedClickText("立即捐步", 1000);
             deviceService.combinedClickText("知道了", 1000);
@@ -1356,13 +1358,7 @@ module.exports = {
      */
     collectTreasure: function () {
         log("------收集宝箱 start------");
-        let treasureArray = [
-            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasure.png"),
-            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasureC.png"),
-            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasure.png"),
-            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasureC.png"),
-            images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-greenTreasure.png")
-        ];
+        let treasureArray = [images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasure.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasureC.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasure.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasureC.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-greenTreasure.png")];
         while (!this.finishCollect(treasureArray)) {
             for (let i = 0; i < treasureArray.length; i++) {
                 deviceService.clickImage(treasureArray[i], 3000);
