@@ -241,7 +241,8 @@ module.exports = {
      */
     loopEnergyRain: function (count) {
         // 切换账号
-        aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
+        let currentAccount = accountList[count % accountList.length];
+        aliPayService.switchAccount(currentAccount.userAccount);
         // 打开蚂蚁森林
         aliPayService.launchSubApp("蚂蚁森林");
         // 关闭弹框
@@ -256,7 +257,9 @@ module.exports = {
             deviceService.clickNearBy("玩一场能量雨", "去赠送", 10000);
             deviceService.clickNearBy("玩一场能量雨", "去看看", 10000);
             // 收能量
-            this.takeEnergyRain(accountList[(count + 1) % accountList.length].userName, false);
+            let nextUsername = accountList[(count + 1) % accountList.length].userName;
+            let giveChanceUser = currentAccount.giveChanceUser;
+            this.takeEnergyRain(nextUsername, giveChanceUser, false);
             // 回到森林
             back();
             sleep(800);
@@ -298,7 +301,22 @@ module.exports = {
     /**
      * 收集能量雨
      */
-    takeEnergyRain: function (nextUsername, vibrateSwitchOff) {
+    takeEnergyRain: function (nextUsername, giveChanceUser, vibrateSwitchOff) {
+        if (text("送TA机会").exists()) {
+            // 只有一个账号
+            if (accountList.length == 1) {
+                deviceService.combinedClickText("送TA机会", 800);
+                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+            } else if (text(giveChanceUser).exists()) {
+                deviceService.clickNearBy(giveChanceUser, "送TA机会", 800);
+                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+            } else {
+                deviceService.combinedClickText("更多好友", 2500);
+                deviceService.clickBrotherIndex(giveChanceUser, 1, 500);
+                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+            }
+            return;
+        }
         if (text("能量拯救日榜").exists() || text("今日累计获取").exists()) {
             toastLog("已收能量，跳过任务");
             return;
@@ -320,31 +338,33 @@ module.exports = {
             text("开启能量拯救之旅").findOne().click();
             sleep(3000);
         }
+        let count = 0;
         while (true) {
             for (let i = 1; i < 8; i++) {
                 press(deviceWidth / 8 * i, deviceHeight / 10, 10);
             }
-            if (className("android.view.View").text("恭喜获得").exists() || className("android.widget.TextView").text("恭喜获得").exists()) {
+            count += 80;
+            if (text("恭喜获得").exists() || text("送TA机会").exists() || count > 30000) {
                 break;
             }
         }
         sleep(1800);
         if (text("再来一次").exists()) {
             deviceService.combinedClickText("再来一次", 800);
-            this.takeEnergyRain(nextUsername, true);
+            this.takeEnergyRain(nextUsername, giveChanceUser, true);
         }
         if (text("送TA机会").exists()) {
             // 只有一个账号
             if (accountList.length == 1) {
                 deviceService.combinedClickText("送TA机会", 800);
-                this.takeEnergyRain(nextUsername, true);
-            } else if (text(nextUsername).exists()) {
-                deviceService.clickNearBy(nextUsername, "送TA机会", 800);
-                this.takeEnergyRain(nextUsername, true);
+                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+            } else if (text(giveChanceUser).exists()) {
+                deviceService.clickNearBy(giveChanceUser, "送TA机会", 800);
+                this.takeEnergyRain(nextUsername, giveChanceUser, true);
             } else {
                 deviceService.combinedClickText("更多好友", 2500);
-                deviceService.clickBrotherIndex(nextUsername, 1, 500);
-                this.takeEnergyRain(nextUsername, true);
+                deviceService.clickBrotherIndex(giveChanceUser, 1, 500);
+                this.takeEnergyRain(nextUsername, giveChanceUser, true);
             }
         }
     },

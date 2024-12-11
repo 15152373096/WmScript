@@ -32,24 +32,24 @@
   },
   "accountList": [
     {
-      "userAccount": "142***@qq.com",
-      "userName": "coco"
-    },
-    {
       "userAccount": "cn_***@163.com",
-      "userName": "wm01"
+      "userName": "wm01",
+      "giveChanceUser": "wm02"
     },
     {
       "userAccount": "173******96",
-      "userName": "wm02"
+      "userName": "wm02",
+      "giveChanceUser": "wm01"
     },
     {
       "userAccount": "173***@163.com",
-      "userName": "wm03"
+      "userName": "wm03",
+      "giveChanceUser": "wm04"
     },
     {
       "userAccount": "173******35",
-      "userName": "wm04"
+      "userName": "wm04",
+      "giveChanceUser": "wm03"
     }
   ]
 }

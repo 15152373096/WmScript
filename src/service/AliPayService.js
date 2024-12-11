@@ -586,7 +586,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】冬日限定装扮来啦";
+        let lotteryName = "【抽抽乐】冬日惊喜装扮来啦";
         if (text(lotteryName).exists() && text(lotteryName).findOne().parent().findOne(text("去完成"))) {
             // 任务
             this.lotteryTask(lotteryName);

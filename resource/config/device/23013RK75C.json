@@ -33,11 +33,18 @@
   "accountList": [
     {
       "userAccount": "346***@qq.com",
-      "userName": "王明"
+      "userName": "王明",
+      "giveChanceUser": "olly"
     },
     {
       "userAccount": "383***@qq.com",
-      "userName": "olly"
+      "userName": "olly",
+      "giveChanceUser": "coco"
+    },
+    {
+      "userAccount": "142***@qq.com",
+      "userName": "coco",
+      "giveChanceUser": "王明"
     }
   ]
 }
