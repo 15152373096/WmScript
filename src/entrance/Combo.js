@@ -246,16 +246,17 @@ module.exports = {
         // 打开蚂蚁森林
         aliPayService.launchSubApp("蚂蚁森林");
         // 关闭弹框
-        deviceService.comboTextClick(["关闭", "知道了"], 1000);
+        deviceService.comboTextClick(["关闭", "关闭按钮", "知道了"], 1000);
         // 点击“奖励”
         deviceService.clickRate(585 / 1440, 2100 / 3200, 2000);
         // 签到领取活力值、知道了、立即领取、打卡
         deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
         // 可以能量雨才操作
-        if (text("玩一场能量雨").findOne()) {
-            deviceService.clickNearBy("玩一场能量雨", "去拯救", 10000);
-            deviceService.clickNearBy("玩一场能量雨", "去赠送", 10000);
-            deviceService.clickNearBy("玩一场能量雨", "去看看", 10000);
+        let rainText = "玩一场能量雨 一起拯救绿色能量吧";
+        if (text(rainText).findOne()) {
+            deviceService.clickNearBy(rainText, "去拯救", 10000);
+            deviceService.clickNearBy(rainText, "去赠送", 10000);
+            deviceService.clickNearBy(rainText, "去看看", 10000);
             // 收能量
             let nextUsername = accountList[(count + 1) % accountList.length].userName;
             let giveChanceUser = currentAccount.giveChanceUser;
@@ -330,14 +331,7 @@ module.exports = {
                 sleep(500);
             }
         }
-        if (text("立即开启").exists()) {
-            text("立即开启").findOne().click();
-            sleep(2000);
-        }
-        if (text("开启能量拯救之旅").exists()) {
-            text("开启能量拯救之旅").findOne().click();
-            sleep(3000);
-        }
+        deviceService.comboTextClick(["立即开启", "开启能量拯救之旅"], 2000);
         let count = 0;
         while (true) {
             for (let i = 1; i < 8; i++) {

@@ -28,7 +28,7 @@ module.exports = {
             deviceService.combinedClickText("首页", 2000);
         } else {
             // 设置
-            deviceService.combinedClickDesc("设置", 2000);
+            deviceService.combinedClickDesc("设置", 3500);
             // 登陆其他账号
             if (className("android.widget.TextView").text("登录其他账号").exists()) {
                 className("android.widget.TextView").text("登录其他账号").findOne().click();
@@ -404,10 +404,10 @@ module.exports = {
      */
     chickenTaoBao: function () {
         // 所有跳转淘宝任务
-        let taoBaoTaskList = ["去逛一逛淘宝芭芭农场", "去逛一逛淘宝摇现金活动", "去逛一逛淘宝视频", "去淘宝签到逛一逛"];
-        if ("on" == userConfig.chickenTask.taobaoSwitch) {
-            taoBaoTaskList.push("去逛一逛淘金币小镇");
+        if ("on" != userConfig.chickenTask.taobaoSwitch) {
+            return;
         }
+        let taoBaoTaskList = ["去逛一逛淘金币小镇", "去逛一逛淘宝芭芭农场", "去逛一逛淘宝摇现金活动", "去逛一逛淘宝视频", "去淘宝签到逛一逛"];
         // 遍历任务
         for (let i = 0; i < taoBaoTaskList.length; i++) {
             if (text(taoBaoTaskList[i]).exists() && text(taoBaoTaskList[i]).findOne().parent().findOne(text("去完成"))) {
@@ -467,21 +467,21 @@ module.exports = {
                 deviceService.clickNearBy("去鲸探喂鱼集福气", "去喂鱼", 1000);
                 text("一个小正经的池塘").waitFor();
                 sleep(2000);
-                for (let i = 5; i > 0; i--) {
-                    deviceService.combinedClickText("鱼食(" + i + "/5)", 2000);
+                for (let i = 9; i > 0; i--) {
+                    deviceService.combinedClickText("鱼食(" + i + "/6)", 2000);
                     deviceService.combinedClickText("继续喂鱼", 500);
                 }
-                for (let i = 0; i < 88; i++) {
+                for (let i = 0; i < 168; i++) {
                     deviceService.clickRate(0.5, 0.5, 200);
                 }
                 text("敲木鱼").click();
                 sleep(500);
-                for (let i = 0; i < 88; i++) {
+                for (let i = 0; i < 168; i++) {
                     deviceService.clickRate(0.5, 0.5, 200);
                 }
                 text("盘珠子").click();
                 sleep(500);
-                for (let i = 0; i < 88; i++) {
+                for (let i = 0; i < 168; i++) {
                     swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
                 }
 
@@ -501,7 +501,7 @@ module.exports = {
         for (let i = 0; i < appJumpTaskList.length; i++) {
             if (text(appJumpTaskList[i]).exists() && text(appJumpTaskList[i]).findOne().parent().findOne(text("去完成"))) {
                 log("------饲料任务-" + appJumpTaskList[i] + "------");
-                deviceService.clickNearBy(appJumpTaskList[i], "去完成", 8000);
+                deviceService.clickNearBy(appJumpTaskList[i], "去完成", 25000);
                 app.launchApp("支付宝");
                 sleep(1000);
                 back();
@@ -545,10 +545,7 @@ module.exports = {
                 } else {
                     let resultList = response.body.json();
                     for (let i = 0; i < resultList.length; i++) {
-                        if (text(resultList[i]).exists()) {
-                            text(resultList[i]).findOne().click();
-                            sleep(1000);
-                        }
+                        deviceService.combinedClickText(resultList[i], 1000);
                     }
                 }
             } catch (err) {
@@ -586,7 +583,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】冬日惊喜装扮来啦";
+        let lotteryName = "【抽抽乐】新年惊喜装扮来啦";
         if (text(lotteryName).exists() && text(lotteryName).findOne().parent().findOne(text("去完成"))) {
             // 任务
             this.lotteryTask(lotteryName);
@@ -896,16 +893,16 @@ module.exports = {
         deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
         // 好的
         deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
-        // 收食材
-        deviceService.clickRate(175 / 1440, 1960 / 3200, 3600);
-        if (className("android.widget.Button").text("去小鸡厨房").exists()) {
-            deviceService.combinedClickText("关闭", 800);
-        } else {
-            deviceService.combinedClickText("知道了", 800);
-            // 回到芭芭农场
-            back();
-            sleep(1000);
-        }
+        // // 收食材
+        // deviceService.clickRate(175 / 1440, 1960 / 3200, 3600);
+        // if (className("android.widget.Button").text("去小鸡厨房").exists()) {
+        //     deviceService.combinedClickText("关闭", 800);
+        // } else {
+        //     deviceService.combinedClickText("知道了", 800);
+        //     // 回到芭芭农场
+        //     back();
+        //     sleep(1000);
+        // }
         // 立即领奖
         deviceService.comboTextClick(["立即领奖", "立即领取", "领取", "领取", "关闭", "取消"], 2000);
         // 做任务
@@ -937,19 +934,23 @@ module.exports = {
      */
     babaFarmBrowse: function () {
         // 所有浏览任务
-        let browseTaskList = deviceService.initTaskNameList(userConfig.babaBrowseTaskList);
+        let browseTaskList = userConfig.babaBrowseTaskList;
         log("芭芭农场的浏览任务 start");
         // 遍历任务
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
                 deviceService.clickBrotherIndex(browseTaskList[i], 2, 5000);
-                if (className("android.widget.TextView").text("去浏览").exists()) {
-                    className("android.widget.TextView").text("去浏览").findOne().click();
-                    this.swipeViewTask(16000);
+                if(text("搜索后浏览立得奖励").exists()) {
+                    setText("山楂条");
+                    deviceService.combinedClickText("搜索", 3000);
                 }
                 this.swipeViewTask(18000);
                 back();
                 sleep(800);
+                if(text("搜索后浏览立得奖励").exists()) {
+                    back();
+                    sleep(800);
+                }
             }
         }
         log("芭芭农场的浏览任务 end");
@@ -1015,6 +1016,8 @@ module.exports = {
     antForestOption: function () {
         // 打开蚂蚁新村
         this.launchSubApp("蚂蚁森林");
+        // 关闭弹框
+        deviceService.comboTextClick(["关闭", "关闭按钮", "知道了"], 1000);
         let imageObj = {
             "newBook": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png"),
             "lottery": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png"),
@@ -1316,15 +1319,13 @@ module.exports = {
      */
     sportOption: function () {
         this.launchSubApp("运动");
-        // AD
-        deviceService.combinedClickText("知道了", 1000);
-        // 收运动币
-        deviceService.combinedClickText("步数", 1000);
+        deviceService.comboTextClick(["知道了", "暂不开启", "步数"], 2000);
         // 走路线
         if (text("马上走").exists()) {
             deviceService.combinedClickText("马上走", 1000);
             text("去捐赠").waitFor();
             sleep(1000);
+            deviceService.clickDIP("android.widget.Image", 15, 5, 1000);
             deviceService.combinedClickText("重新走", 5000);
             deviceService.combinedClickText("立即开走", 2000);
             deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/立即打开.png"), 2000);
@@ -1332,7 +1333,6 @@ module.exports = {
             deviceService.combinedClickText("开心收下", 2000);
             // 收集宝箱
             this.collectTreasure();
-            // deviceService.combinedClickText("可复活", 1000);
             // Go、下一关
             deviceService.clickRate(1 / 2, 93 / 100, 1000);
             deviceService.clickRate(1 / 2, 93 / 100, 3500);
@@ -1395,10 +1395,12 @@ module.exports = {
      */
     clearForestDialog: function () {
         if (text("帮好友复活能量").exists()) {
-            deviceService.clickDIP("android.widget.Button", 16, 7, 200);
+            deviceService.clickDIP("android.widget.Button", 15, 2, 200);
         }
         // 取消误点皮肤
         deviceService.comboTextClick(["关闭", "知道了"], 100);
+        // 秒玩森林弹框
+        deviceService.clickRate(720 / 1440, 2923 / 3200, 1000);
     },
 
     /**
