@@ -623,20 +623,6 @@ module.exports = {
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + (i + 1) + "/3)", "领取", 5000);
             }
         }
-        // 数字藏品
-        if (text("立得「丹枫如火」稀有装扮 ").exists() && text("立得「丹枫如火」稀有装扮 ").findOne().parent().findOne(text("去完成"))) {
-            deviceService.clickNearBy("立得「丹枫如火」稀有装扮 ", "去完成", 8000);
-            back();
-            sleep(1000);
-            deviceService.clickNearBy("立得「丹枫如火」稀有装扮 ", "领取", 5000);
-        }
-        // 数字藏品
-        if (text("买数字藏品 立得稀有装扮 ").exists() && text("买数字藏品 立得稀有装扮 ").findOne().parent().findOne(text("去完成"))) {
-            deviceService.clickNearBy("买数字藏品 立得稀有装扮 ", "去完成", 8000);
-            back();
-            sleep(1000);
-            deviceService.clickNearBy("买数字藏品 立得稀有装扮 ", "领取", 5000);
-        }
     },
 
     /**

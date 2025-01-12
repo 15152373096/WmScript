@@ -639,7 +639,8 @@ module.exports = {
         let finish = false;
         while (!finish) {
             if (text("赠送").exists()) {
-                deviceService.comboTextClick(["赠送", "赠送"], 1000);
+                deviceService.combinedClickText("赠送", 1000);
+                deviceService.clickDIP("android.widget.Button", 16, 3, 800);
             } else {
                 finish = true;
             }

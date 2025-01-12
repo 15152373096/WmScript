@@ -1,11 +1,11 @@
 const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService");
 let aliPayService = require('/sdcard/脚本/WmScript/src/service/AliPayService.js');
 
-// takeEnergy();
-deviceService.clickDIP("android.widget.Image", 15, 5, 1000);
+takeEnergy();
+// click(device.width / 2, device.height / 100 * 55);
 
 function takeEnergy() {
-    deviceService.comboTextClick(["立即开启", "开启能量拯救之旅"], 2000);
+    deviceService.comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
     let count = 0;
     while (true) {
         for (let i = 1; i < 8; i++) {
