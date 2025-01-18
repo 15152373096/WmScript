@@ -1,8 +1,7 @@
 const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService");
-let aliPayService = require('/sdcard/脚本/WmScript/src/service/AliPayService.js');
 
 takeEnergy();
-// click(device.width / 2, device.height / 100 * 55);
+// pickUpSign();
 
 function takeEnergy() {
     deviceService.comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);

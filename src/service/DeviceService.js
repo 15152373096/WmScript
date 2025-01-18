@@ -126,6 +126,16 @@ module.exports = {
                 if (className("android.widget.Button").text("立即开始").exists()) {
                     className("android.widget.Button").text("立即开始").findOne().click();
                     allowFlag = true;
+                } else if (text("要开始使用Autox.js v6录制或投放吗？").exists() && className("android.widget.Button").text("取消").exists()) {
+                    let bounds1 = text("单个应用").findOne().bounds();
+                    click(bounds1.centerX(), bounds1.centerY());
+                    sleep(800);
+                    let bounds2 = text("整个屏幕").findOne().bounds();
+                    click(bounds2.centerX(), bounds2.centerY());
+                    sleep(800);
+                    let bounds = className("android.widget.Button").text("取消").findOne().bounds();
+                    click(bounds.centerX() + device.width * 5 / 10, bounds.centerY());
+                    allowFlag = true;
                 } else if (text("要开始使用Autox.js v6录制或投放内容吗？").exists() && className("android.widget.Button").text("取消").exists()) {
                     let bounds = className("android.widget.Button").text("取消").findOne().bounds();
                     click(bounds.centerX() + device.width * 5 / 10, bounds.centerY());

@@ -378,21 +378,24 @@ module.exports = {
         sleep(3000);
         // 还款
         deviceService.combinedClickText("转账", 3000);
+        deviceService.comboTextClick(["还款", "我知道了"], 5000);
         let count = 0;
         while (count < 5) {
-            deviceService.comboTextClick(["还款", "我知道了", "去还款"], 5000);
+            deviceService.combinedClickText("立即还", 3000);
             // 点击还款金额输入
-            click(deviceWidth / 2, deviceHeight / 24 * 7);
+            deviceService.combinedClickText("单笔最高100万元，预计实时到账", 1000);
             sleep(800);
             // 设置金额
-            deviceService.comboTextClick([".", "0", "1", "确认"], 80);
-            sleep(2000);
+            // deviceService.comboTextClick(["0",".", "0", "1", "确认"], 80);
+            deviceService.clickRate(360 / 1440, 3110 / 3200, 500);
+            deviceService.clickRate(900 / 1440, 3110 / 3200, 500);
+            deviceService.clickRate(360 / 1440, 3110 / 3200, 500);
+            deviceService.clickRate(180 / 1440, 2560 / 3200, 500);
+            deviceService.clickRate(1268 / 1440, 2925 / 3200, 2000);
             // 立即还款
-            click(deviceWidth / 2, deviceHeight / 100 * 55);
-            sleep(5000);
+            deviceService.clickRate(720 / 1440, 2975 / 3200, 5000);
             // 立即支付
-            click(deviceWidth / 2, deviceHeight / 100 * 90);
-            sleep(5000);
+            deviceService.clickRate(720 / 1440, 2975 / 3200, 5000);
             // pass
             deviceService.combinedClickText("使用密码", 1000);
             deviceService.comboTextClick(["5", "9", "4", "6", "0", "6"], 80);

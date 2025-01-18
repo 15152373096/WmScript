@@ -7,6 +7,7 @@ let imagePath = {
     "chickenReward": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-reward.png"), // 蚂蚁庄园-打赏喂食
     "chickenSleep": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep.png"), // 蚂蚁庄园-小鸡睡觉
     "chickenSleep1": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep1.png"), // 蚂蚁庄园-小鸡睡觉
+    "chickenFood": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-food.png")
 };
 // 用户配置
 let userConfig = {};
@@ -468,23 +469,28 @@ module.exports = {
                 text("一个小正经的池塘").waitFor();
                 sleep(2000);
                 for (let i = 9; i > 0; i--) {
-                    deviceService.combinedClickText("鱼食(" + i + "/6)", 2000);
+                    deviceService.combinedClickText("鱼食(" + i + "/8)", 2000);
                     deviceService.combinedClickText("继续喂鱼", 500);
                 }
                 for (let i = 0; i < 168; i++) {
                     deviceService.clickRate(0.5, 0.5, 200);
                 }
-                text("敲木鱼").click();
-                sleep(500);
+                // 敲木鱼
+                deviceService.combinedClickText("敲木鱼", 1000);
                 for (let i = 0; i < 168; i++) {
                     deviceService.clickRate(0.5, 0.5, 200);
                 }
-                text("盘珠子").click();
-                sleep(500);
+                // 盘珠子
+                deviceService.combinedClickText("盘珠子", 1000);
                 for (let i = 0; i < 168; i++) {
                     swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
                 }
-
+                // 鱼食任务
+                deviceService.combinedClickText("放生池", 1000);
+                deviceService.combinedClickText("鱼食任务", 1000);
+                for (let i = 5; i > 0; i--) {
+                    deviceService.combinedClickText("领取", 5000);
+                }
                 back();
                 sleep(2000);
             }
@@ -879,16 +885,18 @@ module.exports = {
         deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
         // 好的
         deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
-        // // 收食材
-        // deviceService.clickRate(175 / 1440, 1960 / 3200, 3600);
-        // if (className("android.widget.Button").text("去小鸡厨房").exists()) {
-        //     deviceService.combinedClickText("关闭", 800);
-        // } else {
-        //     deviceService.combinedClickText("知道了", 800);
-        //     // 回到芭芭农场
-        //     back();
-        //     sleep(1000);
-        // }
+        // 收食材
+        if (deviceService.imageExist(imagePath.chickenFood)) {
+            deviceService.clickImage(imagePath.chickenFood, 3000);
+            if (className("android.widget.Button").text("去小鸡厨房").exists()) {
+                deviceService.combinedClickText("关闭", 800);
+            } else {
+                deviceService.combinedClickText("知道了", 800);
+                // 回到芭芭农场
+                back();
+                sleep(1000);
+            }
+        }
         // 立即领奖
         deviceService.comboTextClick(["立即领奖", "立即领取", "领取", "领取", "关闭", "取消"], 2000);
         // 做任务
