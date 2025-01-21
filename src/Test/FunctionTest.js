@@ -2,6 +2,7 @@ const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService
 
 takeEnergy();
 // pickUpSign();
+// engines.stopAll();
 
 function takeEnergy() {
     deviceService.comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);

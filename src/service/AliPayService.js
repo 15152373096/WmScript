@@ -589,7 +589,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】新春惊限定扮来啦";
+        let lotteryName = "【抽抽乐】新春限定装扮来啦";
         if (text(lotteryName).exists() && text(lotteryName).findOne().parent().findOne(text("去完成"))) {
             // 任务
             this.lotteryTask(lotteryName);
@@ -934,14 +934,14 @@ module.exports = {
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
                 deviceService.clickBrotherIndex(browseTaskList[i], 2, 5000);
-                if(text("搜索后浏览立得奖励").exists()) {
+                if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
                 }
                 this.swipeViewTask(18000);
                 back();
                 sleep(800);
-                if(text("搜索后浏览立得奖励").exists()) {
+                if (text("搜索后浏览立得奖励").exists()) {
                     back();
                     sleep(800);
                 }
@@ -1120,37 +1120,32 @@ module.exports = {
     useTools: function () {
         // 背包
         deviceService.clickRate(370 / 1440, 2100 / 3200, 1000);
-        // 7点到8点，使用加速器
-        if (deviceService.laterThan(7, 0) && deviceService.earlierThan(8, 0)) {
-            if (text("限时加速器").exists()) {
-                text("限时加速器").findOne().parent().findOne(text("使用")).click();
-                sleep(1000);
-                deviceService.combinedClickText("立即使用", 800);
-                deviceService.combinedClickText("知道了", 800);
-            } else if (text("时光加速器").exists()) {
-                text("时光加速器").findOne().parent().findOne(text("使用")).click();
-                sleep(1000);
-                deviceService.combinedClickText("立即使用", 800);
-                deviceService.combinedClickText("知道了", 800);
-            }
+        // 6点到9点，使用加速器
+        if (deviceService.laterThan(6, 0) && deviceService.earlierThan(9, 0)) {
+            this.useAnyExistTool(["限时加速器", "时光加速器"]);
         }
         // 0点到1点，7点到10点。使用双击卡
-        if (deviceService.earlierThan(2, 0) || (deviceService.laterThan(7, 0) && deviceService.earlierThan(10, 0))) {
-            // 使用能量双击卡
-            if (text("限时双击卡").exists()) {
-                // 使用限时能量雨机会
-                text("限时双击卡").findOne().parent().findOne(text("使用")).click();
-                sleep(1000);
-                deviceService.combinedClickText("立即使用", 800);
-            } else if (text("能量双击卡").exists()) {
-                // 使用限时能量雨机会
-                text("能量双击卡").findOne().parent().findOne(text("使用")).click();
-                sleep(1000);
-                deviceService.combinedClickText("立即使用", 800);
-            }
+        if (deviceService.earlierThan(2, 0) || (deviceService.laterThan(7, 0) && deviceService.earlierThan(15, 0))) {
+            this.useAnyExistTool(["限时双击卡", "能量双击卡"]);
         }
         // 关闭背包
         deviceService.combinedClickText("关闭", 1600);
+    },
+
+    /**
+     * 使用存在的工具
+     * @param toolNameArray
+     */
+    useAnyExistTool: function (toolNameArray) {
+        for (let toolName of toolNameArray) {
+            if (text(toolName).exists()) {
+                // 使用限时能量雨机会
+                text(toolName).findOne().parent().findOne(text("使用")).click();
+                sleep(1000);
+                deviceService.comboTextClick(["立即使用", "知道了"], 800);
+                return;
+            }
+        }
     },
 
     /**
@@ -1191,10 +1186,13 @@ module.exports = {
             }
         } else {
             // 别人的用一键收
-            let oneTake = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/一键收.png");
-            while (deviceService.imageExist(oneTake)) {
-                deviceService.clickImage(oneTake, 800);
-            }
+            // let oneTake = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/一键收.png");
+            // while (deviceService.imageExist(oneTake)) {
+            //     deviceService.clickImage(oneTake, 800);
+            // }
+            deviceService.clickRate(720 / 1440, 1860 / 3200, 1000);
+            deviceService.clickRate(720 / 1440, 1860 / 3200, 500);
+
             // 种植礼包
             deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/gift.png"), 2000);
             deviceService.combinedClickText("知道了", 2000);
