@@ -589,7 +589,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】新年惊喜装扮来啦";
+        let lotteryName = "【抽抽乐】新春惊限定扮来啦";
         if (text(lotteryName).exists() && text(lotteryName).findOne().parent().findOne(text("去完成"))) {
             // 任务
             this.lotteryTask(lotteryName);
@@ -1266,7 +1266,7 @@ module.exports = {
         // 奖励
         deviceService.clickRate(1240 / 1440, 3000 / 3200, 2000);
         // 去看看
-        while (text("去看看").exists()) {
+        while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             // 立即领取
             deviceService.combinedClickText("去看看", 5000);
             this.swipeViewTask(18000)

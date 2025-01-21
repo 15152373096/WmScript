@@ -8,10 +8,8 @@
     "fixRunTime": [
       "02:00",
       "03:00",
-      "08:00",
-      "12:00",
-      "15:00",
-      "20:00"
+      "22:35",
+      "23:15"
     ]
   },
   "weLinkConfig": {
@@ -25,8 +23,8 @@
     ]
   },
   "mainJobConfig": {
-    "lastRunTime": "2024-11-02 21:55:00",
-    "timeInterval": 60
+    "lastRunTime": "2024-11-02 19:55:00",
+    "timeInterval": 180
   },
   "starBallJobConfig": {
     "fixRunTime": [
