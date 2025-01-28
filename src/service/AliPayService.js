@@ -63,7 +63,7 @@ module.exports = {
      */
     signIn: function () {
         // 配置不签到
-        if ("off" == userConfig.signSwitch || deviceService.laterThan(10, 0)) {
+        if ("off" == userConfig.signSwitch) {
             return;
         }
         toastLog("====== 支付宝签到 ======");
@@ -165,6 +165,9 @@ module.exports = {
      * 积分任务
      */
     scoreMission: function () {
+        if (deviceService.laterThan(12, 0)) {
+            return;
+        }
         log("===== 积分任务 START =====");
         let browseTaskList = deviceService.initTaskNameList(userConfig.signBrowseTaskList);
         for (let i = 0; i < 6; i++) {
@@ -1317,9 +1320,7 @@ module.exports = {
             deviceService.combinedClickText("马上走", 1000);
             text("去捐赠").waitFor();
             sleep(1000);
-            deviceService.clickDIP("android.widget.Image", 15, 5, 1000);
-            deviceService.combinedClickText("重新走", 5000);
-            deviceService.combinedClickText("立即开走", 2000);
+            deviceService.comboTextClick(["重新走", "可复活", "立即开走"], 4500);
             deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/立即打开.png"), 2000);
             deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/打开.png"), 2000);
             deviceService.combinedClickText("开心收下", 2000);
