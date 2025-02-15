@@ -18,6 +18,10 @@ takeEnergy();
 // //     // deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
 // }
 
+
+deviceService.clickRate(130 / 1440, 2460 / 3200, 500);
+deviceService.combinedClickText("立即使用", 500);
+
 function takeEnergy() {
     deviceService.comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
     let count = 0;

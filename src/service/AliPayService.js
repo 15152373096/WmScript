@@ -841,26 +841,6 @@ module.exports = {
     },
 
     /**
-     * 点击小鸡饲料
-     */
-    initRescueChickenImg: function () {
-        let imageObj = {};
-        imageObj["unlockBox"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/解锁盒子.png");
-        imageObj["revive"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/免费复活.png");
-        imageObj["finish"] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/营救成功.png");
-        let colorList = ["橙", "灰", "粉", "红", "黄", "紫", "绿", "蓝", "棕",]
-        let index = 0;
-        for (let color of colorList) {
-            for (let i = 0; i < 3; i++) {
-                imageObj["needScrew" + index + "_" + i] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/" + color + i + ".png");
-                imageObj["offerScrew" + index + "_" + i] = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/rescue/" + color + "螺丝" + i + ".png");
-            }
-            index++;
-        }
-        return imageObj;
-    },
-
-    /**
      * 芭芭农场操作
      */
     babaFarmOption: function () {
@@ -1062,15 +1042,12 @@ module.exports = {
         deviceService.combinedClickText("关闭", 1000);
         toastLog("====== 开始找能量 ======");
         // 标记是否偷完
-        let finishFlag = false;
         let selfFlag = true;
-        this.useTools();
-        while (!finishFlag) {
+        while (true) {
             // 取消订阅弹框
             deviceService.combinedClickText("取消", 2000);
             // 收能量
             this.energyClick(selfFlag);
-            selfFlag = false;
             // 找能量
             deviceService.clickRate(1315 / 1440, 2115 / 3200, 3000);
             // 如果找完了，返回森林
@@ -1080,44 +1057,16 @@ module.exports = {
                     deviceService.combinedClickText("兑换并铺设", 1000);
                     deviceService.clickDIP("android.widget.TextView", 20, 10, 1000);
                 }
-                finishFlag = true;
+                break;
             }
+            // 双击卡只用一次
+            if (selfFlag) {
+                deviceService.clickRate(130 / 1440, 2460 / 3200, 500);
+                deviceService.combinedClickText("立即使用", 500);
+            }
+            selfFlag = false;
         }
         toastLog("====== 结束找能量 ======");
-    },
-
-    /**
-     * 判断是否需要使用双击
-     */
-    useTools: function () {
-        // 背包
-        deviceService.clickRate(370 / 1440, 2100 / 3200, 1000);
-        // 6点到9点，使用加速器
-        if (deviceService.laterThan(6, 0) && deviceService.earlierThan(9, 0)) {
-            this.useAnyExistTool(["限时加速器", "时光加速器"]);
-        }
-        // 0点到1点，7点到10点。使用双击卡
-        if (deviceService.earlierThan(2, 0) || (deviceService.laterThan(7, 0) && deviceService.earlierThan(15, 0))) {
-            this.useAnyExistTool(["限时双击卡", "能量双击卡"]);
-        }
-        // 关闭背包
-        deviceService.combinedClickText("关闭", 1600);
-    },
-
-    /**
-     * 使用存在的工具
-     * @param toolNameArray
-     */
-    useAnyExistTool: function (toolNameArray) {
-        for (let toolName of toolNameArray) {
-            if (text(toolName).exists()) {
-                // 使用限时能量雨机会
-                text(toolName).findOne().parent().findOne(text("使用")).click();
-                sleep(1000);
-                deviceService.comboTextClick(["立即使用", "知道了"], 800);
-                return;
-            }
-        }
     },
 
     /**
@@ -1268,27 +1217,6 @@ module.exports = {
         }
         // 回到首页
         this.closeSubApp();
-    },
-
-    /**
-     * 收集宝箱是否结束
-     */
-    finishCollect: function (treasureArray) {
-        for (let i = 0; i < treasureArray.length; i++) {
-            if (deviceService.imageExist(treasureArray[i])) {
-                return false;
-            }
-        }
-        return true;
-    },
-
-    /**
-     * 关闭响应弹框
-     */
-    clearSportDialog: function () {
-        deviceService.comboTextClick(["收下运动币", "收下运动币", "收下"], 1000);
-        deviceService.clickDIP("android.widget.Image", 18, 3, 1000);
-        deviceService.clickDIP("android.widget.Image", 18, 4, 1000);
     },
 
     /**
