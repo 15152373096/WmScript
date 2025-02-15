@@ -5,7 +5,6 @@ let taoBaoService = require('../service/TaoBaoService.js');
 let wyMusicService = require('../service/WYMusicService.js');
 let pddService = require('../service/PDDService.js');
 let aDriveService = require('../service/ADriveService.js');
-let himalayanService = require('../service/HimalayanService.js');
 let chinaMobileService = require('../service/ChinaMobileService.js');
 
 // 设备参数
@@ -37,8 +36,6 @@ module.exports = {
         if (!deviceService.appExists("支付宝")) {
             return;
         }
-        // 允许截图
-        deviceService.allowScreenCapture();
         // 启动支付宝
         deviceService.launch("支付宝");
         // 遍历账号
@@ -149,90 +146,11 @@ module.exports = {
     energyRainJob: function () {
         log("======energyRainJob start======");
         this.beforeOpt();
-        // 允许截图
-        deviceService.allowScreenCapture();
         // 启动支付宝
         deviceService.launch("支付宝");
         // 收集能量雨
         this.loopEnergyRain(0);
         log("======energyRainJob end======");
-    },
-
-    /**
-     * 星星球任务
-     */
-    rescueChicken: function () {
-        log("======starBallJob start======");
-        this.beforeOpt();
-        // 允许截图
-        deviceService.allowScreenCapture();
-        // 启动支付宝
-        deviceService.launch("支付宝");
-        // 加载图片
-        let imageObj = aliPayService.initRescueChickenImg();
-        // 打排球
-        this.rescueChickenMission(0, imageObj);
-        log("======starBallJob end======");
-    },
-
-    /**
-     * 营救小鸡
-     */
-    rescueChickenMission: function (count, imageObj) {
-        // 切换账号
-        aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
-        // 打开蚂蚁庄园
-        aliPayService.launchSubApp("蚂蚁庄园");
-        // 广告
-        deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
-        deviceService.comboTextClick(["立即领取", "去收取"], 2000);
-        log("营救小鸡");
-        // 运动会
-        deviceService.clickRate(1300 / 1440, 1100 / 3200, 3000);
-        // 营救小鸡
-        deviceService.combinedClickText("营救小鸡", 8000);
-        // 消除营救
-        deviceService.clickRate(720 / 1440, 2600 / 3200, 8000);
-        // 解锁盒子
-        for (let i = 0; i < 2; i++) {
-            deviceService.clickImage(imageObj.unlockBox, 500);
-            aliPayService.swipeViewTask(35000);
-            deviceService.clickRate(1295 / 1440, 230 / 3200, 1000);
-        }
-        for (let i = 0; i < 4500; i++) {
-            let index = i % 9;
-            for (let j = 0; j < 3; j++) {
-                if (deviceService.imageExist(imageObj["needScrew" + index + "_" + j])) {
-                    for (let k = 0; k < 3; k++) {
-                        deviceService.clickAreaImage(imageObj["offerScrew" + index + "_" + k], 0, 910, 200);
-                    }
-                }
-            }
-            // 广告复活
-            if (deviceService.imageExist(imageObj.revive)) {
-                deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
-                aliPayService.swipeViewTask(35000)
-                deviceService.clickRate(1295 / 1440, 230 / 3200, 100);
-            }
-            // 结束跳出
-            if (deviceService.imageExist(imageObj.finish)) {
-                break;
-            }
-        }
-        // 回到小鸡
-        aliPayService.closeSubApp();
-        // 回到首页
-        aliPayService.closeSubApp();
-        // 计数
-        count++;
-        if (count < accountList.length) {
-            this.rescueChickenMission(count, imageObj);
-        } else {
-            // 复原账号
-            aliPayService.switchAccount(accountList[0].userAccount);
-            this.afterOpt();
-        }
-        log("======rescueChicken end======");
     },
 
 
@@ -721,7 +639,7 @@ module.exports = {
             // 种植
             for (let i = 0; i < 3; i++) {
                 // 种麦子
-                aliPayService.clickCoord("plantWheat");
+                aliPayService.clickCoordinates("plantWheat");
                 // 确认
                 deviceService.combinedClickText("确认", 2800);
             }

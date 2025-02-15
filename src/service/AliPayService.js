@@ -1,14 +1,6 @@
 // 加载设备操作公共方法
 let deviceService = require('./DeviceService.js');
 
-// 图片路径
-let imagePath = {
-    "chickenFodder": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-fodder.png"), // 蚂蚁庄园-喂食饲料
-    "chickenReward": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-reward.png"), // 蚂蚁庄园-打赏喂食
-    "chickenSleep": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep.png"), // 蚂蚁庄园-小鸡睡觉
-    "chickenSleep1": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-sleep1.png"), // 蚂蚁庄园-小鸡睡觉
-    "chickenFood": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/chicken/chicken-food.png")
-};
 // 用户配置
 let userConfig = {};
 
@@ -239,7 +231,7 @@ module.exports = {
         // 收取赠送麦子
         deviceService.comboTextClick(["去收取", "立即领取"], 800);
         // 打赏喂食
-        deviceService.clickImage(imagePath.chickenReward, 1000);
+        deviceService.clickRate(520 / 1440, 2460 / 3200, 800);
         // 睡觉广告
         deviceService.clickRate(55 / 1440, 2385 / 3200, 800);
         // 收鸡蛋
@@ -322,7 +314,7 @@ module.exports = {
     chickenTask: function () {
         log("------蚂蚁庄园-饲料任务------");
         // 领饲料
-        this.clickCoord("collarFeed");
+        this.clickCoordinates("collarFeed");
         // 庄园小课堂
         this.chickenQuestion();
         // 雇佣小鸡
@@ -479,12 +471,12 @@ module.exports = {
                     deviceService.clickRate(0.5, 0.5, 200);
                 }
                 // 敲木鱼
-                deviceService.combinedClickText("敲木鱼", 1000);
+                deviceService.combinedClickText("敲一敲", 1000);
                 for (let i = 0; i < 168; i++) {
                     deviceService.clickRate(0.5, 0.5, 200);
                 }
                 // 盘珠子
-                deviceService.combinedClickText("盘珠子", 1000);
+                deviceService.combinedClickText("盘一盘", 1000);
                 for (let i = 0; i < 168; i++) {
                     swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
                 }
@@ -517,7 +509,7 @@ module.exports = {
                 sleep(800);
                 if (!text(appJumpTaskList[i]).exists()) {
                     // 领饲料
-                    this.clickCoord("collarFeed");
+                    this.clickCoordinates("collarFeed");
                 }
             }
         }
@@ -592,7 +584,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】新春限定装扮来啦";
+        let lotteryName = "【抽抽乐】甜蜜限定装扮来啦";
         if (text(lotteryName).exists() && text(lotteryName).findOne().parent().findOne(text("去完成"))) {
             // 任务
             this.lotteryTask(lotteryName);
@@ -696,7 +688,7 @@ module.exports = {
             // 关闭小鸡乐园
             deviceService.combinedClickText("关闭", 1000);
             // 领饲料
-            this.clickCoord("collarFeed");
+            this.clickCoordinates("collarFeed");
         }
     },
 
@@ -707,6 +699,17 @@ module.exports = {
         if (text("小鸡厨房").exists() && text("小鸡厨房").findOne().parent().findOne(text("去完成"))) {
             log("------饲料任务-小鸡厨房------");
             deviceService.clickNearBy("小鸡厨房", "去完成", 3500);
+            for (let i = 0; i < 2; i++) {
+                // 施肥食材
+                deviceService.clickRate(420 / 1440, 720 / 3200, 5000);
+                if (text("任务列表").exists()) {
+                    // 施肥
+                    deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
+                    // 返回
+                    back();
+                    sleep(1000)
+                }
+            }
             // 厨房垃圾
             deviceService.clickRate(1245 / 1440, 1280 / 3200, 2800);
             // 关闭弹窗
@@ -767,19 +770,13 @@ module.exports = {
      * 喂食小鸡
      */
     feedChicken: function () {
-        // 如果小鸡睡觉了，不喂食
-        if (deviceService.imageExist(imagePath.chickenSleep) || deviceService.imageExist(imagePath.chickenSleep1)) {
-            return;
-        }
         let count = 0;
         // 如果是其他零食，没有显示鸡饲料，或者超过20次
-        while (!deviceService.imageExist(imagePath.chickenFodder) && count < 20) {
+        while (count < 10) {
             // 点击小鸡饲料
             this.clickChickenFodder();
             count++;
         }
-        // 零食吃完，吃饲料
-        this.clickChickenFodder();
     },
 
     /**
@@ -833,7 +830,7 @@ module.exports = {
         // 点击好友
         deviceService.combinedClickText(friendName, 5000);
         // 种麦子
-        this.clickCoord("plantWheat");
+        this.clickCoordinates("plantWheat");
         // 确认
         deviceService.combinedClickText("确认", 2800);
         // 回到好友
@@ -888,18 +885,6 @@ module.exports = {
         deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
         // 好的
         deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
-        // 收食材
-        if (deviceService.imageExist(imagePath.chickenFood)) {
-            deviceService.clickImage(imagePath.chickenFood, 3000);
-            if (className("android.widget.Button").text("去小鸡厨房").exists()) {
-                deviceService.combinedClickText("关闭", 800);
-            } else {
-                deviceService.combinedClickText("知道了", 800);
-                // 回到芭芭农场
-                back();
-                sleep(1000);
-            }
-        }
         // 立即领奖
         deviceService.comboTextClick(["立即领奖", "立即领取", "领取", "领取", "关闭", "取消"], 2000);
         // 做任务
@@ -985,20 +970,20 @@ module.exports = {
             sleep(1800);
             deviceService.comboTextClick(["请走TA", "请走TA"], 1000);
             // 关闭弹框
-            this.clickCoord("closeVillageDialog");
+            this.clickCoordinates("closeVillageDialog");
             // 请走TA
             click(270, 2310);
             sleep(1800);
             deviceService.comboTextClick(["请走TA", "请走TA"], 1000);
             // 关闭弹框
-            this.clickCoord("closeVillageDialog");
+            this.clickCoordinates("closeVillageDialog");
         }
         // 摆摊
         deviceService.clickRate(1195 / 1440, 2967 / 3200, 1800);
         // 全部收摊、确认收摊、随机摆摊、我知道了
         deviceService.comboTextClick(["全部收摊", "确认收摊", "随机摆摊", "返回新村"], 1800);
         // 关闭弹框
-        this.clickCoord("closeVillageDialog");
+        this.clickCoordinates("closeVillageDialog");
         // 加速产币
         deviceService.clickRate(720 / 1440, 2960 / 3200, 1000);
         // 可以领取农民就领取
@@ -1015,36 +1000,20 @@ module.exports = {
         this.launchSubApp("蚂蚁森林");
         // 关闭弹框
         deviceService.comboTextClick(["关闭", "关闭按钮", "知道了"], 1000);
-        let imageObj = {
-            "newBook": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/开启新图鉴.png"),
-            "lottery": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/抽取物种卡.png"),
-            "gift": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/赠送能量.png"),
-            "revive": images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/已复活.png")
-        };
-
-        // 开启新图鉴
-        if (deviceService.imageExist(imageObj.newBook)) {
-            deviceService.clickImage(imageObj.newBook, 3000);
-            back();
-            sleep(1000);
-        }
-        // 抽取物种卡
-        if (deviceService.imageExist(imageObj.lottery)) {
-            deviceService.clickImage(imageObj.lottery, 3000);
-            back();
-            sleep(1000);
-        }
-        // 赠送能量
-        while (deviceService.imageExist(imageObj.gift)) {
-            deviceService.clickImage(imageObj.gift, 800);
+        // 开启新图鉴/抽取物种卡
+        deviceService.clickRate(955 / 1440, 1900 / 3200, 3000);
+        back();
+        sleep(1000);
+        // 收取赠送能量
+        for (let i = 0; i < 15; i++) {
+            deviceService.clickRate(360 / 1440, 680 / 3200, 500);
         }
         if ("on" == userConfig.antForestTask.takeEnergySwitch) {
             // 主账号收能量
             this.takeEnergy();
         } else {
-            // deviceService.clickRate(85 / 100, 24 / 100, 100);
             // 小号接受复活能量
-            deviceService.clickImage(imageObj.revive, 3000);
+            deviceService.clickRate(360 / 1440, 680 / 3200, 500);
             // 立即收取
             deviceService.combinedClickText("立即收取", 1000);
         }
@@ -1075,7 +1044,7 @@ module.exports = {
             deviceService.combinedClickText("浇水送祝福", 4500);
         }
         // 种植礼包
-        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/gift.png"), 2000);
+        deviceService.clickRate(360 / 1440, 680 / 3200, 2000);
         deviceService.combinedClickText("知道了", 2000);
         // 回退到排行榜
         back();
@@ -1157,83 +1126,28 @@ module.exports = {
     energyClick: function (selfFlag) {
         // 自己不能一键收，点击收取
         if (selfFlag) {
-            // 巡护动物能量
-            press(320, 1665, 10);
-            sleep(100);
-            this.clearForestDialog();
-            for (let i = 0; i < 2; i++) {
-                // 左下
-                press(260, 964, 10);
-                sleep(100);
-                this.clearForestDialog();
-                // 右下
-                press(1180, 964, 10);
-                sleep(100);
-                this.clearForestDialog();
-                // 左中
-                press(444, 864, 10);
-                sleep(100);
-                this.clearForestDialog();
-                // 右中
-                press(996, 864, 10);
-                sleep(100);
-                this.clearForestDialog();
-                // 左上
-                press(628, 764, 10);
-                sleep(100);
-                this.clearForestDialog();
-                // 右上
-                press(812, 764, 10);
-                sleep(100);
+            let cordArray = [
+                [320, 1665],
+                [260, 964],
+                [1180, 964],
+                [444, 864],
+                [996, 864],
+                [628, 764],
+                [812, 764],
+            ];
+            for (let cord of cordArray) {
+                deviceService.clickRate(cord[0] / 1440, cord[1] / 3200, 200);
                 this.clearForestDialog();
             }
         } else {
             // 别人的用一键收
-            // let oneTake = images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/一键收.png");
-            // while (deviceService.imageExist(oneTake)) {
-            //     deviceService.clickImage(oneTake, 800);
-            // }
             deviceService.clickRate(720 / 1440, 1860 / 3200, 1000);
             deviceService.clickRate(720 / 1440, 1860 / 3200, 500);
 
             // 种植礼包
-            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/forest/gift.png"), 2000);
+            deviceService.clickRate(360 / 1440, 680 / 3200, 2000);
             deviceService.combinedClickText("知道了", 2000);
-            // 周一，14点前不帮别人激活
-            let now = new Date();
-            if (1 == now.getDay() && deviceService.earlierThan(14, 0) && !this.isSubAccount()) {
-                return;
-            }
-            // 8:00 -22:00 才能复活能量
-            if (deviceService.laterThan(22, 0) || deviceService.earlierThan(8, 0)) {
-                return;
-            }
-            // 补充点1
-            press(720, 580, 10);
-            sleep(800);
-            this.clearForestDialog();
-            // 补充点2
-            press(536, 580, 10);
-            sleep(800);
-            this.clearForestDialog();
-            // 补充点3
-            press(352, 580, 10);
-            sleep(800);
-            this.clearForestDialog();
         }
-    },
-
-    /**
-     * 判断是否是小号
-     */
-    isSubAccount: function () {
-        let subAccountList = ["olly", "coco", "wm01", "wm02", "wm03", "wm04"];
-        for (let i = 0; i < subAccountList.length; i++) {
-            if (text(subAccountList[i] + "的蚂蚁森林").exists()) {
-                return true;
-            }
-        }
-        return false;
     },
 
     /**
@@ -1244,7 +1158,7 @@ module.exports = {
         // 知道了
         deviceService.combinedClickText("知道了", 2000);
         // 收垃圾
-        this.clickCoord("takeGarbage");
+        this.clickCoordinates("takeGarbage");
         // 清理弹框
         this.clearSeaDialog();
         // 回到我的海洋
@@ -1260,17 +1174,29 @@ module.exports = {
                 break;
             }
             // 收垃圾
-            this.clickCoord("takeGarbage");
+            this.clickCoordinates("takeGarbage");
             // 清理弹框
             this.clearSeaDialog();
         }
         // 奖励
         deviceService.clickRate(1240 / 1440, 3000 / 3200, 2000);
         // 去看看
+        while (text("去答题").exists()) {
+            // 去答题
+            deviceService.combinedClickText("去答题", 5000);
+            // 选答案
+            deviceService.clickDIP("android.widget.TextView", 18, 0, 500);
+            back();
+            sleep(1000);
+        }
+        // 去看看
         while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             // 立即领取
             deviceService.combinedClickText("去看看", 5000);
-            this.swipeViewTask(18000)
+            // 如果是随机游戏任务，进入游戏中心要点击一个任务
+            deviceService.combinedClickText("角色扮演", 5000);
+            this.swipeViewTask(30000)
+            this.closeSubApp();
             back();
             sleep(1000);
         }
@@ -1320,16 +1246,14 @@ module.exports = {
             deviceService.combinedClickText("马上走", 1000);
             text("去捐赠").waitFor();
             sleep(1000);
-            deviceService.comboTextClick(["重新走", "可复活", "立即开走"], 4500);
-            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/立即打开.png"), 2000);
-            deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/打开.png"), 2000);
+            deviceService.clickRate(1350 / 1440, 2220 / 3200, 2000);
             deviceService.combinedClickText("开心收下", 2000);
-            // 收集宝箱
-            this.collectTreasure();
             // Go、下一关
             deviceService.clickRate(1 / 2, 93 / 100, 1000);
             deviceService.clickRate(1 / 2, 93 / 100, 3500);
-            deviceService.combinedClickText("留下", 1000);
+            // 立即打开
+            deviceService.clickRate(720 / 1440, 2220 / 3200, 2000);
+            deviceService.clickRate(720 / 1440, 2220 / 3200, 2000);
             this.closeSubApp();
         }
         // 去捐步
@@ -1344,21 +1268,6 @@ module.exports = {
         }
         // 回到首页
         this.closeSubApp();
-    },
-
-    /**
-     * 收集宝箱
-     */
-    collectTreasure: function () {
-        log("------收集宝箱 start------");
-        let treasureArray = [images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasure.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-purpleTreasureC.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasure.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-yellowTreasureC.png"), images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/sport/sport-greenTreasure.png")];
-        while (!this.finishCollect(treasureArray)) {
-            for (let i = 0; i < treasureArray.length; i++) {
-                deviceService.clickImage(treasureArray[i], 3000);
-                this.clearSportDialog();
-            }
-        }
-        log("------收集宝箱 end------");
     },
 
     /**
@@ -1392,15 +1301,13 @@ module.exports = {
         }
         // 取消误点皮肤
         deviceService.comboTextClick(["关闭", "知道了"], 100);
-        // 秒玩森林弹框
-        deviceService.clickRate(720 / 1440, 2923 / 3200, 1000);
     },
 
     /**
      * 坐标点击收敛
      * @param desc
      */
-    clickCoord: function (desc) {
+    clickCoordinates: function (desc) {
         switch (desc) {
             // 蚂蚁庄园-领饲料
             case "collarFeed":

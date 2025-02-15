@@ -16,7 +16,7 @@ ui.layout(
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="拯救小鸡" id="rescueChickenTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="待补充任务" id="rescueChickenTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
             </horizontal>
             <horizontal>
@@ -78,7 +78,7 @@ ui.fafaTask.click(function () {
 });
 ui.rescueChickenTask.click(function () {
     threads.start(function () {
-        combo.rescueChicken();
+        log("cancel");
     });
 });
 ui.syncStepTask.click(function () {
