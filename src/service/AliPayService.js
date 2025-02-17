@@ -228,6 +228,8 @@ module.exports = {
         sleep(5000);
         // 广告
         deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
+        // 添加蚂蚁组件广告
+        deviceService.clickRate(1335 / 1440, 1535 / 3200, 500);
         // 收取赠送麦子
         deviceService.comboTextClick(["去收取", "立即领取"], 800);
         // 打赏喂食
@@ -1095,7 +1097,7 @@ module.exports = {
 
             // 种植礼包
             deviceService.clickRate(360 / 1440, 680 / 3200, 2000);
-            deviceService.combinedClickText("知道了", 2000);
+            this.clearForestDialog();
         }
     },
 
@@ -1190,8 +1192,8 @@ module.exports = {
     sportOption: function () {
         this.launchSubApp("运动");
         deviceService.comboTextClick(["知道了", "暂不开启", "步数"], 2000);
-        // 走路线
-        if (text("马上走").exists()) {
+        // 下午5点25前，不走路线
+        if (text("马上走").exists() && deviceService.laterThan(17, 25)) {
             deviceService.combinedClickText("马上走", 1000);
             text("去捐赠").waitFor();
             sleep(1000);

@@ -657,8 +657,6 @@ module.exports = {
     allSignJob: function () {
         log("======allSignJob start======");
         this.beforeOpt();
-        // 允许截图
-        deviceService.allowScreenCapture();
         // 拼多多签到
         pddService.signIn();
         // 中国移动签到
@@ -722,8 +720,7 @@ module.exports = {
         // 时间
         sleep(3000);
         deviceService.combinedClickDesc("88VIP", 5000);
-        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢.png"), 3000);
-        deviceService.clickImage(images.read("/sdcard/脚本/WmScript/resource/image/" + device.model + "/aliCombo/taobao/立即抢茅台.png"), 3000);
+        deviceService.clickRate(880 / 1440, 1275 / 3200, 3000);
     },
 
     /**
