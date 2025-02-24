@@ -79,7 +79,8 @@ module.exports = {
         // 运动会
         deviceService.clickRate(1300 / 1440, 1100 / 3200, 3000);
         // 星星球
-        deviceService.combinedClickText("星星球", 2000);
+        deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 马上玩", 2000);
+        deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 继续玩", 2000);
         // 等待页面加载
         desc("返回").waitFor();
         sleep(3000);
