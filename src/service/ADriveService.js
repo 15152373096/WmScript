@@ -9,11 +9,10 @@ module.exports = {
         if (!deviceService.appExists("阿里云盘")) {
             return;
         }
-        // 启动淘宝
+        toastLog("阿里云盘签到");
         deviceService.launch("阿里云盘");
         text("我的").waitFor();
         sleep(1000);
-        toastLog("阿里云盘签到");
         // 签到
         deviceService.combinedClickText("领取", 1000);
     }
