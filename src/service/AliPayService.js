@@ -357,6 +357,9 @@ module.exports = {
         for (let i = 30; i <= 720; i += 30) {
             fodderList.unshift("x" + i +"g 领取" + i +"克饲料");
         }
+        for (let i = 1; i <= 12; i++) {
+            browseTaskList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 领取90克饲料");
+        }
         for (let fodder of fodderList) {
             deviceService.combinedClickText(fodder, 1800);
             // 满了就跳出
@@ -418,6 +421,9 @@ module.exports = {
     chickenBrowse: function () {
         // 所有浏览任务
         let browseTaskList = userConfig.chickenBrowseTaskList;
+        for (let i = 1; i <= 12; i++) {
+            browseTaskList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 去完成");
+        }
         // 遍历任务
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
