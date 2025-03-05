@@ -358,7 +358,7 @@ module.exports = {
             fodderList.unshift("x" + i +"g 领取" + i +"克饲料");
         }
         for (let i = 1; i <= 12; i++) {
-            browseTaskList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 领取90克饲料");
+            fodderList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 领取90克饲料");
         }
         for (let fodder of fodderList) {
             deviceService.combinedClickText(fodder, 1800);
@@ -679,6 +679,10 @@ module.exports = {
             log("------饲料任务-小鸡厨房------");
             deviceService.combinedClickText(cookTask, 3500);
             for (let i = 0; i < 2; i++) {
+                // 没有开通芭芭农场，不收集农场食材
+                if ("off" == userConfig.babaFarmSwitch) {
+                    break;
+                }
                 // 施肥食材
                 deviceService.clickRate(420 / 1440, 720 / 3200, 5000);
                 if (text("任务列表").exists()) {
