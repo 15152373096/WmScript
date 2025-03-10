@@ -12,10 +12,10 @@ takeEnergy();
 
 // while(true) {
 //     // 打鼓
-//     deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
+//     // deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
 
-// //     // 宣传
-// //     // deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
+//     // 宣传
+//     // deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
 // }
 
 function takeEnergy() {

@@ -304,7 +304,10 @@ module.exports = {
         deviceService.combinedClickText(toolType, 2800);
         // 使用道具
         deviceService.clickNearBy(toolName, useName, 2800);
-        deviceService.combinedClickText("立即加速", 2800);
+        // 立即加速
+        for (let i = 20; i > 0; i--) {
+            deviceService.combinedClickText("还有" + i + "张 立即加速", 2800);
+        }
         deviceService.clickDIP("android.widget.TextView", 18, 4, 1000);
         // 使用-未使用道具场景、确认-已使用道具场景、知道了、已使用加速卡时，补充关闭
         deviceService.comboTextClick(["使用", "确认", "知道了", "关闭"], 2800);
@@ -355,7 +358,7 @@ module.exports = {
         // 满载标识
         let fodderList = userConfig.fodderList;
         for (let i = 30; i <= 720; i += 30) {
-            fodderList.unshift("x" + i +"g 领取" + i +"克饲料");
+            fodderList.unshift("x" + i + "g 领取" + i + "克饲料");
         }
         for (let i = 1; i <= 12; i++) {
             fodderList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 领取90克饲料");

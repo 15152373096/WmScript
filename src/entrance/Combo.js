@@ -114,9 +114,9 @@ module.exports = {
             let playTime = 0;
             while (true) {
                 for (let i = 1; i < 8; i++) {
-                    press(deviceWidth / 8 * i, deviceHeight / 10 * 4, 30);
+                    press(deviceWidth / 8 * i, deviceHeight / 10 * 4, 20);
                 }
-                playTime += 240;
+                playTime += 160;
                 if (playTime > 98000) {
                     toast("停止打排球");
                     break;
@@ -336,73 +336,6 @@ module.exports = {
         sleep(800);
         this.afterOpt();
         log("======netBankJob end======");
-    },
-
-    /**
-     * 发发日任务
-     */
-    fafaJob: function () {
-        if ("23013RK75C" != device.model) {
-            return;
-        }
-        log("======fafaJob start======");
-        this.beforeOpt();
-        this.openFaFaRi();
-        this.FaFaBrowse();
-        log("======fafaJob end======");
-    },
-
-    /**
-     * 发发日任务
-     */
-    FaFaBrowse: function () {
-        deviceService.swipeDown(device.height / 2);
-        sleep(5000);
-        log("======FaFaBrowse start======");
-        let taskNameArray = ["逛5秒得", "去看看", "去领取", "去赚钱", "去逛逛"];
-        for (let taskName of taskNameArray) {
-            while (text(taskName).exists()) {
-                log("======" + taskName + " click======");
-                text(taskName).findOne().click();
-                sleep(9000);
-                back();
-                sleep(2000);
-                if (!text("元").exists()) {
-                    this.openFaFaRi();
-                }
-            }
-        }
-        log("======FaFaBrowse end======");
-        // 开红包
-        for (let i = 100; i > 0; i--) {
-            if (text("剩" + i + "次").exists()) {
-                deviceService.combinedClickText("剩" + i + "次", 5000);
-                deviceService.clickRate(720 / 1440, 2395 / 3200, 800);
-            }
-        }
-        deviceService.clickDIP("android.view.View", 17, 3, 3000);
-    },
-
-    /**
-     * 打开发发日
-     */
-    openFaFaRi: function () {
-        // 回主页
-        home();
-        // 清除后台任务
-        deviceService.clearBackground();
-        // 启动支付宝
-        deviceService.launch("支付宝");
-        // 切换账号
-        aliPayService.switchAccount("346***@qq.com");
-        // 打开网商银行
-        aliPayService.launchSubApp("网商银行");
-        // 打开发发日
-        deviceService.clickRate(1005 / 1440, 3100 / 3200, 1800);
-        deviceService.combinedClickText("发发日领红包", 2000);
-        text("元").waitFor();
-        log("======发发日 打开成功======")
-        sleep(3000);
     },
 
     /**
@@ -672,8 +605,6 @@ module.exports = {
         this.mtLottery();
         // 月月赚任务
         this.monthEarnJob();
-        // 发发日任务
-        this.fafaJob();
         // 芭芭农场任务
         if (deviceService.appExists("淘宝")) {
             toastLog("芭芭农场任务");
