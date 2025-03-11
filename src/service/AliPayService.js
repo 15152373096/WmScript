@@ -355,19 +355,12 @@ module.exports = {
      * 领取饲料
      */
     takeFodder: function () {
-        // 满载标识
-        let fodderList = userConfig.fodderList;
-        for (let i = 30; i <= 720; i += 30) {
-            fodderList.unshift("x" + i + "g 领取" + i + "克饲料");
-        }
-        for (let i = 1; i <= 12; i++) {
-            fodderList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 领取90克饲料");
-        }
-        for (let fodder of fodderList) {
-            deviceService.combinedClickText(fodder, 1800);
-            // 满了就跳出
-            if (this.checkFodderFull()) {
-                break;
+        // 领取饲料
+        let fodderList = ["领取30克饲料", "领取60克饲料", "领取90克饲料", "领取120克饲料", "领取180克饲料", "领取270克饲料"];
+        //  满了就跳出
+        while (!this.checkFodderFull()) {
+            for (let fodder of fodderList) {
+                deviceService.combinedClickText(fodder, 1800);
             }
         }
     },
@@ -1047,7 +1040,7 @@ module.exports = {
             // 双击卡只用一次
             if (selfFlag) {
                 deviceService.clickRate(130 / 1440, 2460 / 3200, 500);
-                deviceService.combinedClickText("立即使用", 500);
+                deviceService.combinedClickText("立即使用", 3000);
             }
             selfFlag = false;
         }
