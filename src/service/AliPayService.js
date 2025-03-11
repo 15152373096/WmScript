@@ -348,7 +348,7 @@ module.exports = {
         // 领取饲料
         this.takeFodder();
         // 关闭"领饲料"的弹框
-        deviceService.combinedClickText("关闭", 1800);
+        deviceService.combinedClickText("关闭饲料任务弹窗", 1800);
     },
 
     /**
@@ -394,7 +394,6 @@ module.exports = {
      */
     chickenTaoBao: function () {
         // 所有APP跳转任务
-        // let taoBaoTaskList = ["去逛一逛淘金币小镇", "", "去逛一逛淘宝摇现金活动", "去逛一逛淘宝视频", ""];
         let chickenTaoBaoList = userConfig.chickenTaoBaoList;
         // 遍历任务
         for (let i = 0; i < chickenTaoBaoList.length; i++) {
