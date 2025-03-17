@@ -28,9 +28,6 @@ module.exports = {
                 sleep(1800);
             } else {
                 deviceService.clickRate(720 / 1440, 2450 / 3200, 1800);
-                if (!text("管理名下账号").exists()) {
-                    deviceService.combinedClickText("登录其他账号", 1800);
-                }
             }
             // 选择账号
             deviceService.combinedClickText(account, 5000);
@@ -357,10 +354,11 @@ module.exports = {
     takeFodder: function () {
         // 领取饲料
         let fodderList = ["领取30克饲料", "领取60克饲料", "领取90克饲料", "领取120克饲料", "领取180克饲料", "领取270克饲料"];
-        //  满了就跳出
-        while (!this.checkFodderFull()) {
-            for (let fodder of fodderList) {
-                deviceService.combinedClickText(fodder, 1800);
+        for (let fodder of fodderList) {
+            deviceService.combinedClickText(fodder, 1800);
+            //  满了就跳出
+            if (this.checkFodderFull()) {
+                break;
             }
         }
     },
@@ -569,7 +567,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】甜蜜限定装扮来啦 「爱老虎油兔」开启甜蜜氛围！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
+        let lotteryName = "【抽抽乐】打工人限定来啦 「荷气生财」祝你好运连连！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
         if (text(lotteryName).exists()) {
             // 抽抽乐
             deviceService.combinedClickText(lotteryName, 2000);

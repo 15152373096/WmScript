@@ -3,20 +3,32 @@ const aliPayService = require("/sdcard/脚本/WmScript/src/service/AliPayService
 
 takeEnergy();
 // pickUpSign();
-// engines.stopAll();
+// timeTask(1);
 
-// 拍摄
-// for (let i = 1; i < 3; i++) {
-//     press(1210, 2300, 50000);
-// }
+function timeTask(type) {
+    if (1 == type) {
+        engines.stopAll();
+    }
+    // 拍摄
+    if (2 == type) {
+        for (let i = 1; i < 3; i++) {
+            press(1210, 2300, 50000);
+        }
+    }
+    // 打鼓
+    if (3 == type) {
+        for (let i = 1; i < 600; i++) {
+            deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
+        }
+    }
+    // 宣传
+    if (4 == type) {
+        for (let i = 1; i < 600; i++) {
+            deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
+        }
+    }
+}
 
-// while(true) {
-//     // 打鼓
-//     // deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
-
-//     // 宣传
-//     // deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
-// }
 
 function takeEnergy() {
     deviceService.comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
