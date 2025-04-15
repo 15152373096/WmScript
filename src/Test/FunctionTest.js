@@ -1,13 +1,16 @@
 const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService");
 const aliPayService = require("/sdcard/脚本/WmScript/src/service/AliPayService");
 
-takeEnergy();
-// pickUpSign();
-// timeTask(1);
+timeTask(1);
+
 
 function timeTask(type) {
-    if (1 == type) {
+    if (0 == type) {
         engines.stopAll();
+    }
+    // 收能量
+    if (1 == type) {
+        takeEnergy();
     }
     // 拍摄
     if (2 == type) {
@@ -15,20 +18,17 @@ function timeTask(type) {
             press(1210, 2300, 50000);
         }
     }
-    // 打鼓
-    if (3 == type) {
-        for (let i = 1; i < 600; i++) {
-            deviceService.clickRate(720 / 1440, 2100 / 3200, 100);
-        }
-    }
     // 宣传
-    if (4 == type) {
+    if (3 == type) {
         for (let i = 1; i < 600; i++) {
             deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
         }
     }
+    // 补签
+    if (4 == type) {
+        pickUpSign();
+    }
 }
-
 
 function takeEnergy() {
     deviceService.comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);

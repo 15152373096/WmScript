@@ -601,6 +601,8 @@ module.exports = {
         aDriveService.signIn();
         // 星空内网传递签到
         this.starryFrpSignIn();
+        // 网上国网签到
+        this.wsgwSignIn();
         // 88VIP抽茅台
         this.mtLottery();
         // 月月赚任务
@@ -640,6 +642,26 @@ module.exports = {
     },
 
     /**
+     * 网上国网签到
+     */
+    wsgwSignIn: function () {
+        if ("23013RK75C" != device.model) {
+            return;
+        }
+        toastLog("网上国网签到");
+        // 网上国网
+        deviceService.launch("网上国网");
+        // 时间
+        sleep(3000);
+        // 我的
+        deviceService.comboTextClick("我的", 5000);
+        deviceService.comboTextClick("做任务提升等级", 8000);
+        let bounds = className("android.widget.TextView").text("签到").findOne().bounds();
+        click(bounds.centerX() + device.width * 8 / 10, bounds.centerY());
+        deviceService.clickRate(720 / 1440, 1915 / 3200, 3000);
+    },
+
+    /**
      * 88VIP抽茅台
      */
     mtLottery: function () {
@@ -652,7 +674,8 @@ module.exports = {
         // 时间
         sleep(3000);
         deviceService.combinedClickDesc("88VIP", 5000);
-        deviceService.clickRate(880 / 1440, 1275 / 3200, 3000);
+        deviceService.clickRate(720 / 1440, 810 / 3200, 3000);
+        deviceService.clickRate(720 / 1440, 2535 / 3200, 3000);
     },
 
     /**

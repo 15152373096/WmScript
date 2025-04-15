@@ -14,12 +14,9 @@ module.exports = {
         deviceService.combinedClickText("参与比赛", 1000);
         // 点击领取
         deviceService.clickRate(1290 / 1440, 2000 / 3200, 800);
-        deviceService.combinedClickText("提醒我明天领", 1000);
-        deviceService.combinedClickText("取消订阅每日肥料提醒", 1000);
+        deviceService.comboTextClick(["提醒我明天领","取消订阅每日肥料提醒"], 1000);
         // 集肥料
-        deviceService.combinedClickText("集肥料", 1000);
-        deviceService.combinedClickText("去签到", 1000);
-        deviceService.combinedClickText("去领取", 1000);
+        deviceService.combinedClickText(["集肥料","去签到","去领取"], 1000);
         // 芭芭农场的浏览任务
         this.babaFarmBrowse();
         // 芭芭农场的跳转任务

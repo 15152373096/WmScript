@@ -307,7 +307,7 @@ module.exports = {
         }
         deviceService.clickDIP("android.widget.TextView", 18, 4, 1000);
         // 使用-未使用道具场景、确认-已使用道具场景、知道了、已使用加速卡时，补充关闭
-        deviceService.comboTextClick(["使用", "确认", "知道了", "关闭"], 2800);
+        deviceService.comboTextClick(["使用", "确认", "知道了",  "知道啦", "关闭"], 2800);
     },
 
     /**
@@ -353,7 +353,17 @@ module.exports = {
      */
     takeFodder: function () {
         // 领取饲料
-        let fodderList = ["领取30克饲料", "领取60克饲料", "领取90克饲料", "领取120克饲料", "领取180克饲料", "领取270克饲料"];
+        let fodderList = [
+            "领取30克饲料",
+            "领取60克饲料",
+            "领取90克饲料",
+            "领取90克饲料",
+            "领取90克饲料",
+            "领取120克饲料",
+            "领取180克饲料",
+            "领取180克饲料",
+            "领取180克饲料",
+            "领取270克饲料"];
         for (let fodder of fodderList) {
             deviceService.combinedClickText(fodder, 1800);
             //  满了就跳出
@@ -463,8 +473,8 @@ module.exports = {
                     swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
                 }
                 // 鱼食任务
-                deviceService.combinedClickText("放生池", 1000);
-                deviceService.combinedClickText("鱼食任务", 1000);
+                deviceService.clickRate(365 / 1440, 3045 / 3200, 2000);
+                deviceService.combinedClickText("鱼食任务", 2000);
                 for (let i = 5; i > 0; i--) {
                     deviceService.combinedClickText("领取", 5000);
                 }
@@ -522,7 +532,7 @@ module.exports = {
             text("题目来源 - 答答星球").waitFor();
             try {
                 let queryDate = deviceService.formatDate(new Date());
-                let response = http.get("http://110.40.48.222:29343/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
+                let response = http.get("https://d385-2408-823c-e18-4a0d-15e9-c353-ceda-e42.ngrok-free.app/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
                 sleep(1000);
                 if (response.statusCode != 200) {
                     log("请求失败: " + response.statusCode + " " + response.statusMessage);
@@ -547,17 +557,7 @@ module.exports = {
         let hireText = "雇佣小鸡拿饲料 在任务指定页面中雇佣小鸡可获得90g饲料，雇佣特定小鸡可获得180g饲料哦（1次/天） 去完成";
         if (text(hireText).exists()) {
             deviceService.combinedClickText(hireText, 2000);
-            if (className("android.widget.Image").depth(14).indexInParent(1).exists()) {
-                // 奖励翻倍父控件
-                let doubleReward = className("android.widget.Image").depth(14).indexInParent(1).findOne().parent();
-                // 雇佣并通知
-                if (depth(doubleReward.depth()).indexInParent(doubleReward.depth() + 2).exists()) {
-                    depth(doubleReward.depth()).indexInParent(doubleReward.depth() + 2).findOne().click();
-                }
-            } else {
-                deviceService.combinedClickText("雇佣并通知", 1000);
-            }
-            deviceService.combinedClickText("不通知TA", 1000);
+            deviceService.comboTextClick(["雇佣", "雇佣并通知", "不通知TA"], 1000);
             this.closeSubApp();
             sleep(1000);
         }
@@ -567,16 +567,22 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】打工人限定来啦 「荷气生财」祝你好运连连！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
+        let lotteryName = "国风季限定装扮来啦 「戏梦游园」邀你共赏梨园春色！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
         if (text(lotteryName).exists()) {
             // 抽抽乐
             deviceService.combinedClickText(lotteryName, 2000);
+            // 白雪公主装
+            if (text("去抽「小白雪公主装」 ").exists()) {
+                deviceService.clickNearBy("去抽「小白雪公主装」 ", "去完成", 3000);
+                // 白雪公主装任务
+                this.lotteryDisneyTask();
+            }
             // 任务
             this.lotteryTask();
             // 抽奖
             for (let i = 24; i > 0; i--) {
                 deviceService.combinedClickText("还剩" + i + "次机会", 6000);
-                deviceService.combinedClickText("知道啦", 1000);
+                deviceService.comboTextClick(["继续抽奖", "继续抽", "开心收下", "知道啦"], 1000);
             }
             // 回退到任务
             back();
@@ -585,12 +591,39 @@ module.exports = {
     },
 
     /**
+     * 抽抽乐白雪公主装任务
+     */
+    lotteryDisneyTask: function () {
+        // 每日签到
+        deviceService.comboTextClick(["领取", "领取"], 3000);
+        // 兑换饲料
+        for (let i = 0; i < 2; i++) {
+            if (text("消耗饲料换机会(" + i + "/2)").exists()) {
+                deviceService.clickBrotherIndex("消耗饲料换机会(" + i + "/2)", 2, 3000);
+                deviceService.combinedClickText("确认兑换", 5000)
+            }
+        }
+        // 逛一逛
+        for (let i = 0; i < 3; i++) {
+            if (text("去杂货铺逛一逛(" + i + "/3)").exists()) {
+                deviceService.clickBrotherIndex("去杂货铺逛一逛(" + i + "/3)", 2, 5000);
+                this.swipeViewTask(18000);
+                back();
+                sleep(1000);
+                deviceService.clickBrotherIndex("去杂货铺逛一逛(" + (i + 1) + "/3)", 2, 5000);
+            }
+        }
+        // 回退到任务
+        back();
+        sleep(1000);
+    },
+
+    /**
      * 抽抽乐任务
      */
     lotteryTask: function () {
         // 每日签到 
-        deviceService.clickNearBy("每日签到 ", "领取", 3000);
-        deviceService.clickNearBy("每日签到 ", "领取", 3000);
+        deviceService.comboTextClick(["领取", "领取"], 3000);
         // 兑换饲料
         for (let i = 0; i < 2; i++) {
             if (text("消耗饲料换机会 (" + i + "/2)").exists()) {
@@ -726,9 +759,9 @@ module.exports = {
             return;
         }
         // 点击去捐蛋
-        deviceService.clickRate(885 / 1440, 2975 / 3200, 1500);
-        text("去捐蛋").waitFor();
-        deviceService.combinedClickText("去捐蛋", 5000);
+        deviceService.clickRate(885 / 1440, 2975 / 3200, 5000);
+        // 捐蛋
+        deviceService.clickRate(1030 / 1440, 3010 / 3200, 6000);
         text("立即捐蛋").waitFor();
         deviceService.comboTextClick(["立即捐蛋", "立即捐蛋"], 8000);
         sleep(10000);
@@ -859,7 +892,7 @@ module.exports = {
         this.babaFarmBrowse();
         // 逛逛淘宝芭芭农场
         if ("on" == userConfig.babaFarmTask.gotoTBFarmSwitch) {
-            deviceService.clickBrotherIndex(" 逛逛淘宝芭芭农场 (0/1)", 2, 6000);
+            deviceService.clickBrotherIndex(" 逛逛淘宝芭芭农场 (0/1)", 1, 6000);
             app.launchApp("支付宝");
         }
         deviceService.combinedClickText("关闭", 1000);
@@ -877,7 +910,7 @@ module.exports = {
         // 遍历任务
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
-                deviceService.clickBrotherIndex(browseTaskList[i], 2, 5000);
+                deviceService.clickBrotherIndex(browseTaskList[i], 1, 5000);
                 if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
@@ -1104,7 +1137,7 @@ module.exports = {
             this.clearSeaDialog();
         }
         // 奖励
-        deviceService.clickRate(1240 / 1440, 3000 / 3200, 2000);
+        deviceService.clickRate(720 / 1440, 3000 / 3200, 2000);
         // 去看看
         while (text("去答题").exists()) {
             // 去答题
@@ -1115,7 +1148,8 @@ module.exports = {
             sleep(1000);
         }
         // 去看看
-        while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
+        let taskCount = 0;
+        while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 8) {
             // 立即领取
             deviceService.combinedClickText("去看看", 5000);
             // 如果是随机游戏任务，进入游戏中心要点击一个任务
@@ -1124,9 +1158,11 @@ module.exports = {
             this.closeSubApp();
             back();
             sleep(1000);
+            taskCount++;
         }
         // 看视频
-        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
+        taskCount = 0;
+        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 8) {
             // 立即领取
             deviceService.combinedClickText("去逛逛", 5000);
             this.swipeViewTask(18000)
@@ -1136,6 +1172,7 @@ module.exports = {
                 back();
                 sleep(1000);
             }
+            taskCount++;
         }
         while (text("立即领取").exists()) {
             // 立即领取
@@ -1165,7 +1202,7 @@ module.exports = {
      */
     sportOption: function () {
         this.launchSubApp("运动");
-        deviceService.comboTextClick(["知道了", "暂不开启", "步数"], 2000);
+        deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数"], 2000);
         // 下午5点25前，不走路线
         if (text("马上走").exists() && deviceService.laterThan(22, 25)) {
             deviceService.combinedClickText("马上走", 1000);
