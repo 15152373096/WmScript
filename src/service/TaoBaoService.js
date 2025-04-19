@@ -5,22 +5,36 @@ let deviceService = require('./DeviceService.js');
 module.exports = {
 
     /**
+     * 切换账号
+     */
+    switchAccount: function (account) {
+        deviceService.clickRate(1300 / 1440, 3100 / 3200, 3000);
+        deviceService.combinedClickDesc("设置", 3000);
+        deviceService.combinedClickDesc("切换账号", 3000);
+        deviceService.combinedClickText(account, 5000);
+        deviceService.combinedClickDesc("关闭按钮", 3000);
+    },
+
+    /**
      * 芭芭农场操作
      */
-    babaFarmOption: function () {
+    babaFarmOption: function (account) {
         deviceService.combinedClickDesc("芭芭农场", 1000);
         text("集肥料").waitFor();
         sleep(5000);
         deviceService.combinedClickText("参与比赛", 1000);
         // 点击领取
         deviceService.clickRate(1290 / 1440, 2000 / 3200, 800);
-        deviceService.comboTextClick(["提醒我明天领","取消订阅每日肥料提醒"], 1000);
         // 集肥料
-        deviceService.combinedClickText(["集肥料","去签到","去领取"], 1000);
+        deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "集肥料", "去签到"], 1000);
         // 芭芭农场的浏览任务
         this.babaFarmBrowse();
-        // 芭芭农场的跳转任务
-        this.babaFarmJump();
+        if (account == "家人留名") {
+            // 芭芭农场的跳转任务
+            this.babaFarmJump();
+        }
+        deviceService.comboTextClick(["立即领取", "立即领取"], 5000);
+        deviceService.combinedClickDesc("返回首页", 1000);
     },
 
     /**
@@ -95,7 +109,7 @@ module.exports = {
         for (let i = 0; i < jumpTaskNameList.length; i++) {
             for (let j = 1; j <= 5; j++) {
                 for (let k = 0; k < j; k++) {
-                    jumpTaskList.push(jumpTaskNameList[i] + "(" + k + "/" + j +")")
+                    jumpTaskList.push(jumpTaskNameList[i] + "(" + k + "/" + j + ")")
                 }
             }
         }

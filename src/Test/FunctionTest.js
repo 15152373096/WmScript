@@ -1,5 +1,6 @@
 const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService");
 const aliPayService = require("/sdcard/脚本/WmScript/src/service/AliPayService");
+let taoBaoService = require('/sdcard/脚本/WmScript/src/service/TaoBaoService.js');
 
 timeTask(1);
 

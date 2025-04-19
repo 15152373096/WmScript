@@ -14,6 +14,7 @@ let deviceHeight = device.height;
 // 账号列表
 let globalConfig = deviceService.getGlobalConfig()
 let accountList = globalConfig.accountList;
+let taobaoAccountList = globalConfig.taobaoAccountList;
 
 module.exports = {
 
@@ -609,13 +610,7 @@ module.exports = {
         this.monthEarnJob();
         // 芭芭农场任务
         if (deviceService.appExists("淘宝")) {
-            toastLog("芭芭农场任务");
-            // 清除后台任务
-            deviceService.clearBackground();
-            // 启动淘宝
-            deviceService.launch("淘宝");
-            // 芭芭农场任务
-            taoBaoService.babaFarmOption();
+            this.taoBaoBaBaJob();
         }
         this.afterOpt();
     },
@@ -703,11 +698,18 @@ module.exports = {
         this.beforeOpt();
         // 启动淘宝
         deviceService.launch("淘宝");
-        // 芭芭农场任务
-        taoBaoService.babaFarmOption();
+        for (let i = 0; i < taobaoAccountList.length; i++) {
+            // 广告弹框
+            deviceService.combinedClickDesc("关闭按钮", 3000);
+            // 芭芭农场任务
+            taoBaoService.babaFarmOption(taobaoAccountList[i]);
+            // 切换账号
+            taoBaoService.switchAccount(taobaoAccountList[(i + 1) % taobaoAccountList.length]);
+        }
         log("======taoBaoBaBa end======");
         this.afterOpt()
     },
+
 
     /**
      * 后置操作
