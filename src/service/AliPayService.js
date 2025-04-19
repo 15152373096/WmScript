@@ -198,7 +198,7 @@ module.exports = {
         // 蚂蚁新村任务
         this.antNewVillageOption();
         // 蚂蚁森林任务
-        this.antForestOption();
+        this.antForestOption(accountInfo.userName);
         // 神奇海洋任务
         this.magicSeaOption();
         // 运动任务
@@ -307,7 +307,7 @@ module.exports = {
         }
         deviceService.clickDIP("android.widget.TextView", 18, 4, 1000);
         // 使用-未使用道具场景、确认-已使用道具场景、知道了、已使用加速卡时，补充关闭
-        deviceService.comboTextClick(["使用", "确认", "知道了",  "知道啦", "关闭"], 2800);
+        deviceService.comboTextClick(["使用", "确认", "知道了", "知道啦", "关闭"], 2800);
     },
 
     /**
@@ -567,7 +567,7 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "国风季限定装扮来啦 「戏梦游园」邀你共赏梨园春色！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
+        let lotteryName = "【抽抽乐】国风限定装扮来啦 「戏梦游园」邀你共赏梨园春色！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
         if (text(lotteryName).exists()) {
             // 抽抽乐
             deviceService.combinedClickText(lotteryName, 2000);
@@ -984,7 +984,7 @@ module.exports = {
     /**
      * 蚂蚁森林操作
      */
-    antForestOption: function () {
+    antForestOption: function (userName) {
         // 打开蚂蚁新村
         this.launchSubApp("蚂蚁森林");
         // 关闭弹框
@@ -993,6 +993,10 @@ module.exports = {
         deviceService.clickRate(955 / 1440, 1900 / 3200, 3000);
         back();
         sleep(1000);
+        if (!text(userName).exists()) {
+            back();
+            sleep(1000);
+        }
         // 收取赠送能量
         for (let i = 0; i < 15; i++) {
             deviceService.clickRate(360 / 1440, 680 / 3200, 500);
