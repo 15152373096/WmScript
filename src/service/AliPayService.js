@@ -363,7 +363,9 @@ module.exports = {
             "领取180克饲料",
             "领取180克饲料",
             "领取180克饲料",
-            "领取270克饲料"];
+            "领取270克饲料",
+            "领取360克饲料",
+            "领取540克饲料"];
         for (let fodder of fodderList) {
             deviceService.combinedClickText(fodder, 1800);
             //  满了就跳出
