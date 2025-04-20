@@ -1,9 +1,7 @@
 const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService");
 const aliPayService = require("/sdcard/脚本/WmScript/src/service/AliPayService");
-let taoBaoService = require('/sdcard/脚本/WmScript/src/service/TaoBaoService.js');
 
 timeTask(1);
-
 
 function timeTask(type) {
     if (0 == type) {
@@ -13,21 +11,15 @@ function timeTask(type) {
     if (1 == type) {
         takeEnergy();
     }
-    // 拍摄
+    // 补签
     if (2 == type) {
-        for (let i = 1; i < 3; i++) {
-            press(1210, 2300, 50000);
-        }
+        pickUpSign();
     }
     // 宣传
     if (3 == type) {
         for (let i = 1; i < 600; i++) {
             deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
         }
-    }
-    // 补签
-    if (4 == type) {
-        pickUpSign();
     }
 }
 

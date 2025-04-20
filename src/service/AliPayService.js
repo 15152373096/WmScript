@@ -628,8 +628,8 @@ module.exports = {
         deviceService.comboTextClick(["领取", "领取"], 3000);
         // 兑换饲料
         for (let i = 0; i < 2; i++) {
-            if (text("消耗90g饲料，可换取1次机会").exists()) {
-                deviceService.clickBrotherIndex("消耗90g饲料，可换取1次机会", 1, 3000);
+            if (text("消耗饲料换机会 (" + i +"/2)").exists()) {
+                deviceService.clickNearBy("消耗饲料换机会 (" + i +"/2)", "去完成", 3000);
                 deviceService.combinedClickText("确认兑换", 5000)
             }
         }
