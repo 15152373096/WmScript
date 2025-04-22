@@ -1,5 +1,6 @@
 const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService");
 const aliPayService = require("/sdcard/脚本/WmScript/src/service/AliPayService");
+const combo = require("/sdcard/脚本/WmScript/src/entrance/Combo");
 
 timeTask(1);
 
@@ -20,6 +21,10 @@ function timeTask(type) {
         for (let i = 1; i < 600; i++) {
             deviceService.clickRate(1285 / 1440, 2750 / 3200, 500);
         }
+    }
+    // combo
+    if (4 == type) {
+        combo.mainJob();
     }
 }
 

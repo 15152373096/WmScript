@@ -46,9 +46,9 @@ module.exports = {
         }
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
-        this.afterOpt();
         // 更新运行时间
         deviceService.updateLastRunTime();
+        this.afterOpt();
         log("======mainJob end======");
     },
 

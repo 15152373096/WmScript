@@ -534,7 +534,7 @@ module.exports = {
             text("题目来源 - 答答星球").waitFor();
             try {
                 let queryDate = deviceService.formatDate(new Date());
-                let response = http.get("https://d385-2408-823c-e18-4a0d-15e9-c353-ceda-e42.ngrok-free.app/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
+                let response = http.get("https://a1fb-2408-823c-e18-71d1-c5a5-32b2-5067-ef88.ngrok-free.app/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
                 sleep(1000);
                 if (response.statusCode != 200) {
                     log("请求失败: " + response.statusCode + " " + response.statusMessage);
