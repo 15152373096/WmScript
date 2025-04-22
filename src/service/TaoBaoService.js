@@ -21,7 +21,7 @@ module.exports = {
     babaFarmOption: function (account) {
         deviceService.combinedClickDesc("芭芭农场", 1000);
         text("集肥料").waitFor();
-        sleep(5000);
+        sleep(8000);
         deviceService.combinedClickText("参与比赛", 1000);
         // 点击领取
         deviceService.clickRate(1290 / 1440, 2000 / 3200, 800);
