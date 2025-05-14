@@ -185,7 +185,7 @@ module.exports = {
             back();
             sleep(800);
             // 关闭弹框
-            deviceService.combinedClickText("关闭", 800);
+            deviceService.comboTextClick(["关闭", "关闭奖励弹窗"], 800);
             // 给主账号浇水
             if ("346***@qq.com" != accountList[count % accountList.length].userAccount) {
                 aliPayService.waterFriend("王明");

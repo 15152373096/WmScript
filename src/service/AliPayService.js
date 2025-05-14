@@ -478,7 +478,7 @@ module.exports = {
                 deviceService.clickRate(365 / 1440, 3045 / 3200, 2000);
                 deviceService.combinedClickText("鱼食任务", 2000);
                 for (let i = 5; i > 0; i--) {
-                    deviceService.combinedClickText("领取", 5000);
+                    deviceService.combinedClickText("领取", 8000);
                 }
                 back();
                 sleep(2000);
@@ -534,7 +534,7 @@ module.exports = {
             text("题目来源 - 答答星球").waitFor();
             try {
                 let queryDate = deviceService.formatDate(new Date());
-                let response = http.get("https://a1fb-2408-823c-e18-71d1-c5a5-32b2-5067-ef88.ngrok-free.app/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
+                let response = http.get("http://43.157.13.112:40254/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
                 sleep(1000);
                 if (response.statusCode != 200) {
                     log("请求失败: " + response.statusCode + " " + response.statusMessage);
@@ -569,16 +569,10 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】国风限定装扮来啦 「戏梦游园」邀你共赏梨园春色！还有更多美食道具卡哦，每日抽奖1次可得90g饲料 去完成";
+        let lotteryName = "【抽抽乐】儿童节装扮来啦 每日抽1次小鸡装扮可得90g饲料 去完成";
         if (text(lotteryName).exists()) {
             // 抽抽乐
             deviceService.combinedClickText(lotteryName, 2000);
-            // 白雪公主装
-            if (text("去抽「小白雪公主装」 ").exists()) {
-                deviceService.clickNearBy("去抽「小白雪公主装」 ", "去完成", 3000);
-                // 白雪公主装任务
-                this.lotteryDisneyTask();
-            }
             // 任务
             this.lotteryTask();
             // 抽奖
@@ -590,34 +584,6 @@ module.exports = {
             back();
             sleep(1000);
         }
-    },
-
-    /**
-     * 抽抽乐白雪公主装任务
-     */
-    lotteryDisneyTask: function () {
-        // 每日签到
-        deviceService.comboTextClick(["领取", "领取"], 3000);
-        // 兑换饲料
-        for (let i = 0; i < 2; i++) {
-            if (text("消耗90g饲料，可换取1次机会").exists()) {
-                deviceService.clickBrotherIndex("消耗90g饲料，可换取1次机会", 1, 3000);
-                deviceService.combinedClickText("确认兑换", 5000)
-            }
-        }
-        // 逛一逛
-        for (let i = 0; i < 3; i++) {
-            if (text("去杂货铺逛一逛(" + i + "/3)").exists()) {
-                deviceService.clickBrotherIndex("去杂货铺逛一逛(" + i + "/3)", 2, 5000);
-                this.swipeViewTask(18000);
-                back();
-                sleep(1000);
-                deviceService.clickBrotherIndex("去杂货铺逛一逛(" + (i + 1) + "/3)", 2, 5000);
-            }
-        }
-        // 回退到任务
-        back();
-        sleep(1000);
     },
 
     /**
@@ -877,7 +843,14 @@ module.exports = {
         // 好的
         deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
         // 立即领奖
-        deviceService.comboTextClick(["立即领奖", "立即领取", "领取", "领取", "关闭", "取消"], 2000);
+        deviceService.comboTextClick(["立即领奖", "立即领取"], 2000);
+        if (text("点此逛一逛再得1000肥料>").exists()) {
+            deviceService.combinedClickText("点此逛一逛再得1000肥料>", 2000);
+            this.swipeViewTask(18000);
+            back();
+            sleep(800);
+        }
+        deviceService.comboTextClick(["领取", "领取", "关闭", "取消"], 2000);
         // 做任务
         this.babaFarmTask();
     },
@@ -1075,10 +1048,10 @@ module.exports = {
                 break;
             }
             // 双击卡只用一次
-            if (selfFlag) {
-                deviceService.clickRate(130 / 1440, 2460 / 3200, 500);
-                deviceService.combinedClickText("立即使用", 3000);
-            }
+            // if (selfFlag) {
+            //     deviceService.clickRate(130 / 1440, 2460 / 3200, 500);
+            //     deviceService.combinedClickText("立即使用", 3000);
+            // }
             selfFlag = false;
         }
         toastLog("====== 结束找能量 ======");
@@ -1168,7 +1141,7 @@ module.exports = {
         }
         // 看视频
         taskCount = 0;
-        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 8) {
+        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 3) {
             // 立即领取
             deviceService.combinedClickText("去逛逛", 5000);
             this.swipeViewTask(18000)
@@ -1244,7 +1217,7 @@ module.exports = {
      */
     clearForestDialog: function () {
         if (text("帮好友复活能量").exists()) {
-            deviceService.clickDIP("android.widget.Button", 15, 2, 200);
+            deviceService.clickDIP("android.widget.Button", 17, 2, 200);
         }
         // 取消误点皮肤
         deviceService.comboTextClick(["关闭", "知道了"], 100);
