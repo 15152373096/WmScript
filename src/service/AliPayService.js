@@ -534,12 +534,13 @@ module.exports = {
             text("题目来源 - 答答星球").waitFor();
             try {
                 let queryDate = deviceService.formatDate(new Date());
-                let response = http.get("http://43.157.13.112:40254/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
+                let response = http.get("http://101.126.83.165:8080/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
                 sleep(1000);
                 if (response.statusCode != 200) {
                     log("请求失败: " + response.statusCode + " " + response.statusMessage);
                 } else {
                     let resultList = response.body.json();
+                    log("请求成功: resultList =" + resultList);
                     for (let i = 0; i < resultList.length; i++) {
                         deviceService.combinedClickText(resultList[i], 1000);
                     }
@@ -1217,7 +1218,7 @@ module.exports = {
      */
     clearForestDialog: function () {
         if (text("帮好友复活能量").exists()) {
-            deviceService.clickDIP("android.widget.Button", 17, 2, 200);
+            deviceService.clickRate(720 / 1440, 2060 / 3200, 2800);
         }
         // 取消误点皮肤
         deviceService.comboTextClick(["关闭", "知道了"], 100);

@@ -496,7 +496,7 @@ module.exports = {
         while (!finish) {
             if (text("赠送").exists()) {
                 deviceService.combinedClickText("赠送", 1000);
-                deviceService.clickDIP("android.widget.Button", 16, 3, 800);
+                deviceService.clickDIP("android.widget.Button", 17, 3, 800);
             } else {
                 finish = true;
             }
