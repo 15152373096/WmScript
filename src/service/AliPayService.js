@@ -354,18 +354,19 @@ module.exports = {
     takeFodder: function () {
         // 领取饲料
         let fodderList = [
-            "领取30克饲料",
-            "领取60克饲料",
-            "领取90克饲料",
-            "领取90克饲料",
-            "领取90克饲料",
-            "领取120克饲料",
-            "领取180克饲料",
-            "领取180克饲料",
-            "领取180克饲料",
-            "领取270克饲料",
+            "领取540克饲料",
             "领取360克饲料",
-            "领取540克饲料"];
+            "领取270克饲料",
+            "领取180克饲料",
+            "领取180克饲料",
+            "领取180克饲料",
+            "领取120克饲料",
+            "领取90克饲料",
+            "领取90克饲料",
+            "领取90克饲料",
+            "领取60克饲料",
+            "领取30克饲料"
+        ];
         for (let fodder of fodderList) {
             deviceService.combinedClickText(fodder, 1800);
             //  满了就跳出
@@ -570,20 +571,24 @@ module.exports = {
      * 抽抽乐
      */
     happyLottery: function () {
-        let lotteryName = "【抽抽乐】儿童节装扮来啦 每日抽1次小鸡装扮可得90g饲料 去完成";
-        if (text(lotteryName).exists()) {
-            // 抽抽乐
-            deviceService.combinedClickText(lotteryName, 2000);
-            // 任务
-            this.lotteryTask();
-            // 抽奖
-            for (let i = 24; i > 0; i--) {
-                deviceService.combinedClickText("还剩" + i + "次机会", 6000);
-                deviceService.comboTextClick(["继续抽奖", "继续抽", "开心收下", "知道啦"], 1000);
+        // 所有抽抽乐任务
+        let happyLotteryList = userConfig.chickenHappyLottery;
+        // 遍历任务
+        for (let i = 0; i < happyLotteryList.length; i++) {
+            if (text(happyLotteryList[i]).exists()) {
+                // 抽抽乐
+                deviceService.combinedClickText(happyLotteryList[i], 2000);
+                // 任务
+                this.lotteryTask();
+                // 抽奖
+                for (let i = 24; i > 0; i--) {
+                    deviceService.combinedClickText("还剩" + i + "次机会", 6000);
+                    deviceService.comboTextClick(["继续抽奖", "继续抽", "开心收下", "知道啦"], 1000);
+                }
+                // 回退到任务
+                back();
+                sleep(1000);
             }
-            // 回退到任务
-            back();
-            sleep(1000);
         }
     },
 
