@@ -22,6 +22,7 @@ module.exports = {
         } else {
             // 设置
             deviceService.combinedClickDesc("设置", 3500);
+            deviceService.combinedClickText("", 3500);
             // 登陆其他账号
             if (className("android.widget.TextView").text("登录其他账号").exists()) {
                 className("android.widget.TextView").text("登录其他账号").findOne().click();
@@ -224,6 +225,7 @@ module.exports = {
         this.launchSubApp("蚂蚁庄园");
         sleep(5000);
         // 广告
+        deviceService.combinedClickText("关闭", 1000);
         deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
         // 添加蚂蚁组件广告
         deviceService.clickRate(1335 / 1440, 1535 / 3200, 500);
@@ -323,8 +325,6 @@ module.exports = {
         this.chickenHire();
         // 抽抽乐
         this.happyLottery();
-        // 庄园小视频
-        this.chickenVideo();
         // 逛一逛
         this.chickenStroll();
         // 会员签到
@@ -436,6 +436,9 @@ module.exports = {
                 // 需要做任务
                 log("------饲料任务-" + browseTaskList[i] + "------");
                 deviceService.combinedClickText(browseTaskList[i], 5000);
+                if (browseTaskList[i].indexOf("15s") >= 0) {
+                    sleep(18000);
+                }
                 back();
                 sleep(800);
                 if (!text("x180").exists()) {
@@ -520,8 +523,6 @@ module.exports = {
             deviceService.combinedClickText(signTask, 3800);
             back();
             sleep(800);
-            back();
-            sleep(1000);
         }
     },
 
@@ -529,7 +530,7 @@ module.exports = {
      * 庄园小课堂
      */
     chickenQuestion: function () {
-        let answerQuestText = "庄园小课堂 每天和小鸡一起答题，可获得1次小鸡饲料哦 去答题";
+        let answerQuestText = "庄园小课堂 每天答题最高可得180g饲料 去答题";
         if (text(answerQuestText).exists()) {
             deviceService.combinedClickText(answerQuestText, 2000);
             text("题目来源 - 答答星球").waitFor();
@@ -600,8 +601,8 @@ module.exports = {
         deviceService.comboTextClick(["领取", "领取"], 3000);
         // 兑换饲料
         for (let i = 0; i < 2; i++) {
-            if (text("消耗饲料换机会 (" + i +"/2)").exists()) {
-                deviceService.clickNearBy("消耗饲料换机会 (" + i +"/2)", "去完成", 3000);
+            if (text("消耗饲料换机会 (" + i + "/2)").exists()) {
+                deviceService.clickNearBy("消耗饲料换机会 (" + i + "/2)", "去完成", 3000);
                 deviceService.combinedClickText("确认兑换", 5000)
             }
         }
@@ -1122,7 +1123,7 @@ module.exports = {
             this.clearSeaDialog();
         }
         // 奖励
-        deviceService.clickRate(720 / 1440, 3000 / 3200, 2000);
+        deviceService.clickRate(1220 / 1440, 3000 / 3200, 2000);
         // 去看看
         while (text("去答题").exists()) {
             // 去答题
@@ -1192,7 +1193,7 @@ module.exports = {
         if (text("马上走").exists() && deviceService.laterThan(22, 25)) {
             deviceService.combinedClickText("马上走", 1000);
             text("去捐赠").waitFor();
-            sleep(1000);
+            sleep(3000);
             deviceService.clickRate(1350 / 1440, 2220 / 3200, 2000);
             deviceService.combinedClickText("开心收下", 2000);
             // Go、下一关
@@ -1207,7 +1208,7 @@ module.exports = {
         if (text("捐步做公益").exists()) {
             deviceService.combinedClickText("捐步做公益", 1000);
             text("大家都在捐").waitFor();
-            sleep(1000);
+            sleep(3000);
             deviceService.combinedClickText("立即捐步", 1000);
             deviceService.combinedClickText("知道了", 1000);
             back();

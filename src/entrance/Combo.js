@@ -169,6 +169,9 @@ module.exports = {
         deviceService.comboTextClick(["关闭", "关闭按钮", "知道了"], 1000);
         // 点击“奖励”
         deviceService.clickRate(585 / 1440, 2100 / 3200, 2000);
+        text("我的活力值").waitFor();
+        // 森林寻宝
+        this.forestTreasureHunt();
         // 签到领取活力值、知道了、立即领取、打卡
         deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
         // 可以能量雨才操作
@@ -217,6 +220,47 @@ module.exports = {
                 this.afterOpt();
             }
         }
+    },
+
+    /**
+     * 森林寻宝
+     */
+    forestTreasureHunt: function () {
+        // 森林寻宝
+        deviceService.clickRate(1225 / 1440, 915 / 3200, 3000);
+        // 签到
+        deviceService.combinedClickText("签到", 1000);
+        // 去逛逛
+        while (text("去逛逛").exists()) {
+            deviceService.combinedClickText("去逛逛", 3000);
+            aliPayService.swipeViewTask(18000);
+            back();
+            sleep(1000);
+            deviceService.combinedClickText("领取", 1000);
+        }
+        // 补充领取
+        while (text("领取").exists()) {
+            deviceService.combinedClickText("领取", 1000);
+        }
+        // 去邀请
+        if (text("去邀请").exists()) {
+            deviceService.combinedClickText("去邀请", 1000);
+            let userNameArrayAll = ["王明", "coco", "olly", "wm01", "wm02", "wm03", "wm04"];
+            for (let i = 0; i < userNameArrayAll.length; i++) {
+                let textName = userNameArrayAll[i] + " " + userNameArrayAll[i] + " " + "送TA机会";
+                deviceService.combinedClickText(textName, 1000);
+            }
+            deviceService.combinedClickText("close", 1000);
+        }
+        // 立即抽奖
+        while (text("次机会").exists()) {
+            deviceService.combinedClickText("次机会", 1000);
+            // 关闭
+            deviceService.clickDIP("android.widget.TextView", 16, 2, 1000);
+            deviceService.clickDIP("android.widget.TextView", 17, 2, 1000);
+        }
+        back();
+        sleep(1000);
     },
 
     /**
@@ -552,7 +596,7 @@ module.exports = {
     },
 
     /**
-     * 中小麦
+     * 种小麦
      */
     loopPlantWheat: function () {
         // 用户

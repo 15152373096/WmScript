@@ -2,8 +2,31 @@ const deviceService = require("/sdcard/脚本/WmScript/src/service/DeviceService
 const aliPayService = require("/sdcard/脚本/WmScript/src/service/AliPayService");
 const combo = require("/sdcard/脚本/WmScript/src/entrance/Combo");
 
-timeTask(1);
+// if (deviceService.appExists("豆包")) {
+//     deviceService.launch("豆包");
+//     setText("蚂蚁庄园今日答案，直接给我答案就行，不要多余的字，用逗号分割");
+//     sleep(2000);
+//     deviceService.clickRate(1315 / 1440, 3010 / 3200, 5000);
+// }
+// // deviceService.clickDIP("android.widget.ImageView", 18, 8, 1000);
 
+// clickRate(1295, 3010);
+
+
+deviceService.combinedClickText("立即领取", 5000)
+
+
+
+
+
+
+
+
+
+
+
+
+// timeTask(1);
 function timeTask(type) {
     if (0 == type) {
         engines.stopAll();

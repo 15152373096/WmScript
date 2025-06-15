@@ -42,44 +42,13 @@ module.exports = {
      */
     babaFarmBrowse: function () {
         sleep(3000);
-        let browseTaskNameList = [
-            "搜一搜你喜欢的商品",
-            "看严选推荐商品",
-            "逛精选好物",
-            "逛精选手机",
-            "逛逛热卖手机",
-            "搜一搜你心仪的宝贝",
-            "逛精选好货",
-            "看农场平价好物",
-            "浏览金币小镇得肥料",
-        ];
-        // 任务-搜一搜
-        let browseTaskList = deviceService.initTaskNameList(browseTaskNameList);
-        for (let i = 0; i < browseTaskList.length; i++) {
-            if (text(browseTaskList[i]).exists() && text(browseTaskList[i]).findOne().parent().parent().findOne(text("去完成"))) {
-                log(browseTaskList[i]);
-                deviceService.clickNearBy(browseTaskList[i], "去完成", 2000);
-                setText("山楂条");
-                deviceService.combinedClickText("搜索", 3000);
-                this.swipeViewTask(18000);
-                back();
-                sleep(1800);
-                if (!text("去完成").exists()) {
-                    back();
-                    sleep(1800);
-                }
-                this.babaFarmBrowse();
-            }
-        }
-        let browse15TaskNameList = [
+        let browse15TaskList = [
             "浏览15秒得奖励",
             "浏览15秒得",
         ];
-        // 任务-浏览15秒
-        let browse15TaskList = deviceService.initTaskNameList(browse15TaskNameList);
         for (let i = 0; i < browse15TaskList.length; i++) {
-            if (text(browse15TaskList[i]).exists() && text(browse15TaskList[i]).findOne().parent().parent().parent().findOne(text("去完成"))) {
-                log(browse15TaskList[i]);
+            while (text(browse15TaskList[i]).exists() && text(browse15TaskList[i]).findOne().parent().parent().parent().findOne(text("去完成"))) {
+                log("淘宝芭芭农场 任务 ==> " + browse15TaskList[i]);
                 deviceService.clickNearBy(browse15TaskList[i], "去完成", 2000);
                 setText("山楂条");
                 deviceService.combinedClickText("搜索", 3000);
@@ -90,7 +59,6 @@ module.exports = {
                     back();
                     sleep(1800);
                 }
-                this.babaFarmBrowse();
             }
         }
     },
