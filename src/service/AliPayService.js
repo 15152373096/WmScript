@@ -333,8 +333,6 @@ module.exports = {
         this.cookDishes();
         // APP跳转任务
         this.chickenAppJump();
-        // 淘宝任务
-        this.chickenTaoBao();
         // 浏览任务
         this.chickenBrowse();
         // 鲸探任务
@@ -396,34 +394,6 @@ module.exports = {
     /**
      * 浏览任务
      */
-    chickenTaoBao: function () {
-        // 所有APP跳转任务
-        let chickenTaoBaoList = userConfig.chickenTaoBaoList;
-        // 遍历任务
-        for (let i = 0; i < chickenTaoBaoList.length; i++) {
-            if (text(chickenTaoBaoList[i]).exists()) {
-                log("------饲料任务-" + chickenTaoBaoList[i] + "------");
-                deviceService.combinedClickText(chickenTaoBaoList[i], 25000);
-                // 等等机器人验证
-                this.robotCheck();
-                deviceService.combinedClickText("立即签到", 1000);
-                if (text("账号绑定").exists()) {
-                    back();
-                    sleep(8000);
-                }
-                app.launchApp("支付宝");
-                sleep(2000);
-                if (text("打开淘宝").exists()) {
-                    back();
-                    sleep(800);
-                }
-            }
-        }
-    },
-
-    /**
-     * 浏览任务
-     */
     chickenBrowse: function () {
         // 所有浏览任务
         let browseTaskList = userConfig.chickenBrowseTaskList;
@@ -454,40 +424,47 @@ module.exports = {
      */
     jingTanTask: function () {
         if ("on" == userConfig.chickenTask.jingTanSwitch) {
-            let jingTanText = "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼";
-            if (text(jingTanText).exists()) {
-                // 需要做任务
-                log("------饲料任务-去鲸探喂鱼集福气------");
-                deviceService.combinedClickText(jingTanText, 1000);
-                text("一个小正经的池塘").waitFor();
-                sleep(2000);
-                for (let i = 9; i > 0; i--) {
-                    deviceService.combinedClickText("鱼食(" + i + "/8)", 2000);
-                    deviceService.combinedClickText("继续喂鱼", 500);
-                }
-                for (let i = 0; i < 168; i++) {
-                    deviceService.clickRate(0.5, 0.5, 200);
-                }
-                // 敲木鱼
-                deviceService.combinedClickText("敲一敲", 1000);
-                for (let i = 0; i < 168; i++) {
-                    deviceService.clickRate(0.5, 0.5, 200);
-                }
-                // 盘珠子
-                deviceService.combinedClickText("盘一盘", 1000);
-                for (let i = 0; i < 168; i++) {
-                    swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
-                }
-                // 鱼食任务
-                deviceService.clickRate(365 / 1440, 3045 / 3200, 2000);
-                deviceService.combinedClickText("鱼食任务", 2000);
-                for (let i = 5; i > 0; i--) {
-                    deviceService.combinedClickText("领取", 8000);
-                }
-                back();
-                sleep(2000);
-            }
+            return
         }
+        let jingTanTextList = [
+            "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼",
+            "去鲸探喂鱼集福气 完成1次喂鱼，可获得90g饲料 去喂鱼"
+        ];
+        jingTanTextList.forEach(jingTanText => {
+            if (!text(jingTanText).exists()) {
+                return;
+            }
+            // 需要做任务
+            log("------饲料任务-去鲸探喂鱼集福气------");
+            deviceService.combinedClickText(jingTanText, 1000);
+            text("一个小正经的池塘").waitFor();
+            sleep(2000);
+            for (let i = 9; i > 0; i--) {
+                deviceService.combinedClickText("鱼食(" + i + "/8)", 2000);
+                deviceService.combinedClickText("继续喂鱼", 500);
+            }
+            for (let i = 0; i < 168; i++) {
+                deviceService.clickRate(0.5, 0.5, 200);
+            }
+            // 敲木鱼
+            deviceService.combinedClickText("敲一敲", 1000);
+            for (let i = 0; i < 168; i++) {
+                deviceService.clickRate(0.5, 0.5, 200);
+            }
+            // 盘珠子
+            deviceService.combinedClickText("盘一盘", 1000);
+            for (let i = 0; i < 168; i++) {
+                swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
+            }
+            // 鱼食任务
+            deviceService.clickRate(365 / 1440, 3045 / 3200, 2000);
+            deviceService.combinedClickText("鱼食任务", 2000);
+            for (let i = 5; i > 0; i--) {
+                deviceService.combinedClickText("领取", 8000);
+            }
+            back();
+            sleep(2000);
+        });
     },
 
     /**
@@ -496,21 +473,24 @@ module.exports = {
     chickenAppJump: function () {
         // 所有APP跳转任务
         let appJumpTaskList = userConfig.chickenAppJumpList;
-        // 遍历任务
-        for (let i = 0; i < appJumpTaskList.length; i++) {
-            if (text(appJumpTaskList[i]).exists()) {
-                log("------饲料任务-" + appJumpTaskList[i] + "------");
-                deviceService.combinedClickText(appJumpTaskList[i], 25000);
-                app.launchApp("支付宝");
-                sleep(1000);
+        appJumpTaskList.forEach(appJumpTask => {
+            if (!text(appJumpTask).exists()) {
+                return;
+            }
+            log("------饲料任务-" + appJumpTask + "------");
+            deviceService.combinedClickText(appJumpTask, 25000);
+            // 等等机器人验证
+            this.robotCheck();
+            deviceService.combinedClickText("立即签到", 1000);
+            app.launchApp("支付宝");
+            sleep(2000);
+            if (!text("去完成").exists()) {
                 back();
                 sleep(800);
-                if (!text(appJumpTaskList[i]).exists()) {
-                    // 领饲料
-                    this.clickCoordinates("collarFeed");
-                }
+                ;
             }
-        }
+        });
+
     },
 
     /**
@@ -559,13 +539,19 @@ module.exports = {
      * 雇佣小鸡
      */
     chickenHire: function () {
-        let hireText = "雇佣小鸡拿饲料 在任务指定页面中雇佣小鸡可获得90g饲料，雇佣特定小鸡可获得180g饲料哦（1次/天） 去完成";
-        if (text(hireText).exists()) {
+        let hireTextList = [
+            "雇佣小鸡拿饲料 在任务指定页面中雇佣小鸡可获得90g饲料，雇佣特定小鸡可获得180g饲料哦（1次/天） 去完成",
+            "雇佣小鸡拿饲料 指定页面雇佣可得90g饲料 去完成"
+        ];
+        hireTextList.forEach(hireText => {
+            if (!text(hireText).exists()) {
+                return;
+            }
             deviceService.combinedClickText(hireText, 2000);
             deviceService.comboTextClick(["雇佣", "雇佣并通知", "不通知TA"], 1000);
             this.closeSubApp();
             sleep(1000);
-        }
+        });
     },
 
     /**
@@ -622,15 +608,21 @@ module.exports = {
      * 逛一逛任务
      */
     chickenStroll: function () {
-        let strollTask = "去杂货铺逛一逛 和小鸡一起逛15s杂货铺，可获得90g饲料哦 去完成"
-        if (text(strollTask).exists()) {
+        let strollTaskList = [
+            "去杂货铺逛一逛 和小鸡一起逛15s杂货铺，可获得90g饲料哦 去完成",
+            "去杂货铺逛一逛 浏览15s可得90g饲料 去完成"
+        ];
+        strollTaskList.forEach(strollTask => {
+            if (!text(strollTask).exists()) {
+                return;
+            }
             log("------饲料任务-去杂货铺逛一逛------");
             deviceService.combinedClickText(strollTask, 2000);
             // 等等机器人验证
             this.swipeViewTask(18000);
             back();
             sleep(1000);
-        }
+        });
     },
 
     /**
@@ -651,8 +643,14 @@ module.exports = {
      * 小鸡睡觉
      */
     chickenSleep: function () {
-        let sleepTask = "让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 去完成";
-        if (deviceService.laterThan(20, 0) && text(sleepTask).exists()) {
+        let sleepTaskList = [
+            "让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 去完成",
+            "让小鸡去睡觉 完成可得90g饲料 去完成"
+        ];
+        sleepTaskList.forEach(sleepTask => {
+            if (deviceService.earlierThan(20, 0) || !text(sleepTask).exists()) {
+                return;
+            }
             log("------饲料任务-小鸡睡觉------");
             deviceService.combinedClickText(sleepTask, 5000);
             // 点击睡觉
@@ -668,15 +666,22 @@ module.exports = {
             deviceService.combinedClickText("取消", 800);
             back();
             sleep(800);
-        }
+        });
     },
 
     /**
      * 做菜
      */
     cookDishes: function () {
-        let cookTask = "小鸡厨房 去爱心小屋厨房让小鸡做美食得肥料，吃美食可以加速产蛋，还可以获得90g饲料哦 去完成";
-        if (text(cookTask).exists()) {
+
+        let cookTaskList = [
+            "小鸡厨房 去爱心小屋厨房让小鸡做美食得肥料，吃美食可以加速产蛋，还可以获得90g饲料哦 去完成",
+            "小鸡厨房 每天做美食可得90g饲料 去完成"
+        ];
+        cookTaskList.forEach(cookTask => {
+            if (!text(cookTask).exists()) {
+                return;
+            }
             log("------饲料任务-小鸡厨房------");
             deviceService.combinedClickText(cookTask, 3500);
             for (let i = 0; i < 2; i++) {
@@ -723,7 +728,8 @@ module.exports = {
             // 退到任务
             back();
             sleep(1000);
-        }
+        });
+
     },
 
     /**
@@ -1194,7 +1200,7 @@ module.exports = {
             deviceService.combinedClickText("马上走", 1000);
             text("去捐赠").waitFor();
             sleep(3000);
-            deviceService.clickRate(1350 / 1440, 2220 / 3200, 2000);
+            // deviceService.clickRate(1350 / 1440, 2220 / 3200, 2000);
             deviceService.combinedClickText("开心收下", 2000);
             // Go、下一关
             deviceService.clickRate(1 / 2, 93 / 100, 1000);

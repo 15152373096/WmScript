@@ -12,21 +12,7 @@ const combo = require("/sdcard/脚本/WmScript/src/entrance/Combo");
 
 // clickRate(1295, 3010);
 
-
-deviceService.combinedClickText("立即领取", 5000)
-
-
-
-
-
-
-
-
-
-
-
-
-// timeTask(1);
+timeTask(1);
 function timeTask(type) {
     if (0 == type) {
         engines.stopAll();
