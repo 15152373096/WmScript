@@ -423,8 +423,8 @@ module.exports = {
      * 鲸探任务
      */
     jingTanTask: function () {
-        if ("on" == userConfig.chickenTask.jingTanSwitch) {
-            return
+        if ("on" != userConfig.chickenTask.jingTanSwitch) {
+            return;
         }
         let jingTanTextList = [
             "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼",
@@ -878,11 +878,6 @@ module.exports = {
         deviceService.comboTextClick(["领取", "我知道了", "领取", "知道了", "领取", "领取", "取消"], 1000);
         // 浏览任务
         this.babaFarmBrowse();
-        // 逛逛淘宝芭芭农场
-        if ("on" == userConfig.babaFarmTask.gotoTBFarmSwitch) {
-            deviceService.clickBrotherIndex(" 逛逛淘宝芭芭农场 (0/1)", 1, 6000);
-            app.launchApp("支付宝");
-        }
         deviceService.combinedClickText("关闭", 1000);
         // 回到首页
         this.closeSubApp();
@@ -1197,9 +1192,7 @@ module.exports = {
         deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数"], 2000);
         // 下午5点25前，不走路线
         if (text("马上走").exists() && deviceService.laterThan(22, 25)) {
-            deviceService.combinedClickText("马上走", 1000);
-            text("去捐赠").waitFor();
-            sleep(3000);
+            deviceService.combinedClickText("马上走", 6000);
             // deviceService.clickRate(1350 / 1440, 2220 / 3200, 2000);
             deviceService.combinedClickText("开心收下", 2000);
             // Go、下一关
