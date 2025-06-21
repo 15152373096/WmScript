@@ -893,7 +893,7 @@ module.exports = {
         // 遍历任务
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
-                deviceService.clickBrotherIndex(browseTaskList[i], 1, 5000);
+                deviceService.clickNearBy(browseTaskList[i], "去完成", 5000);
                 if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
