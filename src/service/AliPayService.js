@@ -482,6 +482,7 @@ module.exports = {
             // 等等机器人验证
             this.robotCheck();
             deviceService.combinedClickText("立即签到", 1000);
+            deviceService.combinedClickText("点击签到", 1000);
             app.launchApp("支付宝");
             sleep(2000);
             if (!text("去完成").exists()) {
@@ -893,7 +894,7 @@ module.exports = {
         // 遍历任务
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
-                deviceService.clickNearBy(browseTaskList[i], "去完成", 5000);
+                deviceService.combinedClickText(browseTaskList[i],  5000);
                 if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
@@ -1137,8 +1138,10 @@ module.exports = {
         // 去看看
         let taskCount = 0;
         while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 8) {
-            // 立即领取
+            // 去看看
             deviceService.combinedClickText("去看看", 5000);
+            // 立即领取
+            deviceService.combinedClickText("立即领取", 2000);
             // 如果是随机游戏任务，进入游戏中心要点击一个任务
             deviceService.combinedClickText("角色扮演", 5000);
             this.swipeViewTask(30000)
@@ -1188,6 +1191,9 @@ module.exports = {
      * 运动操作
      */
     sportOption: function () {
+        if (deviceService.earlierThan(21, 0)) {
+            return;
+        }
         this.launchSubApp("运动");
         deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数"], 2000);
         // 下午5点25前，不走路线
@@ -1205,9 +1211,8 @@ module.exports = {
         }
         // 去捐步
         if (text("捐步做公益").exists()) {
-            deviceService.combinedClickText("捐步做公益", 1000);
-            text("大家都在捐").waitFor();
-            sleep(3000);
+            text("捐步做公益").click();
+            sleep(6000);
             deviceService.combinedClickText("立即捐步", 1000);
             deviceService.combinedClickText("知道了", 1000);
             back();
@@ -1259,8 +1264,23 @@ module.exports = {
      * @param {string} subApp
      */
     launchSubApp: function (subApp) {
+        this.closeShanGouAD();
         toastLog("====== 打开" + subApp + " ======");
         deviceService.combinedClickText(subApp, 8000);
+    },
+
+    /**
+     * 临时闪购广告
+     */
+    closeShanGouAD: function () {
+        // 临时闪购广告
+        deviceService.clickRate(720 / 1440, 2545 / 3200, 3000);
+        // 没广告时误点跳回
+        if (!text("卡包").exists()) {
+            back();
+            sleep(1000);
+        }
+        deviceService.combinedClickDesc("关闭", 2000);
     },
 
     /**

@@ -39,6 +39,7 @@ module.exports = {
         }
         // 启动支付宝
         deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
         // 遍历账号
         for (let i = 0; i < accountList.length; i++) {
             aliPayService.switchAccount(accountList[i].userAccount);
@@ -60,6 +61,7 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
         // 打排球
         this.loopPlayStarBall(0);
         log("======starBallJob end======");
@@ -150,6 +152,7 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
         // 收集能量雨
         this.loopEnergyRain(0);
         log("======energyRainJob end======");
@@ -163,6 +166,7 @@ module.exports = {
         // 切换账号
         let currentAccount = accountList[count % accountList.length];
         aliPayService.switchAccount(currentAccount.userAccount);
+        aliPayService.closeShanGouAD();
         // 打开蚂蚁森林
         aliPayService.launchSubApp("蚂蚁森林");
         // 关闭弹框
@@ -335,8 +339,10 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
         // 切换账号
         aliPayService.switchAccount("346***@qq.com");
+        aliPayService.closeShanGouAD();
         // 打开网商银行
         aliPayService.launchSubApp("网商银行");
         sleep(3000);
@@ -404,7 +410,7 @@ module.exports = {
     },
 
     /**
-     * 月月赚任务
+     * 月月赚浏览
      */
     monthBrowse: function () {
         // 遍历任务
@@ -448,6 +454,7 @@ module.exports = {
         deviceService.clearBackground();
         // 启动支付宝
         deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
         // 点击搜索
         deviceService.combinedClickText("搜索", 1000);
         // 输入月月赚
@@ -482,10 +489,12 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
         // 遍历账号
         for (let i = 0; i < accountList.length; i++) {
             // 账号切换
             aliPayService.switchAccount(accountList[i].userAccount);
+            aliPayService.closeShanGouAD();
             // 切回Zepp Life
             deviceService.launch("Zepp Life");
             // 同步数据
@@ -510,6 +519,7 @@ module.exports = {
             sleep(5000);
             // 启动支付宝
             deviceService.launch("支付宝");
+            aliPayService.closeShanGouAD();
         }
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
