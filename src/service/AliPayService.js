@@ -307,9 +307,8 @@ module.exports = {
         for (let i = 20; i > 0; i--) {
             deviceService.combinedClickText("还有" + i + "张 立即加速", 2800);
         }
-        deviceService.clickDIP("android.widget.TextView", 18, 4, 1000);
         // 使用-未使用道具场景、确认-已使用道具场景、知道了、已使用加速卡时，补充关闭
-        deviceService.comboTextClick(["使用", "确认", "知道了", "知道啦", "关闭"], 2800);
+        deviceService.comboTextClick(["使用", "确认", "知道了", "知道啦", "关闭", "关闭道具弹窗"], 2800);
     },
 
     /**
