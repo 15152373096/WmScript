@@ -93,7 +93,13 @@ module.exports = {
         // 回首页
         home();
         sleep(1000);
-        lockScreen();
+        // 锁屏
+        let success = runtime.accessibilityBridge.getService().performGlobalAction(
+            android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN
+        );
+        if (!success) {
+            toastLog("锁屏失败，请检查权限");
+        }
         // 关闭其他线程
         threads.shutDownAll();
     },
@@ -566,17 +572,30 @@ module.exports = {
      */
     formatDate: function (date) {
         const year = String(date.getFullYear());
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hour = String(date.getHours()).padStart(2, '0');
-        const minute = String(date.getMinutes()).padStart(2, '0');
-        const second = String(date.getSeconds()).padStart(2, '0');
+        const month = this.padZero(date.getMonth() + 1);
+        const day = this.padZero(date.getDate());
+        const hour = this.padZero(date.getHours());
+        const minute = this.padZero(date.getMinutes());
+        const second = this.padZero(date.getSeconds());
         return {
             formatDay: year + '-' + month + '-' + day,
             formatMinute: year + '-' + month + '-' + day + " " + hour + ":" + minute,
             formatSecond: year + '-' + month + '-' + day + " " + hour + ":" + minute + ":" + second,
             hourMinute: hour + ":" + minute,
         };
+    },
+
+    /**
+     * 补零
+     * @param num
+     * @returns {string|string}
+     */
+    padZero: function (num) {
+        // 统一转为字符串
+        const str = String(num);
+
+        // 判断是否需要补零
+        return str.length >= 2 ? str : '0' + str;
     },
 
     /**

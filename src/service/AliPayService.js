@@ -896,7 +896,7 @@ module.exports = {
         // 遍历任务
         for (let i = 0; i < browseTaskList.length; i++) {
             if (text(browseTaskList[i]).exists()) {
-                deviceService.combinedClickText(browseTaskList[i],  5000);
+                deviceService.combinedClickText(browseTaskList[i], 5000);
                 if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
@@ -1138,33 +1138,36 @@ module.exports = {
             sleep(1000);
         }
         // 去看看
-        let taskCount = 0;
-        while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 8) {
-            // 去看看
-            deviceService.combinedClickText("去看看", 5000);
-            // 立即领取
-            deviceService.combinedClickText("立即领取", 2000);
-            // 如果是随机游戏任务，进入游戏中心要点击一个任务
-            deviceService.combinedClickText("角色扮演", 5000);
-            this.swipeViewTask(30000)
-            this.closeSubApp();
-            back();
-            sleep(1000);
-            taskCount++;
-        }
-        // 看视频
-        taskCount = 0;
-        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch && taskCount < 3) {
-            // 立即领取
-            deviceService.combinedClickText("去逛逛", 5000);
-            this.swipeViewTask(18000)
-            app.launchApp("支付宝");
-            sleep(1000);
-            if (!text("立即领取").exists()) {
+        while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
+            let buttons = text("去看看").find();
+            buttons.forEach(button => {
+                // 去看看
+                button.click();
+                sleep(5000);
+                // 立即领取 / 如果是随机游戏任务，进入游戏中心要点击一个任务
+                deviceService.comboTextClick(["立即领取", "角色扮演"], 5000);
+                this.swipeViewTask(30000)
+                this.closeSubApp();
                 back();
                 sleep(1000);
-            }
-            taskCount++;
+            });
+        }
+        // 看视频
+        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
+            let buttons = text("去逛逛").find();
+            buttons.forEach(button => {
+                // 去逛逛
+                button.click();
+                sleep(5000);
+                deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
+                this.swipeViewTask(18000)
+                app.launchApp("支付宝");
+                sleep(1000);
+                if (!text("立即领取").exists()) {
+                    back();
+                    sleep(1000);
+                }
+            });
         }
         while (text("立即领取").exists()) {
             // 立即领取
