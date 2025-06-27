@@ -246,22 +246,11 @@ module.exports = {
         while (text("领取").exists()) {
             deviceService.combinedClickText("领取", 1000);
         }
-        // 去邀请
-        if (text("去邀请").exists()) {
-            deviceService.combinedClickText("去邀请", 1000);
-            let userNameArrayAll = ["王明", "coco", "olly", "wm01", "wm02", "wm03", "wm04"];
-            for (let i = 0; i < userNameArrayAll.length; i++) {
-                let textName = userNameArrayAll[i] + " " + userNameArrayAll[i] + " " + "送TA机会";
-                deviceService.combinedClickText(textName, 1000);
-            }
-            deviceService.combinedClickText("close", 1000);
-        }
         // 立即抽奖
         while (text("次机会").exists()) {
             deviceService.combinedClickText("次机会", 1000);
             // 关闭
-            deviceService.clickDIP("android.widget.TextView", 16, 2, 1000);
-            deviceService.clickDIP("android.widget.TextView", 17, 2, 1000);
+            deviceService.clickRate(720 / 1440, 2980 / 3200, 2000);
         }
         back();
         sleep(1000);
@@ -508,6 +497,7 @@ module.exports = {
             back();
             sleep(800);
             deviceService.combinedClickText("首页", 2000);
+            aliPayService.closeShanGouAD();
             // 下拉刷新同步
             deviceService.swipeDown(device.height);
             sleep(5000);

@@ -19,6 +19,7 @@ module.exports = {
         if (className("android.widget.TextView").text(account).exists()) {
             // 回到首页
             deviceService.combinedClickText("首页", 2000);
+            this.closeShanGouAD();
         } else {
             // 设置
             deviceService.combinedClickDesc("设置", 3500);
@@ -46,6 +47,7 @@ module.exports = {
         deviceService.combinedClickDesc("一键清除", 1000);
         // 首页
         deviceService.combinedClickText("首页", 2000);
+        this.closeShanGouAD();
     },
 
     /**
@@ -84,6 +86,7 @@ module.exports = {
         sleep(5000);
         // 首页
         deviceService.combinedClickText("首页", 2000);
+        this.closeShanGouAD();
     },
 
     /**
@@ -1047,7 +1050,7 @@ module.exports = {
             // 找能量
             deviceService.clickRate(1315 / 1440, 2115 / 3200, 3000);
             // 如果找完了，返回森林
-            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("返回蚂蚁森林 >").exists()) {
+            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists()) {
                 deviceService.clickDIP("android.view.View", 14, 9, 1000);
                 while (text("兑换并铺设").exists()) {
                     deviceService.combinedClickText("兑换并铺设", 1000);
