@@ -273,9 +273,9 @@ module.exports = {
      * @param sleepTime
      */
     comboTextClick: function (textNameArray, sleepTime) {
-        for (let textName of textNameArray) {
+        textNameArray.forEach(textName => {
             this.combinedClickText(textName, sleepTime);
-        }
+        });
     },
 
     /**
@@ -397,23 +397,6 @@ module.exports = {
                 sleep(sleepTime);
             }
         }
-    },
-
-    /**
-     * 初始化任务列表
-     * @param configTaskNameList
-     */
-    initTaskNameList: function (configTaskNameList) {
-        let taskList = [];
-        for (let i = 0; i < configTaskNameList.length; i++) {
-            taskList.push(configTaskNameList[i]);
-            for (let j = 1; j <= 5; j++) {
-                for (let k = 0; k < j; k++) {
-                    taskList.push(configTaskNameList[i] + "(" + k + "/" + j + ")")
-                }
-            }
-        }
-        return taskList;
     },
 
     /**

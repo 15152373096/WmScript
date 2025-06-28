@@ -59,19 +59,15 @@ module.exports = {
             return;
         }
         toastLog("====== 支付宝签到 ======");
-        // 我的
-        deviceService.combinedClickText("我的", 2000);
-        // 支付宝会员
-        deviceService.clickRate(720 / 1440, 715 / 3200, 5000);
+        // 我的 - 支付宝会员
+        deviceService.comboTextClick(["我的", "支付宝会员"], 2000);
         // 关闭广告
         deviceService.combinedClickDesc("关闭", 800);
-        // 全部领取积分
-        deviceService.combinedClickText("全部领取", 1000);
-        // 签到
-        deviceService.combinedClickText("每日签到", 10000);
+        // 全部领取积分 - 每日签到
+        deviceService.comboTextClick(["全部领取", "每日签到"], 2000);
         // 等等机器人验证
         this.robotCheck();
-        if (text("逛一逛赚积分").exists() && !text("限时福利：已完成浏览任务，得 3 积分").exists()) {
+        if (text("逛一逛赚积分").exists() && !text("限时福利：已完成浏览任务，得 5 积分").exists()) {
             deviceService.combinedClickText("逛一逛赚积分", 1000);
             this.swipeViewTask(3600);
         }
@@ -162,7 +158,7 @@ module.exports = {
             return;
         }
         log("===== 积分任务 START =====");
-        let browseTaskList = deviceService.initTaskNameList(userConfig.signBrowseTaskList);
+        let browseTaskList = userConfig.signBrowseTaskList;
         for (let i = 0; i < 6; i++) {
             for (let i = 0; i < browseTaskList.length; i++) {
                 if (className("android.widget.TextView").text(browseTaskList[i]).exists()) {
@@ -1275,13 +1271,6 @@ module.exports = {
      * 临时闪购广告
      */
     closeShanGouAD: function () {
-        // 临时闪购广告
-        deviceService.clickRate(720 / 1440, 2545 / 3200, 3000);
-        // 没广告时误点跳回
-        if (!text("卡包").exists()) {
-            back();
-            sleep(1000);
-        }
         deviceService.combinedClickDesc("关闭", 2000);
     },
 

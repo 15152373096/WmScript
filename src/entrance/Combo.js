@@ -562,6 +562,48 @@ module.exports = {
     },
 
     /**
+     * 积分补签到
+     */
+    makeUpSignInJob: function () {
+        log("======makeUpSignInJob start======");
+        this.beforeOpt();
+        // 启动支付宝
+        deviceService.launch("支付宝");
+        aliPayService.closeShanGouAD();
+        // 我的 - 支付宝会员
+        deviceService.comboTextClick(["我的", "支付宝会员"], 2000);
+        // 关闭广告
+        deviceService.combinedClickDesc("关闭", 800);
+        // 全部领取积分 - 每日签到
+        deviceService.comboTextClick(["全部领取", "每日签到"], 2000);
+        let array = [
+            "我要补签",
+            "补签卡",
+            "立即兑换",
+            "6.使用补签卡后，次日签到获得的积分将按照最新连续签到天数进行计算。",
+            "6.使用补签卡后，次日签到获得的积分将按照最新连续签到天数进行计算。",
+            "去使用",
+            "补签卡X1",
+            "推荐补签",
+            "立即补签"
+        ];
+        for (let i = 0; i < 100; i++) {
+            deviceService.comboTextClick(array, 3000);
+            sleep(3000);
+        }
+        if (!text("首页").exists()) {
+            // 关闭签到
+            deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 1000);
+        }
+        // 首页
+        deviceService.combinedClickText("首页", 2000);
+        aliPayService.closeShanGouAD();
+        this.afterOpt();
+        log("======makeUpSignInJob end======");
+
+    },
+
+    /**
      * 种植小麦
      */
     plantWheatJob: function () {
@@ -574,7 +616,6 @@ module.exports = {
             aliPayService.switchAccount(accountList[i].userAccount);
             // 打开蚂蚁庄园
             aliPayService.launchSubApp("蚂蚁庄园");
-            sleep(5000);
             // 广告
             deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
             // 收取赠送麦子
@@ -590,6 +631,7 @@ module.exports = {
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
         this.afterOpt();
+        log("======plantWheatJob end======");
     },
 
     /**
@@ -600,28 +642,29 @@ module.exports = {
         let userNameArrayAll = ["王明", "coco", "olly", "wm01", "wm02", "wm03", "wm04"];
         // 好友
         deviceService.clickRate(160 / 1440, 2980 / 3200, 3000);
-        // 好友列表
-        let needPlantUserArray = [];
-        for (let i = 0; i < userNameArrayAll.length; i++) {
-            if (text(userNameArrayAll[i]).exists() && !text(userNameArrayAll[i] + "（我自己）").exists()) {
-                needPlantUserArray.push(userNameArrayAll[i]);
-            }
-        }
-        for (let i = 0; i < needPlantUserArray.length; i++) {
-            if (text(needPlantUserArray[i]).exists()) {
-                text(needPlantUserArray[i]).findOne().click();
-            }
-            sleep(3000);
-            // 种植
-            for (let i = 0; i < 3; i++) {
-                // 种麦子
-                aliPayService.clickCoordinates("plantWheat");
-                // 确认
-                deviceService.combinedClickText("确认", 2800);
-            }
-            // 回到好友
-            back();
-            sleep(800);
+        // 遍历列表
+        if (className("android.widget.Button").depth(18).exists()) {
+            let buttons = className("android.widget.Button").depth(18).find();
+            buttons.forEach(indexButton => {
+                userNameArrayAll.forEach(searchText => {
+                    let buttonText = indexButton.text();
+                    if (buttonText.indexOf(searchText) > -1 && buttonText.indexOf("（我自己）") == -1) {
+                        // 点击好友
+                        indexButton.click();
+                        sleep(5000);
+                        // 种植
+                        for (let i = 0; i < 3; i++) {
+                            // 种麦子
+                            aliPayService.clickCoordinates("plantWheat");
+                            // 确认
+                            deviceService.combinedClickText("确认", 2800);
+                        }
+                        // 回到好友
+                        back();
+                        sleep(800);
+                    }
+                });
+            });
         }
         // 回到庄园
         deviceService.combinedClickText("关闭", 1800);
