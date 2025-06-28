@@ -160,9 +160,9 @@ module.exports = {
         log("===== 积分任务 START =====");
         let browseTaskList = userConfig.signBrowseTaskList;
         for (let i = 0; i < 6; i++) {
-            for (let i = 0; i < browseTaskList.length; i++) {
-                if (className("android.widget.TextView").text(browseTaskList[i]).exists()) {
-                    className("android.widget.TextView").text(browseTaskList[i]).findOne().click();
+            browseTaskList.forEach(browseTask => {
+                if (className("android.widget.TextView").text(browseTask).exists()) {
+                    className("android.widget.TextView").text(browseTask).findOne().click();
                     sleep(800);
                     deviceService.combinedClickText("去完成", 2000);
                     // 等等机器人验证
@@ -174,7 +174,7 @@ module.exports = {
                         sleep(3000);
                     }
                 }
-            }
+            });
             deviceService.combinedClickText("换一换", 1000);
         }
         log("===== 积分任务 END =====");
@@ -399,12 +399,12 @@ module.exports = {
             browseTaskList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 去完成");
         }
         // 遍历任务
-        for (let i = 0; i < browseTaskList.length; i++) {
-            if (text(browseTaskList[i]).exists()) {
+        browseTaskList.forEach(browseTask => {
+            if (text(browseTask).exists()) {
                 // 需要做任务
-                log("------饲料任务-" + browseTaskList[i] + "------");
-                deviceService.combinedClickText(browseTaskList[i], 5000);
-                if (browseTaskList[i].indexOf("15s") >= 0) {
+                log("------饲料任务-" + browseTask + "------");
+                deviceService.combinedClickText(browseTask, 5000);
+                if (browseTask.indexOf("15s") >= 0) {
                     sleep(18000);
                 }
                 back();
@@ -414,7 +414,7 @@ module.exports = {
                     sleep(800);
                 }
             }
-        }
+        });
     },
 
     /**
@@ -560,10 +560,10 @@ module.exports = {
         // 所有抽抽乐任务
         let happyLotteryList = userConfig.chickenHappyLottery;
         // 遍历任务
-        for (let i = 0; i < happyLotteryList.length; i++) {
-            if (text(happyLotteryList[i]).exists()) {
+        happyLotteryList.forEach(happyLottery => {
+            if (text(happyLottery).exists()) {
                 // 抽抽乐
-                deviceService.combinedClickText(happyLotteryList[i], 2000);
+                deviceService.combinedClickText(happyLottery, 2000);
                 // 任务
                 this.lotteryTask();
                 // 抽奖
@@ -575,7 +575,7 @@ module.exports = {
                 back();
                 sleep(1000);
             }
-        }
+        });
     },
 
     /**
@@ -890,9 +890,9 @@ module.exports = {
         let browseTaskList = userConfig.babaBrowseTaskList;
         log("芭芭农场的浏览任务 start");
         // 遍历任务
-        for (let i = 0; i < browseTaskList.length; i++) {
-            if (text(browseTaskList[i]).exists()) {
-                deviceService.combinedClickText(browseTaskList[i], 5000);
+        browseTaskList.forEach(browseTask => {
+            if (text(browseTask).exists()) {
+                deviceService.combinedClickText(browseTask, 5000);
                 if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
@@ -905,7 +905,7 @@ module.exports = {
                     sleep(800);
                 }
             }
-        }
+        });
         log("芭芭农场的浏览任务 end");
     },
 
@@ -1079,10 +1079,10 @@ module.exports = {
                 [628, 764],
                 [812, 764],
             ];
-            for (let cord of cordArray) {
+            cordArray.forEach(cord => {
                 deviceService.clickRate(cord[0] / 1440, cord[1] / 3200, 200);
                 this.clearForestDialog();
-            }
+            });
         } else {
             // 别人的用一键收
             deviceService.clickRate(720 / 1440, 1860 / 3200, 1000);

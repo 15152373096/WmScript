@@ -111,12 +111,12 @@ module.exports = {
         let currentJob = engines.myEngine();
         let jobs = engines.all();
         log("正在运行的脚本有", jobs.length, "个");
-        for (let i = 0; i < jobs.length; i++) {
-            if (jobs[i].toString() != currentJob.toString()) {
-                log("停止脚本", jobs[i].toString());
-                jobs[i].forceStop();
+        jobs.forEach(job => {
+            if (job.toString() != currentJob.toString()) {
+                log("停止脚本", job.toString());
+                job.forceStop();
             }
-        }
+        });
     },
 
     /**

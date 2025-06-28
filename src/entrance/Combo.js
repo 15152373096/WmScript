@@ -41,10 +41,10 @@ module.exports = {
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
         // 遍历账号
-        for (let i = 0; i < accountList.length; i++) {
-            aliPayService.switchAccount(accountList[i].userAccount);
-            aliPayService.combo(accountList[i]);
-        }
+        accountList.forEach(account => {
+            aliPayService.switchAccount(account.userAccount);
+            aliPayService.combo(account);
+        });
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
         // 更新运行时间
@@ -477,9 +477,9 @@ module.exports = {
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
         // 遍历账号
-        for (let i = 0; i < accountList.length; i++) {
+        accountList.forEach(account => {
             // 账号切换
-            aliPayService.switchAccount(accountList[i].userAccount);
+            aliPayService.switchAccount(account.userAccount);
             aliPayService.closeShanGouAD();
             // 切回Zepp Life
             deviceService.launch("Zepp Life");
@@ -507,7 +507,7 @@ module.exports = {
             // 启动支付宝
             deviceService.launch("支付宝");
             aliPayService.closeShanGouAD();
-        }
+        });
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
         this.afterOpt();
@@ -612,8 +612,8 @@ module.exports = {
         // 启动支付宝
         deviceService.launch("支付宝");
         // 遍历账号
-        for (let i = 0; i < accountList.length; i++) {
-            aliPayService.switchAccount(accountList[i].userAccount);
+        accountList.forEach(account => {
+            aliPayService.switchAccount(account.userAccount);
             // 打开蚂蚁庄园
             aliPayService.launchSubApp("蚂蚁庄园");
             // 广告
@@ -627,7 +627,7 @@ module.exports = {
             this.loopPlantWheat();
             // 回到首页
             aliPayService.closeSubApp();
-        }
+        });
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
         this.afterOpt();
