@@ -409,7 +409,7 @@ module.exports = {
             }
             if (text("去看看").exists()) {
                 text("去看看").click();
-                sleep(18000);
+                sleep(3000);
                 back();
                 sleep(2000);
                 if (!text("立即使用").exists()) {
@@ -424,11 +424,8 @@ module.exports = {
      * 关闭弹窗
      */
     closeToast: function () {
-        if (className("android.view.View").depth(17).indexInParent(1).exists()) {
-            className("android.view.View").depth(17).indexInParent(1).click()
-        }
-        if (className("android.widget.TextView").depth(17).indexInParent(1).exists()) {
-            className("android.widget.TextView").depth(17).indexInParent(1).click()
+        if (className("android.widget.TextView").depth(18).indexInParent(1).exists()) {
+            className("android.widget.TextView").depth(18).indexInParent(1).click()
         }
         sleep(1000);
     },

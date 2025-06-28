@@ -1171,9 +1171,7 @@ module.exports = {
         }
         while (text("立即领取").exists()) {
             // 立即领取
-            deviceService.combinedClickText("立即领取", 2000);
-            // 收下
-            deviceService.combinedClickText("收下", 2000);
+            deviceService.comboTextClick(["立即领取", "收下", "迎回海洋伙伴", "返回"], 2000);
         }
         // 回到首页
         this.closeSubApp();
@@ -1204,14 +1202,13 @@ module.exports = {
         // 下午5点25前，不走路线
         if (text("马上走").exists() && deviceService.laterThan(22, 25)) {
             deviceService.combinedClickText("马上走", 6000);
-            // deviceService.clickRate(1350 / 1440, 2220 / 3200, 2000);
-            deviceService.combinedClickText("开心收下", 2000);
+            // 开心收下
+            deviceService.comboTextClick(["开心收下", "打开", "可找回"], 2000);
             // Go、下一关
             deviceService.clickRate(1 / 2, 93 / 100, 1000);
             deviceService.clickRate(1 / 2, 93 / 100, 3500);
             // 立即打开
-            deviceService.clickRate(720 / 1440, 2220 / 3200, 2000);
-            deviceService.clickRate(720 / 1440, 2220 / 3200, 2000);
+            deviceService.comboTextClick(["立即打开"], 2000);
             this.closeSubApp();
         }
         // 去捐步
