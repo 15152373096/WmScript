@@ -820,12 +820,10 @@ module.exports = {
         // 时间
         sleep(3000);
         // 我的
-        deviceService.comboTextClick(["我的", "做任务提升等级"], 8000);
+        deviceService.clickRate(1400, 3100, 3000);
         // 签到
-        let bounds = className("android.widget.TextView").text("签到").findOne().bounds();
-        click(bounds.centerX() + device.width * 8 / 10, bounds.centerY());
-        sleep(3000);
-
+        deviceService.comboTextClick(["做任务提升等级", "签到"], 8000);
+        // 收下
         deviceService.clickRate(720, 1915, 3000);
     },
 
