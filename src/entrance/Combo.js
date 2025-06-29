@@ -677,7 +677,15 @@ module.exports = {
         }
         // 去分享
         if (text("去分享").exists()) {
-            deviceService.comboTextClick(["去分享", "确认"], 5000);
+            deviceService.comboTextClick([
+                "去分享",
+                "分享给Ta们 亲密度+6",
+                "分享给Ta们 亲密度+5",
+                "分享给Ta们 亲密度+4",
+                "分享给Ta们 亲密度+3",
+                "分享给Ta们 亲密度+2",
+                "分享给Ta们 亲密度+1"
+            ], 5000);
         }
         // 去捐步
         if (text("去捐步").exists()) {

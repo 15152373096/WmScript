@@ -1,4 +1,3 @@
-// comboTextClick(["我的"], 5000);
 takeEnergy();
 function takeEnergy() {
     comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
