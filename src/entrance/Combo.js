@@ -671,13 +671,13 @@ module.exports = {
             if (text("美食不足，去抽奖得美食").exists()) {
                 // 关闭弹框
                 className("android.widget.TextView").depth(16).indexInParent(8).findOne().click();
-            }else {
+            } else {
                 deviceService.combinedClickText("确认", 3800);
             }
         }
         // 去分享
         if (text("去分享").exists()) {
-            deviceService.comboTextClick(["去分享", "确认"], 3000);
+            deviceService.comboTextClick(["去分享", "确认"], 5000);
         }
         // 去捐步
         if (text("去捐步").exists()) {
@@ -811,7 +811,7 @@ module.exports = {
      * 网上国网签到
      */
     wsgwSignIn: function () {
-        if ("23013RK75C" != device.model) {
+        if (!deviceService.appExists("网上国网")) {
             return;
         }
         toastLog("网上国网签到");
@@ -820,10 +820,12 @@ module.exports = {
         // 时间
         sleep(3000);
         // 我的
-        deviceService.comboTextClick("我的", 5000);
-        deviceService.comboTextClick("做任务提升等级", 8000);
+        deviceService.comboTextClick(["我的", "做任务提升等级"], 8000);
+        // 签到
         let bounds = className("android.widget.TextView").text("签到").findOne().bounds();
         click(bounds.centerX() + device.width * 8 / 10, bounds.centerY());
+        sleep(3000);
+
         deviceService.clickRate(720, 1915, 3000);
     },
 
@@ -831,17 +833,15 @@ module.exports = {
      * 88VIP抽茅台
      */
     mtLottery: function () {
-        if ("23013RK75C" != device.model) {
-            return;
-        }
         toastLog("88VIP抽茅台");
         // 淘宝
         deviceService.launch("淘宝");
         // 时间
         sleep(3000);
-        deviceService.combinedClickDesc("88VIP", 5000);
-        deviceService.clickRate(720, 810, 3000);
-        deviceService.clickRate(720, 2535, 3000);
+        if (desc("88VIP").exists()) {
+            deviceService.combinedClickDesc("88VIP", 5000);
+            deviceService.comboTextClick(["抢茅台", "立即抢茅台"], 4000);
+        }
     },
 
     /**

@@ -1,13 +1,3 @@
-comboTextClick(["去捐蛋", "立即捐蛋", "立即捐蛋"], 8000);
-sleep(10000);
-back();
-sleep(1000);
-if (!text("去捐蛋").exists()) {
-    // 回到庄园
-    back();
-    sleep(1000);
-}
-comboTextClick(["关闭"], 800);
 
 
 
@@ -16,27 +6,7 @@ comboTextClick(["关闭"], 800);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// takeEnergy();
+takeEnergy();
 function takeEnergy() {
     comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
     let count = 0;

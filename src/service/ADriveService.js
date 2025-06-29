@@ -15,5 +15,7 @@ module.exports = {
         sleep(1000);
         // 签到
         deviceService.combinedClickText("领取", 1000);
+        back();
+        sleep(1000);
     }
 }
