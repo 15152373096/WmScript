@@ -677,9 +677,7 @@ module.exports = {
         }
         // 去分享
         if (text("去分享").exists()) {
-            deviceService.combinedClickText("去分享", 3800);
-            deviceService.combinedClickDesc("关闭", 2800);
-            deviceService.combinedClickText("关闭", 2800);
+            deviceService.comboTextClick(["去分享", "确认"], 3000);
         }
         // 去捐步
         if (text("去捐步").exists()) {

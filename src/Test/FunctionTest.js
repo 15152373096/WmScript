@@ -1,4 +1,13 @@
-comboTextClick(["确认"], 3800);
+comboTextClick(["去捐蛋", "立即捐蛋", "立即捐蛋"], 8000);
+sleep(10000);
+back();
+sleep(1000);
+if (!text("去捐蛋").exists()) {
+    // 回到庄园
+    back();
+    sleep(1000);
+}
+comboTextClick(["关闭"], 800);
 
 
 
