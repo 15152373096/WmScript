@@ -441,16 +441,16 @@ module.exports = {
     },
 
     /**
-     * 按照设备比例点击
-     * @param {number} xRate
-     * @param {number} yRate
+     * 按照K60设备比例点击
+     * @param {number} k60X
+     * @param {number} k60Y
      * @param {number} sleepTime
      */
-    clickRate: function (xRate, yRate, sleepTime) {
+    clickRate: function (k60X, k60Y, sleepTime) {
         // 设备参数
         let deviceWidth = device.width;
         let deviceHeight = device.height;
-        click(deviceWidth * xRate, deviceHeight * yRate);
+        click(deviceWidth * k60X / 1440, deviceHeight * k60Y / 3200);
         sleep(sleepTime);
     },
 

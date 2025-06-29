@@ -1,4 +1,35 @@
-takeEnergy();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// takeEnergy();
 function takeEnergy() {
     comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
     let count = 0;

@@ -18,6 +18,6 @@ module.exports = {
         back();
         sleep(200);
         deviceService.combinedClickText("多多视频", 1000);
-        deviceService.clickRate(720 / 1440, 2020 / 3200, 1000);
+        deviceService.clickRate(720, 2020, 1000);
     }
 }

@@ -80,7 +80,7 @@ module.exports = {
         deviceService.comboTextClick(["立即领取", "去收取"], 2000);
         log("星星球");
         // 运动会
-        deviceService.clickRate(1300 / 1440, 1100 / 3200, 3000);
+        deviceService.clickRate(1300, 1100, 3000);
         // 星星球
         deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 马上玩", 2000);
         deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 继续玩", 2000);
@@ -170,9 +170,9 @@ module.exports = {
         // 打开蚂蚁森林
         aliPayService.launchSubApp("蚂蚁森林");
         // 关闭弹框
-        deviceService.comboTextClick(["关闭", "关闭按钮", "知道了"], 1000);
+        aliPayService.clearForestDialog();
         // 点击“奖励”
-        deviceService.clickRate(585 / 1440, 2100 / 3200, 2000);
+        deviceService.clickRate(585, 2100, 2000);
         text("我的活力值").waitFor();
         // 森林寻宝
         this.forestTreasureHunt();
@@ -231,7 +231,7 @@ module.exports = {
      */
     forestTreasureHunt: function () {
         // 森林寻宝
-        deviceService.clickRate(1225 / 1440, 915 / 3200, 3000);
+        deviceService.clickRate(1225, 915, 3000);
         // 签到
         deviceService.combinedClickText("签到", 1000);
         // 去逛逛
@@ -250,7 +250,7 @@ module.exports = {
         while (text("次机会").exists()) {
             deviceService.combinedClickText("次机会", 1000);
             // 关闭
-            deviceService.clickRate(720 / 1440, 2980 / 3200, 2000);
+            deviceService.clickRate(720, 2980, 2000);
         }
         back();
         sleep(1000);
@@ -346,15 +346,15 @@ module.exports = {
             sleep(800);
             // 设置金额
             // deviceService.comboTextClick(["0",".", "0", "1", "确认"], 80);
-            deviceService.clickRate(360 / 1440, 3110 / 3200, 500);
-            deviceService.clickRate(900 / 1440, 3110 / 3200, 500);
-            deviceService.clickRate(360 / 1440, 3110 / 3200, 500);
-            deviceService.clickRate(180 / 1440, 2560 / 3200, 500);
-            deviceService.clickRate(1268 / 1440, 2925 / 3200, 2000);
+            deviceService.clickRate(360, 3110, 500);
+            deviceService.clickRate(900, 3110, 500);
+            deviceService.clickRate(360, 3110, 500);
+            deviceService.clickRate(180, 2560, 500);
+            deviceService.clickRate(1268, 2925, 2000);
             // 立即还款
-            deviceService.clickRate(720 / 1440, 2975 / 3200, 5000);
+            deviceService.clickRate(720, 2975, 5000);
             // 立即支付
-            deviceService.clickRate(720 / 1440, 2975 / 3200, 5000);
+            deviceService.clickRate(720, 2975, 5000);
             // pass
             deviceService.combinedClickText("使用密码", 1000);
             deviceService.comboTextClick(["5", "9", "4", "6", "0", "6"], 80);
@@ -486,7 +486,7 @@ module.exports = {
             // 同步数据
             sleep(3000);
             // 我的
-            deviceService.clickRate(1200 / 1440, 3150 / 3200, 1000);
+            deviceService.clickRate(1200, 3150, 1000);
             deviceService.comboTextClick(["第三方接入", "支付宝", "解除绑定", "确定", "绑定"], 2000);
             sleep(4000);
             back();
@@ -526,20 +526,32 @@ module.exports = {
         aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
         // 打开蚂蚁森林
         aliPayService.launchSubApp("蚂蚁森林");
+        // 关闭弹框
+        aliPayService.clearForestDialog();
         // 上滑
         deviceService.swipeUp(device.height / 2);
         // 上滑
         deviceService.swipeUp(device.height / 2);
         // 新版本收能量
         deviceService.comboTextClick(["查看更多好友", "王明"], 5000);
-        deviceService.clickRate(1120 / 1440, 2475 / 3200, 1800);
-        let finish = false;
-        while (!finish) {
-            if (text("赠送").exists()) {
-                deviceService.combinedClickText("赠送", 1000);
-                deviceService.clickDIP("android.widget.Button", 17, 3, 800);
-            } else {
-                finish = true;
+        // 送道具
+        deviceService.clickRate(1120, 2475, 1800);
+        while (className("android.widget.Button").depth(18).text("赠送").exists()) {
+            className("android.widget.Button").depth(18).text("赠送").findOne().click();
+            sleep(3000);
+            // 确认赠送
+            if (className("android.widget.Button").depth(16).text("赠送").exists()) {
+                className("android.widget.Button").depth(16).text("赠送").findOne().click();
+                sleep(3000);
+            }
+        }
+        while (className("android.widget.Button").depth(19).text("赠送").exists()) {
+            className("android.widget.Button").depth(19).text("赠送").findOne().click();
+            sleep(3000);
+            // 确认赠送
+            if (className("android.widget.Button").depth(16).text("赠送").exists()) {
+                className("android.widget.Button").depth(16).text("赠送").findOne().click();
+                sleep(3000);
             }
         }
         deviceService.combinedClickText("关闭", 2800);
@@ -621,9 +633,9 @@ module.exports = {
             // 收取赠送麦子
             deviceService.comboTextClick(["去收取", "立即领取"], 800);
             // 睡觉广告
-            deviceService.clickRate(55 / 1440, 2385 / 3200, 800);
+            deviceService.clickRate(55, 2385, 800);
             // 收鸡蛋
-            deviceService.clickRate(250 / 1440, 2245 / 3200, 800);
+            deviceService.clickRate(250, 2245, 800);
             this.loopPlantWheat();
             // 回到首页
             aliPayService.closeSubApp();
@@ -641,7 +653,7 @@ module.exports = {
         // 用户
         let userNameArrayAll = ["王明", "coco", "olly", "wm01", "wm02", "wm03", "wm04"];
         // 好友
-        deviceService.clickRate(160 / 1440, 2980 / 3200, 3000);
+        deviceService.clickRate(160, 2980, 3000);
         // 遍历列表
         if (className("android.widget.Button").depth(18).exists()) {
             let buttons = className("android.widget.Button").depth(18).find();
@@ -737,7 +749,7 @@ module.exports = {
         deviceService.comboTextClick("做任务提升等级", 8000);
         let bounds = className("android.widget.TextView").text("签到").findOne().bounds();
         click(bounds.centerX() + device.width * 8 / 10, bounds.centerY());
-        deviceService.clickRate(720 / 1440, 1915 / 3200, 3000);
+        deviceService.clickRate(720, 1915, 3000);
     },
 
     /**
@@ -753,8 +765,8 @@ module.exports = {
         // 时间
         sleep(3000);
         deviceService.combinedClickDesc("88VIP", 5000);
-        deviceService.clickRate(720 / 1440, 810 / 3200, 3000);
-        deviceService.clickRate(720 / 1440, 2535 / 3200, 3000);
+        deviceService.clickRate(720, 810, 3000);
+        deviceService.clickRate(720, 2535, 3000);
     },
 
     /**

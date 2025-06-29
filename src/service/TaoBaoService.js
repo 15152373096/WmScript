@@ -8,7 +8,7 @@ module.exports = {
      * 切换账号
      */
     switchAccount: function (account) {
-        deviceService.clickRate(1300 / 1440, 3100 / 3200, 3000);
+        deviceService.clickRate(1300, 3100, 3000);
         deviceService.combinedClickDesc("设置", 3000);
         deviceService.combinedClickDesc("切换账号", 3000);
         deviceService.combinedClickText(account, 5000);
@@ -24,7 +24,7 @@ module.exports = {
         sleep(8000);
         deviceService.combinedClickText("参与比赛", 1000);
         // 点击领取
-        deviceService.clickRate(1290 / 1440, 2000 / 3200, 800);
+        deviceService.clickRate(1290, 2000, 800);
         // 集肥料
         deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "集肥料", "去签到"], 1000);
         // 芭芭农场的浏览任务

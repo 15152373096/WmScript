@@ -29,7 +29,7 @@ module.exports = {
                 className("android.widget.TextView").text("登录其他账号").findOne().click();
                 sleep(1800);
             } else {
-                deviceService.clickRate(720 / 1440, 2450 / 3200, 1800);
+                deviceService.clickRate(720, 2450, 1800);
             }
             // 选择账号
             deviceService.combinedClickText(account, 5000);
@@ -227,15 +227,15 @@ module.exports = {
         deviceService.combinedClickText("关闭", 1000);
         deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
         // 添加蚂蚁组件广告
-        deviceService.clickRate(1335 / 1440, 1535 / 3200, 500);
+        deviceService.clickRate(1335, 1535, 500);
         // 收取赠送麦子
         deviceService.comboTextClick(["去收取", "立即领取"], 800);
         // 打赏喂食
-        deviceService.clickRate(520 / 1440, 2460 / 3200, 800);
+        deviceService.clickRate(520, 2460, 800);
         // 睡觉广告
-        deviceService.clickRate(55 / 1440, 2385 / 3200, 800);
+        deviceService.clickRate(55, 2385, 800);
         // 收鸡蛋
-        deviceService.clickRate(250 / 1440, 2245 / 3200, 1500);
+        deviceService.clickRate(250, 2245, 1500);
         // 喂食小鸡
         this.feedChicken();
         // 小鸡日记
@@ -263,9 +263,9 @@ module.exports = {
      * 小鸡日记
      */
     chickenDiary: function () {
-        deviceService.clickRate(1 / 10, 36 / 100, 3800)
+        deviceService.clickRate(144, 1152, 3800)
         // 贴贴小鸡
-        deviceService.clickRate(1 / 2, 95 / 100, 3800)
+        deviceService.clickRate(720, 3040, 3800)
         if (text("点赞").exists()) {
             text("点赞").click();
             sleep(1000);
@@ -297,7 +297,7 @@ module.exports = {
     chickenToolUse: function (toolType, toolName, useName) {
         log("------蚂蚁庄园-道具-" + toolType + "-" + toolName + "-" + useName);
         // 点击道具
-        deviceService.clickRate(1295 / 1440, 900 / 3200, 2000);
+        deviceService.clickRate(1295, 900, 2000);
         // 选择道具类型
         deviceService.combinedClickText(toolType, 2800);
         // 使用道具
@@ -455,7 +455,7 @@ module.exports = {
                 swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
             }
             // 鱼食任务
-            deviceService.clickRate(365 / 1440, 3045 / 3200, 2000);
+            deviceService.clickRate(365, 3045, 2000);
             deviceService.combinedClickText("鱼食任务", 2000);
             for (let i = 5; i > 0; i--) {
                 deviceService.combinedClickText("领取", 8000);
@@ -653,7 +653,7 @@ module.exports = {
             log("------饲料任务-小鸡睡觉------");
             deviceService.combinedClickText(sleepTask, 5000);
             // 点击睡觉
-            deviceService.clickRate(1 / 2, 1 / 3, 800);
+            deviceService.clickRate(720, 1066, 800);
             // 去睡觉
             deviceService.combinedClickText("去睡觉", 800);
             deviceService.combinedClickText(userConfig.chickenTask.sleepPlace, 800);
@@ -689,25 +689,25 @@ module.exports = {
                     break;
                 }
                 // 施肥食材
-                deviceService.clickRate(420 / 1440, 720 / 3200, 5000);
+                deviceService.clickRate(420, 720, 5000);
                 if (text("任务列表").exists()) {
                     // 施肥
-                    deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
+                    deviceService.clickRate(720, 2585, 1000);
                     // 返回
                     back();
                     sleep(1000)
                 }
             }
             // 厨房垃圾
-            deviceService.clickRate(1245 / 1440, 1280 / 3200, 2800);
+            deviceService.clickRate(1245, 1280, 2800);
             // 关闭弹窗
             deviceService.combinedClickText("关闭", 800);
             // 领取食材
-            deviceService.clickRate(1270 / 1440, 2230 / 3200, 2800);
+            deviceService.clickRate(1270, 2230, 2800);
             // 我知道了、关闭弹窗
             deviceService.comboTextClick(["我知道了", "关闭", "取消"], 800);
             // 爱心食材店
-            deviceService.clickRate(1 / 7, 35 / 100, 1800)
+            deviceService.clickRate(206, 1120, 1800)
             // 领10g食材
             deviceService.combinedClickText("领10g食材", 800);
             // 后退
@@ -720,7 +720,7 @@ module.exports = {
             sleep(800);
             for (let i = 0; i < 3; i++) {
                 // 做美食
-                deviceService.clickRate(1030 / 1440, 3010 / 3200, 6000);
+                deviceService.clickRate(1030, 3010, 6000);
                 // 关闭弹窗
                 deviceService.combinedClickText("关闭", 800);
             }
@@ -739,9 +739,9 @@ module.exports = {
             return;
         }
         // 点击去捐蛋
-        deviceService.clickRate(885 / 1440, 2975 / 3200, 5000);
+        deviceService.clickRate(885, 2975, 5000);
         // 捐蛋
-        deviceService.clickRate(1030 / 1440, 3010 / 3200, 6000);
+        deviceService.clickRate(1030, 3010, 6000);
         text("立即捐蛋").waitFor();
         deviceService.comboTextClick(["立即捐蛋", "立即捐蛋"], 8000);
         sleep(10000);
@@ -773,7 +773,7 @@ module.exports = {
      */
     clickChickenFodder: function () {
         // 点击喂食饲料
-        deviceService.clickRate(1255 / 1440, 2970 / 3200, 800);
+        deviceService.clickRate(1255, 2970, 800);
         // 小鸡不在家，领回小鸡
         this.takeBackChicken();
         // 关闭饲料不足弹窗
@@ -794,13 +794,13 @@ module.exports = {
                 sleep(5000);
             } else {
                 // 找小鸡场景
-                deviceService.clickRate(550 / 1440, 2188 / 3200, 800);
+                deviceService.clickRate(550, 2188, 800);
                 // 下次再说
                 deviceService.combinedClickText("下次再说", 800);
                 // 确认带小鸡回家
                 deviceService.combinedClickText("确认", 5000);
                 // 点击右边
-                deviceService.clickRate(980 / 1440, 2188 / 3200, 800);
+                deviceService.clickRate(980, 2188, 800);
                 // 下次再说
                 deviceService.combinedClickText("下次再说", 800);
                 // 确认带小鸡回家
@@ -815,7 +815,7 @@ module.exports = {
      */
     plantWheat: function (friendName) {
         // 好友
-        deviceService.clickRate(160 / 1440, 2980 / 3200, 3000);
+        deviceService.clickRate(160, 2980, 3000);
         // 点击好友
         deviceService.combinedClickText(friendName, 5000);
         // 种麦子
@@ -847,11 +847,11 @@ module.exports = {
         // 通知申请
         deviceService.combinedClickText("取消", 2000);
         // 领取肥料
-        deviceService.clickRate(1265 / 1440, 2325 / 3200, 800);
+        deviceService.clickRate(1265, 2325, 800);
         // 通知申请、关闭明日可领取、通知申请
         deviceService.comboTextClick(["取消", "关闭", "取消"], 2000);
         // 施肥
-        deviceService.clickRate(720 / 1440, 2585 / 3200, 1000);
+        deviceService.clickRate(720, 2585, 1000);
         // 好的
         deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
         // 立即领奖
@@ -932,7 +932,7 @@ module.exports = {
         // 捐币弹框
         deviceService.clickDIP("android.view.View", 14, 0, 800);
         // 收豆子
-        deviceService.clickRate(740 / 1440, 1660 / 3200, 2000);
+        deviceService.clickRate(740, 1660, 2000);
         // 通知申请
         deviceService.combinedClickText("取消", 2000);
         if ("on" == userConfig.antNewVillageTask.takeAwayVendors) {
@@ -950,13 +950,13 @@ module.exports = {
             this.clickCoordinates("closeVillageDialog");
         }
         // 摆摊
-        deviceService.clickRate(1195 / 1440, 2967 / 3200, 1800);
+        deviceService.clickRate(1195, 2967, 1800);
         // 全部收摊、确认收摊、随机摆摊、我知道了
         deviceService.comboTextClick(["全部收摊", "确认收摊", "随机摆摊", "返回新村"], 1800);
         // 关闭弹框
         this.clickCoordinates("closeVillageDialog");
         // 加速产币
-        deviceService.clickRate(720 / 1440, 2960 / 3200, 1000);
+        deviceService.clickRate(720, 2960, 1000);
         // 可以领取农民就领取
         deviceService.combinedClickText("领取", 800);
         // 回到首页
@@ -970,9 +970,9 @@ module.exports = {
         // 打开蚂蚁新村
         this.launchSubApp("蚂蚁森林");
         // 关闭弹框
-        deviceService.comboTextClick(["关闭", "关闭按钮", "知道了"], 1000);
+        this.clearForestDialog();
         // 开启新图鉴/抽取物种卡
-        deviceService.clickRate(955 / 1440, 1900 / 3200, 3000);
+        deviceService.clickRate(955, 1900, 3000);
         back();
         sleep(1000);
         if (!text(userName).exists()) {
@@ -981,14 +981,14 @@ module.exports = {
         }
         // 收取赠送能量
         for (let i = 0; i < 15; i++) {
-            deviceService.clickRate(360 / 1440, 680 / 3200, 500);
+            deviceService.clickRate(360, 680, 500);
         }
         if ("on" == userConfig.antForestTask.takeEnergySwitch) {
             // 主账号收能量
             this.takeEnergy();
         } else {
             // 小号接受复活能量
-            deviceService.clickRate(360 / 1440, 680 / 3200, 500);
+            deviceService.clickRate(360, 680, 500);
             // 立即收取
             deviceService.combinedClickText("立即收取", 1000);
         }
@@ -1012,14 +1012,14 @@ module.exports = {
         deviceService.combinedClickText(friendName, 5000);
         for (let i = 0; i < 3; i++) {
             // 点击浇水
-            deviceService.clickRate(1315 / 1440, 2474 / 3200, 1000);
+            deviceService.clickRate(1315, 2474, 1000);
             // 选择66g
             deviceService.combinedClickText("66克", 600);
             // 浇水
             deviceService.combinedClickText("浇水送祝福", 4500);
         }
         // 种植礼包
-        deviceService.clickRate(360 / 1440, 680 / 3200, 2000);
+        deviceService.clickRate(360, 680, 2000);
         deviceService.combinedClickText("知道了", 2000);
         // 回退到排行榜
         back();
@@ -1036,30 +1036,20 @@ module.exports = {
         // 关闭弹框
         deviceService.combinedClickText("关闭", 1000);
         toastLog("====== 开始找能量 ======");
-        // 标记是否偷完
-        let selfFlag = true;
+        // 计数
+        let count = 1;
         while (true) {
             // 取消订阅弹框
             deviceService.combinedClickText("取消", 2000);
             // 收能量
-            this.energyClick(selfFlag);
+            this.energyClick(count);
             // 找能量
-            deviceService.clickRate(1315 / 1440, 2115 / 3200, 3000);
+            deviceService.clickRate(1315, 2115, 3000);
             // 如果找完了，返回森林
-            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists()) {
-                deviceService.clickDIP("android.view.View", 14, 9, 1000);
-                while (text("兑换并铺设").exists()) {
-                    deviceService.combinedClickText("兑换并铺设", 1000);
-                    deviceService.clickDIP("android.widget.TextView", 20, 10, 1000);
-                }
+            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists() || !text("展开好友动态").exists()) {
                 break;
             }
-            // 双击卡只用一次
-            // if (selfFlag) {
-            //     deviceService.clickRate(130 / 1440, 2460 / 3200, 500);
-            //     deviceService.combinedClickText("立即使用", 3000);
-            // }
-            selfFlag = false;
+            count++;
         }
         toastLog("====== 结束找能量 ======");
     },
@@ -1067,9 +1057,9 @@ module.exports = {
     /**
      * 收能量的点击操作
      */
-    energyClick: function (selfFlag) {
+    energyClick: function (count) {
         // 自己不能一键收，点击收取
-        if (selfFlag) {
+        if (1 == count) {
             let cordArray = [
                 [320, 1665],
                 [260, 964],
@@ -1080,18 +1070,28 @@ module.exports = {
                 [812, 764],
             ];
             cordArray.forEach(cord => {
-                deviceService.clickRate(cord[0] / 1440, cord[1] / 3200, 200);
+                deviceService.clickRate(cord[0], cord[1], 200);
                 this.clearForestDialog();
             });
+            // 双击卡只用一次
+            // if (selfFlag) {
+            //     deviceService.clickRate(130, 2460, 500);
+            //     deviceService.combinedClickText("立即使用", 3000);
+            // }
         } else {
             // 别人的用一键收
-            deviceService.clickRate(720 / 1440, 1860 / 3200, 1000);
-            deviceService.clickRate(720 / 1440, 1860 / 3200, 500);
-
+            deviceService.clickRate(720, 1860, 800);
+            deviceService.clickRate(720, 1860, 800);
             // 种植礼包
-            deviceService.clickRate(360 / 1440, 680 / 3200, 2000);
+            deviceService.clickRate(360, 680, 2000);
             this.clearForestDialog();
         }
+        // 打印日志
+        if (className("android.widget.TextView").depth(12).indexInParent(0).exists()) {
+            let forestInfo = className("android.widget.TextView").depth(12).indexInParent(0).findOne().text();
+            log("收取能量，第" + count + "个:" + forestInfo);
+        }
+
     },
 
     /**
@@ -1111,7 +1111,7 @@ module.exports = {
         }
         while (true) {
             // 找拼图
-            deviceService.clickRate(1325 / 1440, 2500 / 3200, 5000);
+            deviceService.clickRate(1325, 2500, 5000);
             if (text("回到我的海洋").exists()) {
                 text("回到我的海洋").click();
                 sleep(800);
@@ -1123,7 +1123,7 @@ module.exports = {
             this.clearSeaDialog();
         }
         // 奖励
-        deviceService.clickRate(1220 / 1440, 3000 / 3200, 2000);
+        deviceService.clickRate(1220, 3000, 2000);
         // 去看看
         while (text("去答题").exists()) {
             // 去答题
@@ -1201,8 +1201,8 @@ module.exports = {
             // 开心收下
             deviceService.comboTextClick(["开心收下", "打开", "可找回"], 2000);
             // Go、下一关
-            deviceService.clickRate(1 / 2, 93 / 100, 1000);
-            deviceService.clickRate(1 / 2, 93 / 100, 3500);
+            deviceService.clickRate(720, 2976, 1000);
+            deviceService.clickRate(720, 2976, 3500);
             // 立即打开
             deviceService.comboTextClick(["立即打开"], 2000);
             this.closeSubApp();
@@ -1221,15 +1221,17 @@ module.exports = {
     },
 
     /**
-     * 取消误点皮肤
-     * @returns
+     * 取消弹框
      */
     clearForestDialog: function () {
         if (text("帮好友复活能量").exists()) {
-            deviceService.clickRate(720 / 1440, 2060 / 3200, 2800);
+            deviceService.clickRate(720, 2060, 2800);
+        }
+        if (text("添加「蚂蚁森林」到桌面").exists()) {
+            className("android.widget.Image").depth(11).indexInParent(0).findOne().click();
         }
         // 取消误点皮肤
-        deviceService.comboTextClick(["关闭", "知道了"], 100);
+        deviceService.comboTextClick(["关闭", "关闭按钮", "知道了", "关闭弹窗"], 1000);
     },
 
     /**
@@ -1240,19 +1242,19 @@ module.exports = {
         switch (desc) {
             // 蚂蚁庄园-领饲料
             case "collarFeed":
-                deviceService.clickRate(400 / 1440, 2950 / 3200, 2800);
+                deviceService.clickRate(400, 2950, 2800);
                 return;
             // 蚂蚁庄园-种麦子
             case "plantWheat":
-                deviceService.clickRate(465 / 1440, 2965 / 3200, 800);
+                deviceService.clickRate(465, 2965, 800);
                 return;
             // 蚂蚁新村-关闭弹框
             case "closeVillageDialog":
-                deviceService.clickRate(1317 / 1440, 777 / 3200, 800);
+                deviceService.clickRate(1317, 777, 800);
                 return;
             // 神奇海洋-收垃圾
             case "takeGarbage":
-                deviceService.clickRate(1070 / 1440, 2120 / 3200, 1000);
+                deviceService.clickRate(1070, 2120, 1000);
                 return;
         }
     },
