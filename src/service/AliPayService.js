@@ -251,10 +251,6 @@ module.exports = {
             // 捐蛋
             this.donateEgg();
         }
-        // 非主号给主号送小麦
-        if ("on" == userConfig.chickenTask.plantWheatSwitch) {
-            this.plantWheat("王明");
-        }
         // 回到首页
         this.closeSubApp();
     },
@@ -479,7 +475,7 @@ module.exports = {
             deviceService.combinedClickText(appJumpTask, 25000);
             // 等等机器人验证
             this.robotCheck();
-            deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
+            deviceService.comboTextClick(["立即领取", "点击签到", "立即签到"], 1000);
             app.launchApp("支付宝");
             sleep(2000);
             if (!text("去完成").exists()) {
@@ -806,26 +802,6 @@ module.exports = {
                 deviceService.combinedClickText("确认", 5000);
             }
         }
-    },
-
-    /**
-     * 给好友种麦子
-     * @param {string} friendName 好友名称
-     */
-    plantWheat: function (friendName) {
-        // 好友
-        deviceService.clickRate(160, 2980, 3000);
-        // 点击好友
-        deviceService.combinedClickText(friendName, 5000);
-        // 种麦子
-        this.clickCoordinates("plantWheat");
-        // 确认
-        deviceService.combinedClickText("确认", 2800);
-        // 回到好友
-        back();
-        sleep(1000);
-        // 回到庄园
-        deviceService.combinedClickText("关闭", 800);
     },
 
     /**

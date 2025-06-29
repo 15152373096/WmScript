@@ -617,6 +617,82 @@ module.exports = {
     },
 
     /**
+     * 庄园家庭任务
+     */
+    chickenFamilyJob: function () {
+        log("======plantWheatJob start======");
+        this.beforeOpt();
+        // 启动支付宝
+        deviceService.launch("支付宝");
+        // 遍历账号
+        accountList.forEach(account => {
+            aliPayService.switchAccount(account.userAccount);
+            // 打开蚂蚁庄园
+            aliPayService.launchSubApp("蚂蚁庄园");
+            // 广告
+            deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
+            // 收取赠送麦子
+            deviceService.comboTextClick(["去收取", "立即领取"], 800);
+            // 睡觉广告
+            deviceService.clickRate(55, 2385, 800);
+            // 收鸡蛋
+            deviceService.clickRate(250, 2245, 800);
+            this.chickenFamilyTask(account);
+            // 回到首页
+            aliPayService.closeSubApp();
+        });
+        // 切回主账号
+        aliPayService.switchAccount(accountList[0].userAccount);
+        this.afterOpt();
+        log("======plantWheatJob end======");
+    },
+
+    /**
+     * 家庭任务
+     * @param account
+     */
+    chickenFamilyTask: function (account) {
+        // 家庭
+        deviceService.clickRate(640, 2950, 5000);
+        // 立即签到
+        deviceService.clickRate(720, 3000, 5000);
+        // 去捐蛋
+        if (text("去捐蛋").exists()) {
+            deviceService.comboTextClick(["去捐蛋", "去捐蛋", "立即捐蛋", "立即捐蛋"], 3000);
+            back();
+            sleep(800);
+            back();
+            sleep(800);
+            deviceService.combinedClickText("关闭", 2800);
+        }
+        // 去请客
+        if (text("去请客").exists() && "王明" != account.userName) {
+            deviceService.combinedClickText("去请客", 3800);
+            if (text("美食不足，去抽奖得美食").exists()) {
+                // 关闭弹框
+                className("android.widget.TextView").depth(16).indexInParent(8).findOne().click();
+            }else {
+                deviceService.combinedClickText("确认", 3800);
+            }
+        }
+        // 去分享
+        if (text("去分享").exists()) {
+            deviceService.combinedClickText("去分享", 3800);
+            deviceService.combinedClickDesc("关闭", 2800);
+            deviceService.combinedClickText("关闭", 2800);
+        }
+        // 去捐步
+        if (text("去捐步").exists()) {
+            deviceService.comboTextClick(["去捐步", "去捐步数", "立即捐步", "知道了"], 3000);
+            deviceService.combinedClickDesc("关闭", 2800);
+            deviceService.combinedClickText("关闭", 2800);
+        }
+        // 回退
+        back();
+        sleep(800);
+    },
+
+    /**
      * 种植小麦
      */
     plantWheatJob: function () {
@@ -637,7 +713,7 @@ module.exports = {
             deviceService.clickRate(55, 2385, 800);
             // 收鸡蛋
             deviceService.clickRate(250, 2245, 800);
-            this.loopPlantWheat();
+            this.batchPlantWheat();
             // 回到首页
             aliPayService.closeSubApp();
         });
@@ -650,7 +726,7 @@ module.exports = {
     /**
      * 种小麦
      */
-    loopPlantWheat: function () {
+    batchPlantWheat: function () {
         // 用户
         let userNameArrayAll = ["王明", "coco", "olly", "wm01", "wm02", "wm03", "wm04"];
         // 好友

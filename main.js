@@ -4,12 +4,12 @@ ui.layout(
         <vertical>
             <Switch w="{{Math.floor(device.width*0.98)}}px" h="{{Math.floor(device.width*0.1)}}px" margin="{{Math.floor(device.width*0.01)}}px" id="globalSwitch" text="脚本开关" checked="false" textSize="20sp"/>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="待补充任务" id="rescueChickenTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="积分补签到" id="makeUpSignIn"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="全员送道具" id="giveTool"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园种小麦" id="plantWheatTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园大家庭" id="chickenFamily"/>
             </horizontal>
             <horizontal>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园星星球" id="ballJob"/>
@@ -76,9 +76,9 @@ ui.makeUpSignIn.click(function () {
         combo.makeUpSignInJob();
     });
 });
-ui.rescueChickenTask.click(function () {
+ui.chickenFamily.click(function () {
     threads.start(function () {
-        log("wait");
+        combo.chickenFamilyJob();
     });
 });
 ui.syncStepTask.click(function () {

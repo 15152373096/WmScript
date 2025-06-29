@@ -1,7 +1,4 @@
-let currentAccount = text("当前登录").findOne().parent().findOne(className("android.widget.TextView").depth(18)).text()
-log(currentAccount);
-
-
+comboTextClick(["确认"], 3800);
 
 
 
