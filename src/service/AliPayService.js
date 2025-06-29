@@ -479,8 +479,7 @@ module.exports = {
             deviceService.combinedClickText(appJumpTask, 25000);
             // 等等机器人验证
             this.robotCheck();
-            deviceService.combinedClickText("立即签到", 1000);
-            deviceService.combinedClickText("点击签到", 1000);
+            deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
             app.launchApp("支付宝");
             sleep(2000);
             if (!text("去完成").exists()) {
@@ -1134,7 +1133,7 @@ module.exports = {
             sleep(1000);
         }
         // 去看看
-        while (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
+        if (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             let buttons = text("去看看").find();
             buttons.forEach(button => {
                 // 去看看
@@ -1149,7 +1148,7 @@ module.exports = {
             });
         }
         // 看视频
-        while (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
+        if (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             let buttons = text("去逛逛").find();
             buttons.forEach(button => {
                 // 去逛逛

@@ -319,6 +319,17 @@ module.exports = {
     },
 
     /**
+     * 连续多文本
+     * @param descValueArray
+     * @param sleepTime
+     */
+    comboDescClick: function (descValueArray, sleepTime) {
+        descValueArray.forEach(descValue => {
+            this.combinedClickDesc(descValue, sleepTime);
+        });
+    },
+
+    /**
      * 联合点击事件
      * @param descValue
      * @param sleepTime

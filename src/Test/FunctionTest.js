@@ -1,4 +1,5 @@
-
+let currentAccount = text("当前登录").findOne().parent().findOne(className("android.widget.TextView").depth(18)).text()
+log(currentAccount);
 
 
 
@@ -56,4 +57,13 @@ function comboTextClick(textNameArray, sleepTime) {
             sleep(sleepTime);
         }
     });
+}
+
+function swipeViewTask(keepTime) {
+    let duration = 0;
+    while (duration < keepTime) {
+        gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
+        sleep(3000);
+        duration += 3000;
+    }
 }

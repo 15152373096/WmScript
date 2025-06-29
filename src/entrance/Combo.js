@@ -84,6 +84,7 @@ module.exports = {
         // 星星球
         deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 马上玩", 2000);
         deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 继续玩", 2000);
+        deviceService.combinedClickText("星星球 首次得300分+1 去玩", 2000);
         // 等待页面加载
         desc("返回").waitFor();
         sleep(3000);
@@ -789,19 +790,23 @@ module.exports = {
      * 淘宝芭芭农场任务
      */
     taoBaoBaBaJob: function () {
-
         log("======taoBaoBaBa start======");
         this.beforeOpt();
         // 启动淘宝
         deviceService.launch("淘宝");
-        for (let i = 0; i < taobaoAccountList.length; i++) {
+        // 遍历
+        taobaoAccountList.forEach(account => {
+            // 广告弹框
+            deviceService.combinedClickDesc("关闭按钮", 3000);
+            // 切换账号
+            taoBaoService.switchAccount(account);
             // 广告弹框
             deviceService.combinedClickDesc("关闭按钮", 3000);
             // 芭芭农场任务
-            taoBaoService.babaFarmOption(taobaoAccountList[i]);
-            // 切换账号
-            taoBaoService.switchAccount(taobaoAccountList[(i + 1) % taobaoAccountList.length]);
-        }
+            taoBaoService.babaFarmOption(account);
+        });
+        // 切回主账号
+        taoBaoService.switchAccount(taobaoAccountList[0]);
         log("======taoBaoBaBa end======");
         this.afterOpt()
     },

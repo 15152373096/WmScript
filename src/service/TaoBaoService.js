@@ -8,9 +8,25 @@ module.exports = {
      * 切换账号
      */
     switchAccount: function (account) {
+        // 我的淘宝
         deviceService.clickRate(1300, 3100, 3000);
-        deviceService.combinedClickDesc("设置", 3000);
-        deviceService.combinedClickDesc("切换账号", 3000);
+        deviceService.comboDescClick(["设置", "切换账号"], 3000);
+        if (text("当前登录").exists()) {
+            let currentAccount = text("当前登录").findOne().parent().findOne(className("android.widget.TextView").depth(18)).text()
+            // 当前的账号就是要切换的
+            if (currentAccount == account) {
+                // 退回到设置
+                back();
+                sleep(1000);
+                // 我的淘宝
+                back();
+                sleep(1000);
+                // 首页
+                deviceService.clickRate(144, 3100, 3000);
+                return;
+            }
+        }
+        // 切工号场景
         deviceService.combinedClickText(account, 5000);
         deviceService.combinedClickDesc("关闭按钮", 3000);
     },
@@ -42,16 +58,17 @@ module.exports = {
      */
     babaFarmBrowse: function () {
         sleep(3000);
-        let browse15TaskList = [
+        let browseTaskList = [
             "浏览15秒得奖励",
             "浏览15秒得",
         ];
-        for (let i = 0; i < browse15TaskList.length; i++) {
-            while (text(browse15TaskList[i]).exists() && text(browse15TaskList[i]).findOne().parent().parent().parent().findOne(text("去完成"))) {
-                log("淘宝芭芭农场 任务 ==> " + browse15TaskList[i]);
-                deviceService.clickNearBy(browse15TaskList[i], "去完成", 2000);
+        browseTaskList.forEach(browseTask => {
+            while (text(browseTask).exists()) {
+                text(browseTask).findOne().click();
+                sleep(3000);
                 setText("山楂条");
                 deviceService.combinedClickText("搜索", 3000);
+                deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
                 this.swipeViewTask(18000);
                 back();
                 sleep(1800);
@@ -60,7 +77,7 @@ module.exports = {
                     sleep(1800);
                 }
             }
-        }
+        });
     },
 
     /**
@@ -68,19 +85,10 @@ module.exports = {
      */
     babaFarmJump: function () {
         sleep(3000);
-        let jumpTaskNameList = [
-            "逛逛支付宝芭芭农场",
+        let jumpTaskList = [
+            "逛逛支付宝芭芭农场(0/1)",
             "去点淘领每日提现红包",
         ];
-        // 任务-搜一搜
-        let jumpTaskList = [];
-        for (let i = 0; i < jumpTaskNameList.length; i++) {
-            for (let j = 1; j <= 5; j++) {
-                for (let k = 0; k < j; k++) {
-                    jumpTaskList.push(jumpTaskNameList[i] + "(" + k + "/" + j + ")")
-                }
-            }
-        }
         for (let i = 0; i < jumpTaskList.length; i++) {
             if (text(jumpTaskList[i]).exists() && text(jumpTaskList[i]).findOne().parent().parent().findOne(text("去完成"))) {
                 deviceService.clickNearBy(jumpTaskList[i], "去完成", 15000);
@@ -100,7 +108,6 @@ module.exports = {
      * 下滑浏览任务
      */
     swipeViewTask: function (keepTime) {
-        // 等等机器人验证
         let duration = 0;
         while (duration < keepTime) {
             gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
