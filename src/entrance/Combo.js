@@ -637,7 +637,54 @@ module.exports = {
             deviceService.clickRate(55, 2385, 800);
             // 收鸡蛋
             deviceService.clickRate(250, 2245, 800);
-            this.chickenFamilyTask(account);
+            // 家庭
+            deviceService.clickRate(640, 2950, 5000);
+            // 立即签到
+            deviceService.clickRate(720, 3000, 5000);
+            // 去捐蛋
+            if (text("去捐蛋").exists()) {
+                deviceService.comboTextClick(["去捐蛋", "去捐蛋", "立即捐蛋", "立即捐蛋"], 5000);
+                back();
+                sleep(800);
+                back();
+                sleep(800);
+                deviceService.combinedClickText("关闭", 2800);
+            }
+            // 去请客
+            if (text("去请客").exists() && "王明" != account.userName) {
+                deviceService.combinedClickText("去请客", 3800);
+                if (text("美食不足，去抽奖得美食").exists()) {
+                    // 关闭弹框
+                    className("android.widget.TextView").depth(16).indexInParent(8).findOne().click();
+                } else {
+                    deviceService.combinedClickText("确认", 3800);
+                }
+            }
+            // 去分享
+            if (text("去分享").exists()) {
+                deviceService.comboTextClick([
+                    "去分享",
+                    "分享给Ta们 亲密度+6",
+                    "分享给Ta们 亲密度+5",
+                    "分享给Ta们 亲密度+4",
+                    "分享给Ta们 亲密度+3",
+                    "分享给Ta们 亲密度+2",
+                    "分享给Ta们 亲密度+1"
+                ], 5000);
+            }
+            // 去指派
+            if (text("去指派").exists()) {
+                deviceService.comboTextClick(["去指派", "确认"], 5000);
+            }
+            // 去捐步
+            if (text("去捐步").exists()) {
+                deviceService.comboTextClick(["去捐步", "去捐步数", "立即捐步", "知道了"], 3000);
+                deviceService.combinedClickDesc("关闭", 2800);
+                deviceService.combinedClickText("关闭", 2800);
+            }
+            // 回退
+            back();
+            sleep(800);
             // 回到首页
             aliPayService.closeSubApp();
         });
@@ -645,57 +692,6 @@ module.exports = {
         aliPayService.switchAccount(accountList[0].userAccount);
         this.afterOpt();
         log("======plantWheatJob end======");
-    },
-
-    /**
-     * 家庭任务
-     * @param account
-     */
-    chickenFamilyTask: function (account) {
-        // 家庭
-        deviceService.clickRate(640, 2950, 5000);
-        // 立即签到
-        deviceService.clickRate(720, 3000, 5000);
-        // 去捐蛋
-        if (text("去捐蛋").exists()) {
-            deviceService.comboTextClick(["去捐蛋", "去捐蛋", "立即捐蛋", "立即捐蛋"], 3000);
-            back();
-            sleep(800);
-            back();
-            sleep(800);
-            deviceService.combinedClickText("关闭", 2800);
-        }
-        // 去请客
-        if (text("去请客").exists() && "王明" != account.userName) {
-            deviceService.combinedClickText("去请客", 3800);
-            if (text("美食不足，去抽奖得美食").exists()) {
-                // 关闭弹框
-                className("android.widget.TextView").depth(16).indexInParent(8).findOne().click();
-            } else {
-                deviceService.combinedClickText("确认", 3800);
-            }
-        }
-        // 去分享
-        if (text("去分享").exists()) {
-            deviceService.comboTextClick([
-                "去分享",
-                "分享给Ta们 亲密度+6",
-                "分享给Ta们 亲密度+5",
-                "分享给Ta们 亲密度+4",
-                "分享给Ta们 亲密度+3",
-                "分享给Ta们 亲密度+2",
-                "分享给Ta们 亲密度+1"
-            ], 5000);
-        }
-        // 去捐步
-        if (text("去捐步").exists()) {
-            deviceService.comboTextClick(["去捐步", "去捐步数", "立即捐步", "知道了"], 3000);
-            deviceService.combinedClickDesc("关闭", 2800);
-            deviceService.combinedClickText("关闭", 2800);
-        }
-        // 回退
-        back();
-        sleep(800);
     },
 
     /**
