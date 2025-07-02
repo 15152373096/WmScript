@@ -56,21 +56,21 @@ module.exports = {
     /**
      * 星星球任务
      */
-    starBallJob: function () {
+    chickenGameJob: function () {
         log("======starBallJob start======");
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
         // 打排球
-        this.loopPlayStarBall(0);
+        this.loopPlayChickenGame(0);
         log("======starBallJob end======");
     },
 
     /**
      * 循环打星星球
      */
-    loopPlayStarBall: function (count) {
+    loopPlayChickenGame: function (count) {
         // 切换账号
         aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
         // 打开蚂蚁庄园
@@ -92,20 +92,6 @@ module.exports = {
             let recieve = className("android.widget.Button").text("退出挑战").findOne().bounds();
             click(recieve.centerX(), recieve.centerY());
             sleep(2000);
-            // 回到首页
-            aliPayService.closeSubApp();
-            // 计数
-            count++;
-            if (count < accountList.length) {
-                this.loopPlayStarBall(count);
-            } else {
-                // 复原账号
-                aliPayService.switchAccount(accountList[0].userAccount);
-                // 清除后台任务
-                deviceService.clearBackground();
-                // 锁屏
-                deviceService.lockDevice();
-            }
         } else {
             // 玩法提示
             deviceService.clickDIP("android.view.View", 14, 1, 800);
@@ -131,17 +117,17 @@ module.exports = {
             sleep(1000);
             back();
             sleep(1000);
-            // 回到首页
-            aliPayService.closeSubApp();
-            // 计数
-            count++;
-            if (count < accountList.length) {
-                this.loopPlayStarBall(count);
-            } else {
-                // 复原账号
-                aliPayService.switchAccount(accountList[0].userAccount);
-                this.afterOpt();
-            }
+        }
+        // 回到首页
+        aliPayService.closeSubApp();
+        // 计数
+        count++;
+        if (count < accountList.length) {
+            this.loopPlayChickenGame(count);
+        } else {
+            // 复原账号
+            aliPayService.switchAccount(accountList[0].userAccount);
+            this.afterOpt();
         }
     },
 
@@ -639,6 +625,8 @@ module.exports = {
             deviceService.clickRate(250, 2245, 800);
             // 家庭
             deviceService.clickRate(640, 2950, 5000);
+            text("相亲相爱一家人").waitFor();
+            sleep(1000);
             // 立即签到
             deviceService.clickRate(720, 3000, 5000);
             // 去捐蛋
@@ -674,6 +662,10 @@ module.exports = {
             }
             // 去指派
             if (text("去指派").exists()) {
+                deviceService.comboTextClick(["去指派", "确认"], 5000);
+            }
+            // 去喂食
+            if (text("去喂食").exists()) {
                 deviceService.comboTextClick(["去指派", "确认"], 5000);
             }
             // 去捐步

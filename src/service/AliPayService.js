@@ -3,6 +3,8 @@ let deviceService = require('./DeviceService.js');
 
 // 用户配置
 let userConfig = {};
+// 小鸡睡觉标识
+let isChickenSleep;
 
 module.exports = {
 
@@ -236,6 +238,8 @@ module.exports = {
         deviceService.clickRate(55, 2385, 800);
         // 收鸡蛋
         deviceService.clickRate(250, 2245, 1500);
+        // 小鸡睡觉标识
+        isChickenSleep = false;
         // 喂食小鸡
         this.feedChicken();
         // 小鸡日记
@@ -313,6 +317,10 @@ module.exports = {
         log("------蚂蚁庄园-饲料任务------");
         // 领饲料
         this.clickCoordinates("collarFeed");
+        // 更新小鸡睡觉标识
+        if (text("让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 已领取").exists()) {
+            isChickenSleep = true;
+        }
         // 庄园小课堂
         this.chickenQuestion();
         // 雇佣小鸡
@@ -585,6 +593,10 @@ module.exports = {
                 deviceService.clickNearBy("消耗饲料换机会 (" + i + "/2)", "去完成", 3000);
                 deviceService.combinedClickText("确认兑换", 5000)
             }
+            if (text("消耗饲料换机会(" + i + "/2)").exists()) {
+                deviceService.clickNearBy("消耗饲料换机会(" + i + "/2)", "去完成", 3000);
+                deviceService.combinedClickText("确认兑换", 5000)
+            }
         }
         // 逛一逛
         for (let i = 0; i < 3; i++) {
@@ -594,6 +606,13 @@ module.exports = {
                 back();
                 sleep(1000);
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + (i + 1) + "/3)", "领取", 5000);
+            }
+            if (text("去杂货铺逛一逛(" + i + "/3)").exists()) {
+                deviceService.clickNearBy("去杂货铺逛一逛(" + i + "/3)", "去完成", 5000);
+                this.swipeViewTask(18000);
+                back();
+                sleep(1000);
+                deviceService.clickNearBy("去杂货铺逛一逛(" + (i + 1) + "/3)", "领取", 5000);
             }
         }
     },
@@ -754,6 +773,10 @@ module.exports = {
      * 喂食小鸡
      */
     feedChicken: function () {
+        // 小鸡睡了，跳过喂食
+        if (isChickenSleep) {
+            return;
+        }
         let count = 0;
         // 如果是其他零食，没有显示鸡饲料，或者超过20次
         while (count < 10) {
@@ -1099,7 +1122,7 @@ module.exports = {
         }
         // 奖励
         deviceService.clickRate(1220, 3000, 2000);
-        // 去看看
+        // 去答题
         while (text("去答题").exists()) {
             // 去答题
             deviceService.combinedClickText("去答题", 5000);
@@ -1115,6 +1138,12 @@ module.exports = {
                 // 去看看
                 button.click();
                 sleep(5000);
+                // 跳过的任务
+                if (text("每通过1关可获得100心情值").exists()) {
+                    back();
+                    sleep(1000);
+                    return;
+                }
                 // 立即领取 / 如果是随机游戏任务，进入游戏中心要点击一个任务
                 deviceService.comboTextClick(["立即领取", "角色扮演"], 5000);
                 this.swipeViewTask(30000)
@@ -1123,13 +1152,19 @@ module.exports = {
                 sleep(1000);
             });
         }
-        // 看视频
+        // 去逛逛
         if (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             let buttons = text("去逛逛").find();
             buttons.forEach(button => {
                 // 去逛逛
                 button.click();
                 sleep(5000);
+                // 跳过的任务
+                if (text("天天领现金").exists()) {
+                    back();
+                    sleep(1000);
+                    return;
+                }
                 deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
                 this.swipeViewTask(18000)
                 app.launchApp("支付宝");
@@ -1140,6 +1175,7 @@ module.exports = {
                 }
             });
         }
+        sleep(1000);
         while (text("立即领取").exists()) {
             // 立即领取
             deviceService.comboTextClick(["立即领取", "收下", "迎回海洋伙伴", "返回"], 2000);

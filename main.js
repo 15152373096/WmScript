@@ -58,7 +58,7 @@ ui.comboTask.click(function () {
 });
 ui.ballJob.click(function () {
     threads.start(function () {
-        combo.starBallJob();
+        combo.chickenGameJob();
     });
 });
 ui.energyRain.click(function () {

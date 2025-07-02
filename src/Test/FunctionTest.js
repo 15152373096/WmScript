@@ -1,6 +1,7 @@
-takeEnergy();
+// takeEnergy();
+punchChichen();
 function takeEnergy() {
-    comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅"], 2000);
+    comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅", "original"], 2000);
     let count = 0;
     while (true) {
         for (let i = 1; i < 8; i++) {
@@ -8,6 +9,24 @@ function takeEnergy() {
         }
         count += 80;
         if (text("恭喜获得").exists() || text("送TA机会").exists() || count > 30000) {
+            break;
+        }
+    }
+}
+
+// text = 欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩
+
+function punchChichen() {
+    comboTextClick(["original"], 2000);
+    let count = 0;
+    while (true) {
+        for (let i = 1; i < 8; i++) {
+            press(device.width / 8 * i, device.height / 10, 10);
+        }
+        count += 80;
+        if (text("回到蚂蚁庄园 >").exists() || count > 30000) {
+            text("恭喜获得").click();
+            sleep(1000);
             break;
         }
     }
