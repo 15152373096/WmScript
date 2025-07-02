@@ -82,9 +82,64 @@ module.exports = {
         // 运动会
         deviceService.clickRate(1300, 1100, 3000);
         // 星星球
-        deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 马上玩", 2000);
-        deviceService.combinedClickText("星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 继续玩", 2000);
-        deviceService.combinedClickText("星星球 首次得300分+1 去玩", 2000);
+        this.playStarBall();
+        // 欢乐揍小鸡
+        this.punchChichen();
+        // 回到首页
+        aliPayService.closeSubApp();
+        // 计数
+        count++;
+        if (count < accountList.length) {
+            this.loopPlayChickenGame(count);
+        } else {
+            // 复原账号
+            aliPayService.switchAccount(accountList[0].userAccount);
+            this.afterOpt();
+        }
+    },
+
+    /**
+     * 欢乐揍小鸡
+     */
+    punchChichen: function () {
+        deviceService.comboTextClick([
+            "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 马上玩",
+            "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩",
+            "欢乐揍小鸡 首次得60g饲料+1 去玩"
+        ], 2000);
+        // 等待页面加载
+        desc("返回").waitFor();
+        sleep(3000);
+        if (text("回到蚂蚁庄园 >").exists()) {
+            text("回到蚂蚁庄园 >").click();
+            sleep(1000);
+        } else {
+            deviceService.combinedClickText("original", 2000);
+            let count = 0;
+            while (true) {
+                for (let i = 1; i < 8; i++) {
+                    press(device.width / 8 * i, device.height / 10, 10);
+                }
+                count += 80;
+                if (text("回到蚂蚁庄园 >").exists() || count > 24000) {
+                    text("回到蚂蚁庄园 >").click();
+                    sleep(1000);
+                    break;
+                }
+            }
+        }
+    },
+
+    /**
+     * 玩星星球
+     */
+    playStarBall: function () {
+        // 星星球
+        deviceService.comboTextClick([
+            "星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 马上玩",
+            "星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 继续玩",
+            "星星球 首次得300分+1 去玩"
+        ], 2000);
         // 等待页面加载
         desc("返回").waitFor();
         sleep(3000);
@@ -117,17 +172,6 @@ module.exports = {
             sleep(1000);
             back();
             sleep(1000);
-        }
-        // 回到首页
-        aliPayService.closeSubApp();
-        // 计数
-        count++;
-        if (count < accountList.length) {
-            this.loopPlayChickenGame(count);
-        } else {
-            // 复原账号
-            aliPayService.switchAccount(accountList[0].userAccount);
-            this.afterOpt();
         }
     },
 
