@@ -78,10 +78,7 @@ module.exports = {
         this.scoreMission();
         // 关闭签到
         deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 1000);
-        deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 1000);
-        // 刷新
-        deviceService.swipeDown(device.height / 2);
-        sleep(5000);
+        deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 5000);
         // 首页
         deviceService.combinedClickText("首页", 2000);
         this.closeShanGouAD();
@@ -445,13 +442,14 @@ module.exports = {
                 deviceService.combinedClickText("鱼食(" + i + "/8)", 2000);
                 deviceService.combinedClickText("继续喂鱼", 500);
             }
+            // 放生池点击
             for (let i = 0; i < 168; i++) {
-                deviceService.clickRate(0.5, 0.5, 200);
+                deviceService.clickRate(720, 1600, 200);
             }
             // 敲木鱼
             deviceService.combinedClickText("敲一敲", 1000);
             for (let i = 0; i < 168; i++) {
-                deviceService.clickRate(0.5, 0.5, 200);
+                deviceService.clickRate(720, 1600, 200);
             }
             // 盘珠子
             deviceService.combinedClickText("盘一盘", 1000);
@@ -461,7 +459,32 @@ module.exports = {
             // 鱼食任务
             deviceService.clickRate(365, 3045, 2000);
             deviceService.combinedClickText("鱼食任务", 2000);
-            for (let i = 5; i > 0; i--) {
+            // 祈福任务
+            if (text("为您的好友完成一次祈福吧").exists() && text("为您的好友完成一次祈福吧").findOne().parent().findOne(text("前往"))) {
+                text("为您的好友完成一次祈福吧").findOne().parent().findOne(text("前往")).click();
+                sleep(3000);
+                text("为Ta祈福").findOne().click()
+                for (let i = 0; i < 16; i++) {
+                    deviceService.clickRate(720, 1600, 800);
+                    if (text("确定").exists()) {
+                        text("确定").click();
+                        sleep(1800);
+                        break;
+                    }
+                }
+                back();
+                sleep(1000);
+                deviceService.clickRate(720, 800, 1000);
+            }
+            // 社区发现页面
+            if (text("前往社区发现页面").exists() && text("前往社区发现页面").findOne().parent().findOne(text("前往"))) {
+                text("前往社区发现页面").findOne().parent().findOne(text("前往")).click();
+                sleep(3000);
+                back();
+                sleep(1000);
+            }
+            // 领取
+            for (let i = 7; i > 0; i--) {
                 deviceService.combinedClickText("领取", 8000);
             }
             back();
@@ -572,7 +595,20 @@ module.exports = {
                 // 抽奖
                 for (let i = 24; i > 0; i--) {
                     deviceService.combinedClickText("还剩" + i + "次机会", 6000);
-                    deviceService.comboTextClick(["继续抽奖", "继续抽", "开心收下", "知道啦"], 1000);
+                    deviceService.comboTextClick([
+                        "继续抽奖",
+                        "继续抽",
+                        "继续抽还剩8次机会",
+                        "继续抽还剩7次机会",
+                        "继续抽还剩6次机会",
+                        "继续抽还剩5次机会",
+                        "继续抽还剩4次机会",
+                        "继续抽还剩3次机会",
+                        "继续抽还剩2次机会",
+                        "继续抽还剩1次机会",
+                        "开心收下",
+                        "知道啦"
+                    ], 1000);
                 }
                 // 回退到任务
                 back();
@@ -1161,8 +1197,7 @@ module.exports = {
                 sleep(5000);
                 // 跳过的任务
                 if (text("天天领现金").exists()) {
-                    back();
-                    sleep(1000);
+                    this.closeSubApp();
                     return;
                 }
                 deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
@@ -1207,10 +1242,14 @@ module.exports = {
         this.launchSubApp("运动");
         deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数"], 2000);
         // 下午5点25前，不走路线
-        if (text("马上走").exists() && deviceService.laterThan(22, 25)) {
-            deviceService.combinedClickText("马上走", 6000);
+        if (deviceService.laterThan(22, 25)) {
+            if (text("马上走").exists()) {
+                deviceService.combinedClickText("马上走", 6000);
+            } else {
+                deviceService.clickRate(230, 2150, 6000);
+            }
             // 开心收下
-            deviceService.comboTextClick(["开心收下", "打开", "可找回"], 2000);
+            deviceService.comboTextClick(["立即开走", "开心收下", "打开", "可找回", "取消"], 2000);
             // Go、下一关
             deviceService.clickRate(720, 2976, 1000);
             deviceService.clickRate(720, 2976, 3500);

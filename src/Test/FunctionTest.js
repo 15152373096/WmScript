@@ -1,3 +1,8 @@
+// text = 为保障您的正常访问请进行验证
+// text = 请拖动滑块完成拼图
+
+
+
 takeEnergy();
 // punchChichen();
 function takeEnergy() {
@@ -13,7 +18,7 @@ function takeEnergy() {
         }
     }
 }
-
+// 
 // text = 欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩
 
 function punchChichen() {

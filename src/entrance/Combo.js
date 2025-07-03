@@ -68,7 +68,7 @@ module.exports = {
     },
 
     /**
-     * 循环打星星球
+     * 循环小鸡运动会
      */
     loopPlayChickenGame: function (count) {
         // 切换账号
@@ -81,10 +81,10 @@ module.exports = {
         log("星星球");
         // 运动会
         deviceService.clickRate(1300, 1100, 3000);
-        // 星星球
-        this.playStarBall();
         // 欢乐揍小鸡
         this.punchChichen();
+        // 星星球
+        this.playStarBall();
         // 回到首页
         aliPayService.closeSubApp();
         // 计数
@@ -168,8 +168,6 @@ module.exports = {
                 }
             }
             sleep(6000);
-            back();
-            sleep(1000);
             back();
             sleep(1000);
         }
@@ -668,7 +666,7 @@ module.exports = {
             // 收鸡蛋
             deviceService.clickRate(250, 2245, 800);
             // 家庭
-            deviceService.clickRate(640, 2950, 5000);
+            deviceService.clickRate(640, 2950, 8000);
             text("相亲相爱一家人").waitFor();
             sleep(1000);
             // 立即签到
@@ -704,12 +702,12 @@ module.exports = {
                     "分享给Ta们 亲密度+1"
                 ], 5000);
             }
-            // 去指派
-            if (text("去指派").exists()) {
-                deviceService.comboTextClick(["去指派", "确认"], 5000);
-            }
             // 去喂食
             if (text("去喂食").exists()) {
+                deviceService.comboTextClick(["去喂食", "确认"], 5000);
+            }
+            // 去指派
+            if (text("去指派").exists()) {
                 deviceService.comboTextClick(["去指派", "确认"], 5000);
             }
             // 去捐步

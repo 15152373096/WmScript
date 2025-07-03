@@ -12,7 +12,7 @@ ui.layout(
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园大家庭" id="chickenFamily"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园星星球" id="ballJob"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园运动会" id="ballJob"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
