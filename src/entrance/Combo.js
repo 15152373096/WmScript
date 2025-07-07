@@ -85,6 +85,10 @@ module.exports = {
         this.punchChichen();
         // 星星球
         this.playStarBall();
+        // 立即开宝箱 还有3个宝箱
+        for (let i = 10; i > 0; i--) {
+            deviceService.combinedClickText("立即开宝箱 还有" + i + "个宝箱", 6000);
+        }
         // 回到首页
         aliPayService.closeSubApp();
         // 计数
@@ -106,10 +110,7 @@ module.exports = {
             "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 马上玩",
             "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩",
             "欢乐揍小鸡 首次得60g饲料+1 去玩"
-        ], 2000);
-        // 等待页面加载
-        desc("返回").waitFor();
-        sleep(3000);
+        ], 6000);
         if (text("回到蚂蚁庄园 >").exists()) {
             text("回到蚂蚁庄园 >").click();
             sleep(1000);
@@ -266,7 +267,7 @@ module.exports = {
         // 去逛逛
         while (text("去逛逛").exists()) {
             deviceService.combinedClickText("去逛逛", 3000);
-            aliPayService.swipeViewTask(18000);
+            deviceService.swipeViewTask(18000);
             back();
             sleep(1000);
             deviceService.combinedClickText("领取", 1000);
@@ -704,7 +705,7 @@ module.exports = {
             }
             // 去喂食
             if (text("去喂食").exists()) {
-                deviceService.comboTextClick(["去喂食", "确认"], 5000);
+                deviceService.comboTextClick(["去喂食", "确认", "确认 亲密度+1"], 5000);
             }
             // 去指派
             if (text("去指派").exists()) {
@@ -835,10 +836,9 @@ module.exports = {
         app.openUrl(url);
         sleep(5000);
         if (text("登录").exists()) {
-            let index = "23013RK75C" == device.model ? 1 : 0;
-            setText(index++, "15152373096");
+            setText(1, "15152373096");
             sleep(800);
-            setText(index, "SF@ming0935");
+            setText(2, "SF@ming0935");
             sleep(800);
             deviceService.comboTextClick(["登录", "OK"], 6000);
         }

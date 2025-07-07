@@ -470,7 +470,7 @@ module.exports = {
      * @param {String} lookupImage
      */
     imageExist: function (lookupImage) {
-        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
+        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
         if (p) {
             return true;
         } else {
@@ -484,7 +484,7 @@ module.exports = {
      * @param {number} sleepTime
      */
     clickImage: function (lookupImage, sleepTime) {
-        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
+        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);
             sleep(sleepTime);
@@ -651,5 +651,95 @@ module.exports = {
             }
         }
         return false;
+    },
+
+    /**
+     * 下滑浏览任务
+     */
+    swipeViewTask: function (keepTime) {
+        let finishTextArray = [
+            "已完成 可领奖励",
+            "已完成 可领饲料",
+            "任务已完成，恭喜获得奖励！",
+            "浏览完成，下单再得积分",
+        ]
+        // 等等机器人验证
+        this.robotCheck();
+        let duration = 0;
+        while (duration < keepTime) {
+            gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
+            // 完成的，提前跳出
+            for(let i=0; i< finishTextArray.length; i++) {
+                if (text(finishTextArray[i]).exists()) {
+                    return;
+                }
+            };
+            sleep(3000);
+            duration += 3000;
+        }
+    },
+
+    /**
+     * 机器人验证提醒
+     */
+    robotCheck: function () {
+        log("===== 机器人验证 START =====");
+        // 等待滑动加载
+        sleep(3000);
+        // 尝试次数
+        let retryTime = 1;
+        // 如果需要验证，则提示
+        while (text("向右滑动验证").exists() || text("亲，请拖动下方滑块完成验证").exists()) {
+            if (retryTime > 2) {
+                // 反馈
+                let feedbacks = ["滑动验证码后提示验证失败", "频繁看到该验证码"];
+                this.combinedClickText("点我反馈 >", 3000);
+                this.combinedClickText(feedbacks[this.getRandomNumber(0, 1)], 1000);
+                this.combinedClickText("提交", 5000);
+                back();
+                sleep(3000);
+                break;
+            }
+            this.slidingVerification();
+            retryTime++;
+        }
+        log("===== 机器人验证 END =====");
+    },
+
+    /**
+     * 滑动验证
+     */
+    slidingVerification: function () {
+        // 刷新滑块
+        this.clickDIP("android.widget.TextView", 13, 0, 1000)
+        log("===== 开始滑动 START =====");
+        let slideBounds = className("android.widget.Button").text("滑块").exists() ? className("android.widget.Button").text("滑块").findOne().bounds() : className("android.widget.TextView").text("滑块").findOne().bounds();
+        // 最左边X坐标
+        let xLeft = slideBounds.centerX();
+        let bounds = className("android.widget.TextView").text("向右滑动验证").findOne().bounds();
+        let xRight = bounds.right;
+        // 分割次数
+        let cnt = 3;
+        // 高度
+        let height = slideBounds.bottom - slideBounds.top;
+        // 长度
+        let length = xRight - xLeft;
+        // 坐标1
+        let x1 = xLeft;
+        let y1 = this.getRandomNumber(slideBounds.top + height / 4, slideBounds.bottom - height / 4);
+        for (let i = 0; i < cnt - 1; i++) {
+            // 坐标2
+            let x2 = x1 + (length / cnt) + this.getRandomNumber(0, length / (cnt * (cnt - 1)))
+            let y2 = this.getRandomNumber(slideBounds.top + height / 4, slideBounds.bottom - height / 4);
+            // 滑动
+            swipe(x1, y1, x2, y2, this.getRandomNumber(1000, 1500));
+            x1 = x2;
+            y1 = y2;
+        }
+        // 最终坐标
+        swipe(x1, y1, xRight, this.getRandomNumber(slideBounds.top + height / 4, slideBounds.bottom - height / 4), this.getRandomNumber(700, 800));
+        // 等待滑动成功后跳转
+        sleep(3000);
+        log("===== 开始滑动 END =====");
     }
 }

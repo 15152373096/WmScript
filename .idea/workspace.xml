@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/resource/config/user/coco.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/coco.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/user/olly.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/olly.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/user/wm01.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm01.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/user/wm02.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm02.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/user/王明.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/王明.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entrance/Combo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/entrance/Combo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/DeviceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DeviceService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/TaoBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaoBaoService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +121,7 @@
       <workItem from="1751037403164" duration="6613000" />
       <workItem from="1751123932213" duration="42747000" />
       <workItem from="1751294667621" duration="2320000" />
+      <workItem from="1751679967038" duration="4459000" />
     </task>
     <task id="LOCAL-00025" summary="更新">
       <created>1736693896206</created>

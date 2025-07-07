@@ -1,10 +1,38 @@
-// text = 为保障您的正常访问请进行验证
-// text = 请拖动滑块完成拼图
+// if (text("为保障您的正常访问请进行验证").exists() || text("请拖动滑块完成拼图").exists()) {
+//     // 加载提示音
+//     let mp = new android.media.MediaPlayer();
+//     mp.setDataSource(context, android.media.RingtoneManager.getDefaultUri(android.media.RingtoneManager.TYPE_ALARM));
+//     mp.prepare();
+//     if (!mp.isPlaying()) {
+//         mp.start();
+//     }
+//     // 震动两秒
+//     device.vibrate(2000);
+// }else{
+//     log("1111")
+// }
+
+// log(device.width);
 
 
 
 takeEnergy();
 // punchChichen();
+
+
+
+
+/**
+ * 拖动滑块还原拼图
+ */
+function restorePuzzle() {
+    requestScreenCapture();
+    sleep(3000);
+    // var ima =
+}
+
+
+
 function takeEnergy() {
     comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅", "original"], 2000);
     let count = 0;
@@ -58,4 +86,12 @@ function swipeViewTask(keepTime) {
         sleep(3000);
         duration += 3000;
     }
+}
+
+function clickRate(k60X, k60Y, sleepTime) {
+    // 设备参数
+    let deviceWidth = device.width;
+    let deviceHeight = device.height;
+    click(deviceWidth * k60X / 1440, deviceHeight * k60Y / 3200);
+    sleep(sleepTime);
 }

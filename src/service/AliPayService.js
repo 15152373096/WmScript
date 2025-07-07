@@ -31,7 +31,7 @@ module.exports = {
                 className("android.widget.TextView").text("登录其他账号").findOne().click();
                 sleep(1800);
             } else {
-                deviceService.clickRate(720, 2450, 1800);
+                deviceService.clickRate(720, 2650, 1800);
             }
             // 选择账号
             deviceService.combinedClickText(account, 5000);
@@ -68,10 +68,10 @@ module.exports = {
         // 全部领取积分 - 每日签到
         deviceService.comboTextClick(["全部领取", "每日签到"], 2000);
         // 等等机器人验证
-        this.robotCheck();
+        deviceService.robotCheck();
         if (text("逛一逛赚积分").exists() && !text("限时福利：已完成浏览任务，得 5 积分").exists()) {
             deviceService.combinedClickText("逛一逛赚积分", 1000);
-            this.swipeViewTask(3600);
+            deviceService.swipeViewTask(3600);
         }
         deviceService.combinedClickText("做任务赚积分", 1000);
         // 积分任务
@@ -82,71 +82,6 @@ module.exports = {
         // 首页
         deviceService.combinedClickText("首页", 2000);
         this.closeShanGouAD();
-    },
-
-    /**
-     * 机器人验证提醒
-     */
-    robotCheck: function () {
-        log("===== 机器人验证 START =====");
-        // 等待滑动加载
-        sleep(3000);
-        // 尝试次数
-        let retryTime = 1;
-        // 如果需要验证，则提示
-        while (text("向右滑动验证").exists() || text("亲，请拖动下方滑块完成验证").exists()) {
-            if (retryTime > 2) {
-                // 反馈
-                let feedbacks = ["滑动验证码后提示验证失败", "频繁看到该验证码"];
-                deviceService.combinedClickText("点我反馈 >", 3000);
-                deviceService.combinedClickText(feedbacks[deviceService.getRandomNumber(0, 1)], 1000);
-                deviceService.combinedClickText("提交", 5000);
-                back();
-                sleep(1000);
-                break;
-            }
-            this.slidingVerification();
-            retryTime++;
-        }
-        sleep(3000);
-        log("===== 机器人验证 END =====");
-    },
-
-    /**
-     * 滑动验证
-     */
-    slidingVerification: function () {
-        // 刷新滑块
-        deviceService.clickDIP("android.widget.TextView", 13, 0, 1000)
-        log("===== 开始滑动 START =====");
-        let slideBounds = className("android.widget.Button").text("滑块").exists() ? className("android.widget.Button").text("滑块").findOne().bounds() : className("android.widget.TextView").text("滑块").findOne().bounds();
-        // 最左边X坐标
-        let xLeft = slideBounds.centerX();
-        let bounds = className("android.widget.TextView").text("向右滑动验证").findOne().bounds();
-        let xRight = bounds.right;
-        // 分割次数
-        let cnt = 3;
-        // 高度
-        let height = slideBounds.bottom - slideBounds.top;
-        // 长度
-        let length = xRight - xLeft;
-        // 坐标1
-        let x1 = xLeft;
-        let y1 = deviceService.getRandomNumber(slideBounds.top + height / 4, slideBounds.bottom - height / 4);
-        for (let i = 0; i < cnt - 1; i++) {
-            // 坐标2
-            let x2 = x1 + (length / cnt) + deviceService.getRandomNumber(0, length / (cnt * (cnt - 1)))
-            let y2 = deviceService.getRandomNumber(slideBounds.top + height / 4, slideBounds.bottom - height / 4);
-            // 滑动
-            swipe(x1, y1, x2, y2, deviceService.getRandomNumber(1000, 1500));
-            x1 = x2;
-            y1 = y2;
-        }
-        // 最终坐标
-        swipe(x1, y1, xRight, deviceService.getRandomNumber(slideBounds.top + height / 4, slideBounds.bottom - height / 4), deviceService.getRandomNumber(700, 800));
-        // 等待滑动成功后跳转
-        sleep(2000);
-        log("===== 开始滑动 END =====");
     },
 
     /**
@@ -165,7 +100,7 @@ module.exports = {
                     sleep(800);
                     deviceService.combinedClickText("去完成", 2000);
                     // 等等机器人验证
-                    this.swipeViewTask(18000);
+                    deviceService.swipeViewTask(18000);
                     back();
                     sleep(3000);
                     if (!text("换一换").exists()) {
@@ -503,9 +438,7 @@ module.exports = {
                 return;
             }
             log("------饲料任务-" + appJumpTask + "------");
-            deviceService.combinedClickText(appJumpTask, 25000);
-            // 等等机器人验证
-            this.robotCheck();
+            deviceService.combinedClickText(appJumpTask, 20000);
             deviceService.comboTextClick(["立即领取", "点击签到", "立即签到"], 1000);
             app.launchApp("支付宝");
             sleep(2000);
@@ -638,14 +571,14 @@ module.exports = {
         for (let i = 0; i < 3; i++) {
             if (text("去杂货铺逛一逛 (" + i + "/3)").exists()) {
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + i + "/3)", "去完成", 5000);
-                this.swipeViewTask(18000);
+                deviceService.swipeViewTask(18000);
                 back();
                 sleep(1000);
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + (i + 1) + "/3)", "领取", 5000);
             }
             if (text("去杂货铺逛一逛(" + i + "/3)").exists()) {
                 deviceService.clickNearBy("去杂货铺逛一逛(" + i + "/3)", "去完成", 5000);
-                this.swipeViewTask(18000);
+                deviceService.swipeViewTask(18000);
                 back();
                 sleep(1000);
                 deviceService.clickNearBy("去杂货铺逛一逛(" + (i + 1) + "/3)", "领取", 5000);
@@ -668,7 +601,7 @@ module.exports = {
             log("------饲料任务-去杂货铺逛一逛------");
             deviceService.combinedClickText(strollTask, 2000);
             // 等等机器人验证
-            this.swipeViewTask(18000);
+            deviceService.swipeViewTask(18000);
             back();
             sleep(1000);
         });
@@ -892,7 +825,7 @@ module.exports = {
         deviceService.comboTextClick(["立即领奖", "立即领取"], 2000);
         if (text("点此逛一逛再得1000肥料>").exists()) {
             deviceService.combinedClickText("点此逛一逛再得1000肥料>", 2000);
-            this.swipeViewTask(18000);
+            deviceService.swipeViewTask(18000);
             back();
             sleep(800);
         }
@@ -931,7 +864,7 @@ module.exports = {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
                 }
-                this.swipeViewTask(18000);
+                deviceService.swipeViewTask(18000);
                 back();
                 sleep(800);
                 if (text("搜索后浏览立得奖励").exists()) {
@@ -941,20 +874,6 @@ module.exports = {
             }
         });
         log("芭芭农场的浏览任务 end");
-    },
-
-    /**
-     * 下滑浏览任务
-     */
-    swipeViewTask: function (keepTime) {
-        // 等等机器人验证
-        this.robotCheck();
-        let duration = 0;
-        while (duration < keepTime) {
-            gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
-            sleep(3000);
-            duration += 3000;
-        }
     },
 
     /**
@@ -1182,7 +1101,7 @@ module.exports = {
                 }
                 // 立即领取 / 如果是随机游戏任务，进入游戏中心要点击一个任务
                 deviceService.comboTextClick(["立即领取", "角色扮演"], 5000);
-                this.swipeViewTask(30000)
+                deviceService.swipeViewTask(30000)
                 this.closeSubApp();
                 back();
                 sleep(1000);
@@ -1201,7 +1120,7 @@ module.exports = {
                     return;
                 }
                 deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
-                this.swipeViewTask(18000)
+                deviceService.swipeViewTask(18000)
                 app.launchApp("支付宝");
                 sleep(1000);
                 if (!text("立即领取").exists()) {

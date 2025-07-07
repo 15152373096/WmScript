@@ -69,7 +69,7 @@ module.exports = {
                 setText("山楂条");
                 deviceService.combinedClickText("搜索", 3000);
                 deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
-                this.swipeViewTask(18000);
+                deviceService.swipeViewTask(18000);
                 back();
                 sleep(1800);
                 if (!text("去完成").exists()) {
@@ -102,18 +102,5 @@ module.exports = {
                 this.babaFarmJump();
             }
         }
-    },
-
-    /**
-     * 下滑浏览任务
-     */
-    swipeViewTask: function (keepTime) {
-        let duration = 0;
-        while (duration < keepTime) {
-            gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
-            sleep(3000);
-            duration += 3000;
-        }
     }
-
 }
