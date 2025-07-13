@@ -37,6 +37,8 @@ module.exports = {
         if (!deviceService.appExists("支付宝")) {
             return;
         }
+        // 静音
+        let volumeArray = deviceService.mute();
         // 启动支付宝
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
@@ -47,6 +49,8 @@ module.exports = {
         });
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
+        // 还原声音
+        deviceService.revertMute(volumeArray);
         // 更新运行时间
         deviceService.updateLastRunTime();
         this.afterOpt();
@@ -83,6 +87,10 @@ module.exports = {
         deviceService.clickRate(1300, 1100, 3000);
         // 欢乐揍小鸡
         this.punchChichen();
+        // 立即开宝箱 还有3个宝箱
+        for (let i = 10; i > 0; i--) {
+            deviceService.combinedClickText("立即开宝箱 还有" + i + "个宝箱", 6000);
+        }
         // 星星球
         this.playStarBall();
         // 立即开宝箱 还有3个宝箱
@@ -124,7 +132,7 @@ module.exports = {
                 count += 80;
                 if (text("回到蚂蚁庄园 >").exists() || count > 24000) {
                     text("回到蚂蚁庄园 >").click();
-                    sleep(1000);
+                    sleep(2000);
                     break;
                 }
             }
@@ -902,6 +910,8 @@ module.exports = {
     taoBaoBaBaJob: function () {
         log("======taoBaoBaBa start======");
         this.beforeOpt();
+        // 静音
+        let volumeArray = deviceService.mute();
         // 启动淘宝
         deviceService.launch("淘宝");
         // 遍历
@@ -917,6 +927,8 @@ module.exports = {
         });
         // 切回主账号
         taoBaoService.switchAccount(taobaoAccountList[0]);
+        // 还原声音
+        deviceService.revertMute(volumeArray);
         log("======taoBaoBaBa end======");
         this.afterOpt()
     },

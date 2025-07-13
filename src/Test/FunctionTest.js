@@ -17,10 +17,47 @@
 
 
 takeEnergy();
-// punchChichen();
+
+
+// initChickenQuestion();
+function initChickenQuestion() {
+    // setText("蚂蚁庄园今日答案，直接给我答案就行，不要多余的字，用逗号分割");
+    // id("action_send").click();
+    // sleep(9000);
+    // click(170, 2520);
+    // sleep(2000);
+
+// id("answer1").click();
+id("answer1").findOne().longClick();
+// id("answer1").findOne().press(2000);
+// sleep(2000);
+// text("粘贴").click();
 
 
 
+
+
+
+    // // 获取系统剪贴板服务
+    // let clip = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+
+    // // 检查剪贴板是否有内容
+    // if (clip.hasPrimaryClip()) {
+    //     // 获取剪贴板数据
+    //     let item = clip.getPrimaryClip().getItemAt(0);
+
+    //     // 提取文本内容
+    //     let text = item.getText();
+
+    //     if (text) {
+    //         toastLog("剪贴板内容：" + text);
+    //     } else {
+    //         toastLog("剪贴板内容不是文本");
+    //     }
+    // } else {
+    //     toastLog("剪贴板为空");
+    // }
+}
 
 /**
  * 拖动滑块还原拼图
@@ -42,24 +79,6 @@ function takeEnergy() {
         }
         count += 80;
         if (text("恭喜获得").exists() || text("送TA机会").exists() || count > 30000) {
-            break;
-        }
-    }
-}
-// 
-// text = 欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩
-
-function punchChichen() {
-    comboTextClick(["original"], 2000);
-    let count = 0;
-    while (true) {
-        for (let i = 1; i < 8; i++) {
-            press(device.width / 8 * i, device.height / 10, 10);
-        }
-        count += 80;
-        if (text("回到蚂蚁庄园 >").exists() || count > 30000) {
-            text("恭喜获得").click();
-            sleep(1000);
             break;
         }
     }

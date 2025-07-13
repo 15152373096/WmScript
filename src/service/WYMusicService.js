@@ -11,7 +11,6 @@ module.exports = {
         }
         // 启动淘宝
         deviceService.launch("网易云音乐");
-        text("我的").waitFor();
         sleep(3000);
         toastLog("网易云音乐签到");
         // 抽屉菜单
