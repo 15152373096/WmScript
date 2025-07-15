@@ -15,7 +15,7 @@
 // log(device.width);
 
 
-
+// device.setMusicVolume(60);
 takeEnergy();
 
 

@@ -231,24 +231,17 @@ module.exports = {
      */
     mute: function () {
         // 记录当前声音，用于恢复
-        let volumeArray = new Array(3);
-        volumeArray[0] = device.getMusicVolume();
-        volumeArray[1] = device.getNotificationVolume();
-        volumeArray[2] = device.getAlarmVolume();
+        let musicVolume = device.getMusicVolume();
         // 静音
         device.setMusicVolume(0);
-        device.setNotificationVolume(0);
-        device.setAlarmVolume(0);
-        return volumeArray;
+        return musicVolume;
     },
 
     /**
      * 回退静音
      */
-    revertMute: function (volumeArray) {
-        device.setMusicVolume(volumeArray[0]);
-        device.setNotificationVolume(volumeArray[1]);
-        device.setAlarmVolume(volumeArray[2]);
+    revertMute: function (musicVolume) {
+        device.setMusicVolume(musicVolume);
     },
 
 

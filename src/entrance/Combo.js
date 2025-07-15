@@ -38,7 +38,7 @@ module.exports = {
             return;
         }
         // 静音
-        let volumeArray = deviceService.mute();
+        let musicVolume = deviceService.mute();
         // 启动支付宝
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
@@ -50,7 +50,7 @@ module.exports = {
         // 切回主账号
         aliPayService.switchAccount(accountList[0].userAccount);
         // 还原声音
-        deviceService.revertMute(volumeArray);
+        deviceService.revertMute(musicVolume);
         // 更新运行时间
         deviceService.updateLastRunTime();
         this.afterOpt();
@@ -911,7 +911,7 @@ module.exports = {
         log("======taoBaoBaBa start======");
         this.beforeOpt();
         // 静音
-        let volumeArray = deviceService.mute();
+        let musicVolume = deviceService.mute();
         // 启动淘宝
         deviceService.launch("淘宝");
         // 遍历
@@ -928,7 +928,7 @@ module.exports = {
         // 切回主账号
         taoBaoService.switchAccount(taobaoAccountList[0]);
         // 还原声音
-        deviceService.revertMute(volumeArray);
+        deviceService.revertMute(musicVolume);
         log("======taoBaoBaBa end======");
         this.afterOpt()
     },
