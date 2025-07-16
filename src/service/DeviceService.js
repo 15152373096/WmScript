@@ -232,8 +232,11 @@ module.exports = {
     mute: function () {
         // 记录当前声音，用于恢复
         let musicVolume = device.getMusicVolume();
-        // 静音
-        device.setMusicVolume(0);
+        // 休息时间
+        if (this.earlierThan(8, 0)) {
+            // 静音
+            device.setMusicVolume(0);
+        }
         return musicVolume;
     },
 
@@ -662,7 +665,7 @@ module.exports = {
         while (duration < keepTime) {
             gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
             // 完成的，提前跳出
-            for(let i=0; i< finishTextArray.length; i++) {
+            for (let i = 0; i < finishTextArray.length; i++) {
                 if (text(finishTextArray[i]).exists()) {
                     return;
                 }

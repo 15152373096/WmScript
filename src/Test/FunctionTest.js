@@ -15,10 +15,19 @@
 // log(device.width);
 
 
-// device.setMusicVolume(60);
-takeEnergy();
 
 
+let buttons = text("逛一逛").find();
+buttons.forEach(indexButton => {
+});
+
+
+
+
+
+
+
+// takeEnergy();
 // initChickenQuestion();
 function initChickenQuestion() {
     // setText("蚂蚁庄园今日答案，直接给我答案就行，不要多余的字，用逗号分割");

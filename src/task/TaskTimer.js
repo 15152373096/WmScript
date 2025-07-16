@@ -38,7 +38,7 @@ function run() {
         });
     } else {
         // 睡觉时间免打扰
-        if (deviceService.earlierThan(7, 25)) {
+        if (deviceService.earlierThan(7, 11)) {
             return;
         }
         // 上次运行时间

@@ -42,7 +42,10 @@ module.exports = {
         // 点击领取
         deviceService.clickRate(1290, 2000, 800);
         // 集肥料
-        deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "集肥料", "去签到"], 1000);
+        deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "集肥料", "集肥料", "去签到"], 3000);
+        // deviceService.comboTextClick(["集肥料", "去签到"], 3000);
+        // 答题任务
+        this.answerQuestion();
         // 芭芭农场的浏览任务
         this.babaFarmBrowse();
         if (account == "家人留名") {
@@ -51,6 +54,38 @@ module.exports = {
         }
         deviceService.comboTextClick(["立即领取", "立即领取"], 5000);
         deviceService.combinedClickDesc("返回首页", 1000);
+    },
+
+
+    /**
+     * 答题任务
+     */
+    answerQuestion: function () {
+        // 已经答题过了
+        if (!text("去答题").exists()) {
+            return;
+        }
+        // 开始答题
+        deviceService.combinedClickText("去答题", 3000);
+        // 选第一答案
+        className("android.widget.Button").depth(18).indexInParent(1).click();
+        sleep(2000);
+        // 如果答对了
+        if (text("领取奖励 500").exists()) {
+            text("领取奖励 500").click();
+            sleep(2000);
+        } else {
+            text("关闭").click();
+            sleep(1000);
+            deviceService.comboTextClick(["集肥料", "集肥料", "去答题"], 3000);
+            // 选第二答案
+            className("android.widget.Button").depth(18).indexInParent(2).click();
+            sleep(2000);
+            text("领取奖励 500").click();
+            sleep(2000);
+        }
+        // 回到集肥料任务
+        deviceService.comboTextClick(["集肥料", "集肥料"], 3000);
     },
 
     /**

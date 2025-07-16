@@ -87,15 +87,14 @@ module.exports = {
         deviceService.clickRate(1300, 1100, 3000);
         // 欢乐揍小鸡
         this.punchChichen();
-        // 立即开宝箱 还有3个宝箱
-        for (let i = 10; i > 0; i--) {
-            deviceService.combinedClickText("立即开宝箱 还有" + i + "个宝箱", 6000);
-        }
         // 星星球
         this.playStarBall();
         // 立即开宝箱 还有3个宝箱
         for (let i = 10; i > 0; i--) {
             deviceService.combinedClickText("立即开宝箱 还有" + i + "个宝箱", 6000);
+        }
+        for (let i = 10; i > 0; i--) {
+            deviceService.combinedClickText("继续开宝箱 还有" + i + "个宝箱", 6000);
         }
         // 回到首页
         aliPayService.closeSubApp();
@@ -214,8 +213,14 @@ module.exports = {
         text("我的活力值").waitFor();
         // 森林寻宝
         this.forestTreasureHunt();
+        // 活力值任务
+        // this.vitalityTask();
         // 签到领取活力值、知道了、立即领取、打卡
         deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
+        while (text("立即领取").exists()) {
+            text("立即领取").click();
+            sleep(1000);
+        }
         // 可以能量雨才操作
         let rainText = "玩一场能量雨 一起拯救绿色能量吧";
         if (text(rainText).findOne()) {
@@ -262,6 +267,51 @@ module.exports = {
                 this.afterOpt();
             }
         }
+    },
+
+    /**
+     * 活力值任务
+     */
+    vitalityTask: function () {
+        let taskList = ["逛一逛", "去逛逛", "去看看"];
+        taskList.forEach(task => {
+            let buttons = text(task).find();
+            buttons.forEach(button => {
+                log("=== vitalityTask === " + task + " ===")
+                button.click();
+                sleep(8000);
+                if (text("角色扮演").exists()) {
+                    deviceService.combinedClickText("角色扮演", 40000);
+                    aliPayService.closeSubApp();
+                } else {
+                    sleep(15000);
+                }
+                if (text("我的活力值").exists()) {
+                    return;
+                }
+                back();
+                sleep(1000);
+                if (text("蚂蚁森林").exists()) {
+                    // 打开蚂蚁森林
+                    aliPayService.launchSubApp("蚂蚁森林");
+                    // 关闭弹框
+                    aliPayService.clearForestDialog();
+                    // 点击“奖励”
+                    deviceService.clickRate(585, 2100, 2000);
+                }
+                if (!text("我的活力值").exists()) {
+                    app.launchApp("支付宝");
+                }
+                if (!text("我的活力值").exists()) {
+                    back();
+                    sleep(1000);
+                }
+                if (!text("我的活力值").exists()) {
+                    back();
+                    sleep(1000);
+                }
+            });
+        });
     },
 
     /**
@@ -919,7 +969,7 @@ module.exports = {
             // 广告弹框
             deviceService.combinedClickDesc("关闭按钮", 3000);
             // 切换账号
-            taoBaoService.switchAccount(account);
+            // taoBaoService.switchAccount(account);
             // 广告弹框
             deviceService.combinedClickDesc("关闭按钮", 3000);
             // 芭芭农场任务

@@ -2,8 +2,9 @@
   "globalSwitch": false,
   "energyRainConfig": {
     "fixRunTime": [
-      "00:35",
-      "01:35"
+      "04:15",
+      "13:15",
+      "22:15"
     ]
   },
   "allSignConfig": {
