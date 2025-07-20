@@ -248,26 +248,34 @@ module.exports = {
     /**
      * 能量雨任务
      */
-    energyRainJob: function () {
-        log("======energyRainJob start======");
+    forestEnergyJob: function () {
+        log("======forestEnergyJob start======");
         this.beforeOpt();
+        // 静音
+        let musicVolume = deviceService.mute();
         // 启动支付宝
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
-        // 收集能量雨
-        this.loopEnergyRain(0);
-        log("======energyRainJob end======");
+        // 遍历
+        for (let i = 0; i <= accountList.length; i++) {
+            // 最后一次切回主账号
+            let account = (i == accountList.length ? accountList[0] : accountList[i]);
+            // 切换账号
+            aliPayService.switchAccount(account.userAccount);
+            aliPayService.closeShanGouAD();
+            // 收集能量雨
+            this.doForestEnergyTask(account);
+        }
+        // 还原声音
+        deviceService.revertMute(musicVolume);
+        log("======forestEnergyJob end======");
+        this.afterOpt()
     },
-
 
     /**
      * 循环能量雨
      */
-    loopEnergyRain: function (count) {
-        // 切换账号
-        let currentAccount = accountList[count % accountList.length];
-        aliPayService.switchAccount(currentAccount.userAccount);
-        aliPayService.closeShanGouAD();
+    doForestEnergyTask: function (account) {
         // 打开蚂蚁森林
         aliPayService.launchSubApp("蚂蚁森林");
         // 关闭弹框
@@ -278,57 +286,17 @@ module.exports = {
         // 森林寻宝
         this.forestTreasureHunt();
         // 活力值任务
-        // this.vitalityTask();
-        // 签到领取活力值、知道了、立即领取、打卡
-        deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
-        while (text("立即领取").exists()) {
-            text("立即领取").click();
-            sleep(1000);
+        this.vitalityTask();
+        // 能量雨任务
+        this.energyRainTask(account);
+        // 关闭弹框
+        deviceService.comboTextClick(["关闭", "关闭奖励弹窗"], 800);
+        // 给主账号浇水
+        if ("346***@qq.com" != account.userAccount) {
+            aliPayService.waterFriend("王明");
         }
-        // 可以能量雨才操作
-        let rainText = "玩一场能量雨 一起拯救绿色能量吧";
-        if (text(rainText).findOne()) {
-            deviceService.clickNearBy(rainText, "去拯救", 10000);
-            deviceService.clickNearBy(rainText, "去赠送", 10000);
-            deviceService.clickNearBy(rainText, "去看看", 10000);
-            // 收能量
-            let nextUsername = accountList[(count + 1) % accountList.length].userName;
-            let giveChanceUser = currentAccount.giveChanceUser;
-            this.takeEnergyRain(nextUsername, giveChanceUser, false);
-            // 回到森林
-            deviceService.back(800);
-            // 关闭弹框
-            deviceService.comboTextClick(["关闭", "关闭奖励弹窗"], 800);
-            // 给主账号浇水
-            if ("346***@qq.com" != accountList[count % accountList.length].userAccount) {
-                aliPayService.waterFriend("王明");
-            }
-            // 回到首页
-            aliPayService.closeSubApp();
-            // 计数
-            count++;
-            if (count <= accountList.length) {
-                this.loopEnergyRain(count);
-            } else {
-                this.afterOpt();
-            }
-        } else {
-            // 关闭弹框
-            deviceService.combinedClickText("关闭", 800);
-            // 给主账号浇水
-            if ("346***@qq.com" != accountList[count % accountList.length].userAccount) {
-                aliPayService.waterFriend("王明");
-            }
-            // 回到支付宝首页
-            deviceService.back(2000);
-            // 计数
-            count++;
-            if (count <= accountList.length) {
-                this.loopEnergyRain(count);
-            } else {
-                this.afterOpt();
-            }
-        }
+        // 回到首页
+        aliPayService.closeSubApp();
     },
 
     /**
@@ -341,7 +309,13 @@ module.exports = {
             buttons.forEach(button => {
                 log("=== vitalityTask === " + task + " ===")
                 button.click();
-                sleep(8000);
+                sleep(2000);
+                // 如果没有跳转页面，跳过
+                if (text("我的活力值").exists()) {
+                    return;
+                }
+                // 页面加载
+                sleep(6000);
                 if (text("角色扮演").exists()) {
                     deviceService.combinedClickText("角色扮演", 40000);
                     aliPayService.closeSubApp();
@@ -352,7 +326,7 @@ module.exports = {
                     return;
                 }
                 deviceService.back(1000);
-                if (text("蚂蚁森林").exists()) {
+                if (text("蚂蚁森林").exists() && text("芭芭农场").exists()) {
                     // 打开蚂蚁森林
                     aliPayService.launchSubApp("蚂蚁森林");
                     // 关闭弹框
@@ -361,13 +335,17 @@ module.exports = {
                     deviceService.clickRate(585, 2100, 2000);
                 }
                 if (!text("我的活力值").exists()) {
-                    app.launchApp("支付宝");
-                }
-                if (!text("我的活力值").exists()) {
-                    deviceService.back(1000);
-                }
-                if (!text("我的活力值").exists()) {
-                    deviceService.back(1000);
+                    // 清除后台任务
+                    deviceService.clearBackground();
+                    // 启动支付宝
+                    deviceService.launch("支付宝");
+                    aliPayService.closeShanGouAD();
+                    // 打开蚂蚁森林
+                    aliPayService.launchSubApp("蚂蚁森林");
+                    // 关闭弹框
+                    aliPayService.clearForestDialog();
+                    // 点击“奖励”
+                    deviceService.clickRate(585, 2100, 2000);
                 }
             });
         });
@@ -402,21 +380,45 @@ module.exports = {
     },
 
     /**
+     * 能量雨任务
+     */
+    energyRainTask: function (account) {
+        // 签到领取活力值、知道了、立即领取、打卡
+        deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
+        while (text("立即领取").exists()) {
+            text("立即领取").click();
+            sleep(1000);
+        }
+        // 可以能量雨才操作
+        let rainText = "玩一场能量雨 一起拯救绿色能量吧";
+        if (text(rainText).findOne()) {
+            deviceService.clickNearBy(rainText, "去拯救", 10000);
+            deviceService.clickNearBy(rainText, "去赠送", 10000);
+            deviceService.clickNearBy(rainText, "去看看", 10000);
+            // 收能量
+            let giveChanceUser = account.giveChanceUser;
+            this.takeEnergyRain(giveChanceUser, false);
+            // 回到森林
+            deviceService.back(800);
+        }
+    },
+
+    /**
      * 收集能量雨
      */
-    takeEnergyRain: function (nextUsername, giveChanceUser, vibrateSwitchOff) {
+    takeEnergyRain: function (giveChanceUser, vibrateSwitchOff) {
         if (text("送TA机会").exists()) {
             // 只有一个账号
             if (accountList.length == 1) {
                 deviceService.combinedClickText("送TA机会", 800);
-                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+                this.takeEnergyRain(giveChanceUser, true);
             } else if (text(giveChanceUser).exists()) {
                 deviceService.clickNearBy(giveChanceUser, "送TA机会", 800);
-                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+                this.takeEnergyRain(giveChanceUser, true);
             } else {
                 deviceService.combinedClickText("更多好友", 2500);
                 deviceService.clickBrotherIndex(giveChanceUser, 1, 500);
-                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+                this.takeEnergyRain(giveChanceUser, true);
             }
             return;
         }
@@ -446,20 +448,20 @@ module.exports = {
         sleep(1800);
         if (text("再来一次").exists()) {
             deviceService.combinedClickText("再来一次", 800);
-            this.takeEnergyRain(nextUsername, giveChanceUser, true);
+            this.takeEnergyRain(giveChanceUser, true);
         }
         if (text("送TA机会").exists()) {
             // 只有一个账号
             if (accountList.length == 1) {
                 deviceService.combinedClickText("送TA机会", 800);
-                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+                this.takeEnergyRain(giveChanceUser, true);
             } else if (text(giveChanceUser).exists()) {
                 deviceService.clickNearBy(giveChanceUser, "送TA机会", 800);
-                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+                this.takeEnergyRain(giveChanceUser, true);
             } else {
                 deviceService.combinedClickText("更多好友", 2500);
                 deviceService.clickBrotherIndex(giveChanceUser, 1, 500);
-                this.takeEnergyRain(nextUsername, giveChanceUser, true);
+                this.takeEnergyRain(giveChanceUser, true);
             }
         }
     },

@@ -24,7 +24,7 @@ function run() {
     } else if (deviceService.containsInArray(globalConfig.energyRainConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
             // 能量雨任务
-            combo.energyRainJob();
+            combo.forestEnergyJob();
         });
     } else if (deviceService.containsInArray(globalConfig.chickenFamilyAndSportConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
