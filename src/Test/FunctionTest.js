@@ -12,22 +12,7 @@
 //     log("1111")
 // }
 
-// log(device.width);
-
-
-
-
-let buttons = text("逛一逛").find();
-buttons.forEach(indexButton => {
-});
-
-
-
-
-
-
-
-// takeEnergy();
+takeEnergy();
 // initChickenQuestion();
 function initChickenQuestion() {
     // setText("蚂蚁庄园今日答案，直接给我答案就行，不要多余的字，用逗号分割");
@@ -37,14 +22,10 @@ function initChickenQuestion() {
     // sleep(2000);
 
 // id("answer1").click();
-id("answer1").findOne().longClick();
+    id("answer1").findOne().longClick();
 // id("answer1").findOne().press(2000);
 // sleep(2000);
 // text("粘贴").click();
-
-
-
-
 
 
     // // 获取系统剪贴板服务
@@ -78,7 +59,6 @@ function restorePuzzle() {
 }
 
 
-
 function takeEnergy() {
     comboTextClick(["再来一次", "立即开启", "开启能量拯救之旅", "original"], 2000);
     let count = 0;
@@ -93,6 +73,19 @@ function takeEnergy() {
     }
 }
 
+
+function getCombinedClassName() {
+    return [
+        "android.widget.Button",
+        "android.view.View",
+        "android.widget.TextView",
+        "android.widget.FrameLayout",
+        "android.widget.ImageView",
+        "android.widget.Image"
+    ];
+}
+
+
 /**
  * 连续多文本点击
  * @param textNameArray
@@ -100,11 +93,51 @@ function takeEnergy() {
  */
 function comboTextClick(textNameArray, sleepTime) {
     textNameArray.forEach(textName => {
-        if (text(textName).exists()) {
-            text(textName).click();
-            sleep(sleepTime);
-        }
+        combinedClickText(textName, sleepTime);
     });
+}
+
+function combinedClickText(textValue, sleepTime) {
+    // 获取className数组
+    let classNameArray = getCombinedClassName();
+    // 遍历
+    for (let itemClassName of classNameArray) {
+        if (className(itemClassName).text(textValue).exists()) {
+            // 控件可点击，直接点击
+            if (className(itemClassName).text(textValue).findOne().clickable()) {
+                log("className=" + itemClassName + "; text=" + textValue + "; clickable is true!");
+                className(itemClassName).text(textValue).findOne().click();
+                sleep(sleepTime);
+                return;
+            } else {
+                log("className=" + itemClassName + "; text=" + textValue + "; clickable is false!");
+                let bounds = className(itemClassName).text(textValue).findOne().bounds();
+                // 如果超出界面滑动
+                if (bounds.centerY() > device.height * 99 / 100) {
+                    swipeUp(bounds.centerY() - device.height * 90 / 100);
+                    combinedClickText(textValue, sleepTime);
+                } else {
+                    click(bounds.centerX(), bounds.centerY());
+                    sleep(sleepTime);
+                    return;
+                }
+            }
+        }
+    }
+    // 不带className
+    if (text(textValue).exists()) {
+        log("without className; text=" + textValue + "; exists!");
+        text(textValue).findOne().click();
+        sleep(sleepTime);
+    }
+}
+
+function swipeUp(height) {
+    let deviceWidth = device.width;
+    let deviceHeight = device.height;
+    let distance = height > device.height / 2 ? device.height / 2 : height;
+    swipe(deviceWidth / 2, deviceHeight * 7 / 8, deviceWidth / 2, deviceHeight * 7 / 8 - distance, 200);
+    sleep(1600);
 }
 
 function swipeViewTask(keepTime) {
@@ -122,4 +155,19 @@ function clickRate(k60X, k60Y, sleepTime) {
     let deviceHeight = device.height;
     click(deviceWidth * k60X / 1440, deviceHeight * k60Y / 3200);
     sleep(sleepTime);
+}
+
+
+function clickDIP(clazzName, depth, indexInParent, sleepTime) {
+    if (className(clazzName).depth(depth).indexInParent(indexInParent).exists()) {
+        if (className(clazzName).depth(depth).indexInParent(indexInParent).findOne().isClickable()) {
+            log("className=" + clazzName + "; depth=" + depth + "; indexInParent=" + indexInParent + "; clickable is true!");
+            className(clazzName).depth(depth).indexInParent(indexInParent).click();
+        } else {
+            log("className=" + clazzName + "; depth=" + depth + "; indexInParent=" + indexInParent + "; clickable is false!");
+            let bounds = className(clazzName).depth(depth).indexInParent(indexInParent).findOne().bounds();
+            click(bounds.centerX(), bounds.centerY());
+        }
+        sleep(sleepTime);
+    }
 }

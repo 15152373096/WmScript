@@ -14,7 +14,7 @@ let deviceHeight = device.height;
 // 账号列表
 let globalConfig = deviceService.getGlobalConfig()
 let accountList = globalConfig.accountList;
-let taobaoAccountList = globalConfig.taobaoAccountList;
+let taoBaoAccountList = globalConfig.taoBaoAccountList;
 
 module.exports = {
 
@@ -176,8 +176,7 @@ module.exports = {
                 }
             }
             sleep(6000);
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
     },
 
@@ -232,8 +231,7 @@ module.exports = {
             let giveChanceUser = currentAccount.giveChanceUser;
             this.takeEnergyRain(nextUsername, giveChanceUser, false);
             // 回到森林
-            back();
-            sleep(800);
+            deviceService.back(800);
             // 关闭弹框
             deviceService.comboTextClick(["关闭", "关闭奖励弹窗"], 800);
             // 给主账号浇水
@@ -257,8 +255,7 @@ module.exports = {
                 aliPayService.waterFriend("王明");
             }
             // 回到支付宝首页
-            back();
-            sleep(2000);
+            deviceService.back(2000);
             // 计数
             count++;
             if (count <= accountList.length) {
@@ -289,8 +286,7 @@ module.exports = {
                 if (text("我的活力值").exists()) {
                     return;
                 }
-                back();
-                sleep(1000);
+                deviceService.back(1000);
                 if (text("蚂蚁森林").exists()) {
                     // 打开蚂蚁森林
                     aliPayService.launchSubApp("蚂蚁森林");
@@ -303,12 +299,10 @@ module.exports = {
                     app.launchApp("支付宝");
                 }
                 if (!text("我的活力值").exists()) {
-                    back();
-                    sleep(1000);
+                    deviceService.back(1000);
                 }
                 if (!text("我的活力值").exists()) {
-                    back();
-                    sleep(1000);
+                    deviceService.back(1000);
                 }
             });
         });
@@ -326,8 +320,7 @@ module.exports = {
         while (text("去逛逛").exists()) {
             deviceService.combinedClickText("去逛逛", 3000);
             deviceService.swipeViewTask(18000);
-            back();
-            sleep(1000);
+            deviceService.back(1000);
             deviceService.combinedClickText("领取", 1000);
         }
         // 补充领取
@@ -340,8 +333,7 @@ module.exports = {
             // 关闭
             deviceService.clickRate(720, 2980, 2000);
         }
-        back();
-        sleep(1000);
+        deviceService.back(1000);
     },
 
     /**
@@ -372,8 +364,7 @@ module.exports = {
             deviceService.clickDIP("android.widget.FrameLayout", 7, 2, 1000);
             deviceService.combinedClickText("关闭震动", 800);
             if (text("开启震动").exists()) {
-                back();
-                sleep(500);
+                deviceService.back(500);
             }
         }
         deviceService.comboTextClick(["立即开启", "开启能量拯救之旅"], 2000);
@@ -457,11 +448,9 @@ module.exports = {
             }
         }
         // 退回网商首页
-        back();
-        sleep(800);
+        deviceService.back(800);
         // 退回支付宝首页
-        back();
-        sleep(800);
+        deviceService.back(800);
         this.afterOpt();
         log("======netBankJob end======");
     },
@@ -498,8 +487,7 @@ module.exports = {
             if (text("去看看").exists()) {
                 text("去看看").click();
                 sleep(3000);
-                back();
-                sleep(2000);
+                deviceService.back(2000);
                 if (!text("立即使用").exists()) {
                     this.openMonthRich();
                 }
@@ -577,10 +565,8 @@ module.exports = {
             deviceService.clickRate(1200, 3150, 1000);
             deviceService.comboTextClick(["第三方接入", "支付宝", "解除绑定", "确定", "绑定"], 2000);
             sleep(4000);
-            back();
-            sleep(800);
-            back();
-            sleep(800);
+            deviceService.back(800);
+            deviceService.back(800);
             deviceService.combinedClickText("首页", 2000);
             aliPayService.closeShanGouAD();
             // 下拉刷新同步
@@ -644,14 +630,11 @@ module.exports = {
         }
         deviceService.combinedClickText("关闭", 2800);
         // 退回到列表
-        back();
-        sleep(800);
+        deviceService.back(800);
         // 退回首页
-        back();
-        sleep(800);
+        deviceService.back(800);
         // 退回首页
-        back();
-        sleep(800);
+        deviceService.back(800);
         // 计数
         count++;
         if (count < accountList.length) {
@@ -733,10 +716,8 @@ module.exports = {
             // 去捐蛋
             if (text("去捐蛋").exists()) {
                 deviceService.comboTextClick(["去捐蛋", "去捐蛋", "立即捐蛋", "立即捐蛋"], 5000);
-                back();
-                sleep(800);
-                back();
-                sleep(800);
+                deviceService.back(800);
+                deviceService.back(800);
                 deviceService.combinedClickText("关闭", 2800);
             }
             // 去请客
@@ -776,8 +757,7 @@ module.exports = {
                 deviceService.combinedClickText("关闭", 2800);
             }
             // 回退
-            back();
-            sleep(800);
+            deviceService.back(800);
             // 回到首页
             aliPayService.closeSubApp();
         });
@@ -844,8 +824,7 @@ module.exports = {
                             deviceService.combinedClickText("确认", 2800);
                         }
                         // 回到好友
-                        back();
-                        sleep(800);
+                        deviceService.back(800);
                     }
                 });
             });
@@ -965,18 +944,19 @@ module.exports = {
         // 启动淘宝
         deviceService.launch("淘宝");
         // 遍历
-        taobaoAccountList.forEach(account => {
+        taoBaoAccountList.forEach(account => {
             // 广告弹框
             deviceService.combinedClickDesc("关闭按钮", 3000);
             // 切换账号
-            // taoBaoService.switchAccount(account);
+            taoBaoService.switchAccount(account);
             // 广告弹框
             deviceService.combinedClickDesc("关闭按钮", 3000);
             // 芭芭农场任务
             taoBaoService.babaFarmOption(account);
         });
         // 切回主账号
-        taoBaoService.switchAccount(taobaoAccountList[0]);
+        taoBaoService.switchAccount(taoBaoAccountList[0]);
+        taoBaoService.syncAccount();
         // 还原声音
         deviceService.revertMute(musicVolume);
         log("======taoBaoBaBa end======");

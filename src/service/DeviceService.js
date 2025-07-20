@@ -466,7 +466,7 @@ module.exports = {
      * @param {String} lookupImage
      */
     imageExist: function (lookupImage) {
-        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
+        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
         if (p) {
             return true;
         } else {
@@ -480,7 +480,7 @@ module.exports = {
      * @param {number} sleepTime
      */
     clickImage: function (lookupImage, sleepTime) {
-        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
+        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);
             sleep(sleepTime);
@@ -650,6 +650,15 @@ module.exports = {
     },
 
     /**
+     * 后退并等待
+     * @param sleepTime 等待时长
+     */
+    back: function (sleepTime) {
+        back();
+        sleep(sleepTime);
+    },
+
+    /**
      * 下滑浏览任务
      */
     swipeViewTask: function (keepTime) {
@@ -658,6 +667,7 @@ module.exports = {
             "已完成 可领饲料",
             "任务已完成，恭喜获得奖励！",
             "浏览完成，下单再得积分",
+            "已完成浏览任务",
         ]
         // 等等机器人验证
         this.robotCheck();
@@ -669,7 +679,7 @@ module.exports = {
                 if (text(finishTextArray[i]).exists()) {
                     return;
                 }
-            };
+            }
             sleep(3000);
             duration += 3000;
         }
@@ -692,8 +702,7 @@ module.exports = {
                 this.combinedClickText("点我反馈 >", 3000);
                 this.combinedClickText(feedbacks[this.getRandomNumber(0, 1)], 1000);
                 this.combinedClickText("提交", 5000);
-                back();
-                sleep(3000);
+                this.back(3000);
                 break;
             }
             this.slidingVerification();

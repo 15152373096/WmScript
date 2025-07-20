@@ -15,8 +15,7 @@ module.exports = {
         sleep(1000);
         toastLog("拼多多签到");
         // 签到
-        back();
-        sleep(200);
+        deviceService.back(200);
         deviceService.comboTextClick(["多多视频","领取今日现金","明日继续来领"], 3000);
         deviceService.clickRate(720, 2020, 1000);
     }

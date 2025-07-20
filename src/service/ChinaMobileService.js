@@ -11,22 +11,18 @@ module.exports = {
         }
         // 启动淘宝
         deviceService.launch("中国移动");
-        text("品牌福利").waitFor();
-        sleep(1000);
+        sleep(3000);
         toastLog("中国移动江苏签到");
         // 广告
-        deviceService.combinedClickDesc("关闭", 500);
-        deviceService.combinedClickDesc("关闭", 500);
+        deviceService.comboDescClick(["关闭", "关闭"], 500);
         // 签到
-        deviceService.comboTextClick(["品牌福利", "签到", "签 到"], 8000);
+        deviceService.comboTextClick(["当月热销", "签到有惊喜", "签到", "签 到"], 5000);
         // 返回签到
         app.launchApp("中国移动");
         // 立即抽奖
         deviceService.combinedClickText("立即抽奖", 1000);
         // 回“首页”
-        back();
-        sleep(1000);
-        back();
-        sleep(1000);
+        deviceService.back(1000);
+        deviceService.back(1000);
     }
 }

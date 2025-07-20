@@ -101,11 +101,9 @@ module.exports = {
                     deviceService.combinedClickText("去完成", 2000);
                     // 等等机器人验证
                     deviceService.swipeViewTask(18000);
-                    back();
-                    sleep(3000);
+                    deviceService.back(3000);
                     if (!text("换一换").exists()) {
-                        back();
-                        sleep(3000);
+                        deviceService.back(3000);
                     }
                 }
             });
@@ -202,8 +200,7 @@ module.exports = {
             text("点赞").click();
             sleep(1000);
         }
-        back();
-        sleep(2000);
+        deviceService.back(2000);
     },
 
     /**
@@ -343,11 +340,9 @@ module.exports = {
                 if (browseTask.indexOf("15s") >= 0) {
                     sleep(18000);
                 }
-                back();
-                sleep(800);
+                deviceService.back(800);
                 if (!text("x180").exists()) {
-                    back();
-                    sleep(800);
+                    deviceService.back(800);
                 }
             }
         });
@@ -407,23 +402,20 @@ module.exports = {
                         break;
                     }
                 }
-                back();
-                sleep(1000);
+                deviceService.back(1000);
                 deviceService.clickRate(720, 800, 1000);
             }
             // 社区发现页面
             if (text("前往社区发现页面").exists() && text("前往社区发现页面").findOne().parent().findOne(text("前往"))) {
                 text("前往社区发现页面").findOne().parent().findOne(text("前往")).click();
                 sleep(3000);
-                back();
-                sleep(1000);
+                deviceService.back(1000);
             }
             // 领取
             for (let i = 7; i > 0; i--) {
                 deviceService.combinedClickText("领取", 8000);
             }
-            back();
-            sleep(2000);
+            deviceService.back(2000);
         });
     },
 
@@ -443,8 +435,7 @@ module.exports = {
             app.launchApp("支付宝");
             sleep(2000);
             if (!text("去完成").exists()) {
-                back();
-                sleep(800);
+                deviceService.back(800);
                 ;
             }
         });
@@ -459,8 +450,7 @@ module.exports = {
         if (text(signTask).exists()) {
             log("------饲料任务-会员签到------");
             deviceService.combinedClickText(signTask, 3800);
-            back();
-            sleep(800);
+            deviceService.back(800);
         }
     },
 
@@ -488,8 +478,7 @@ module.exports = {
             } catch (err) {
                 log("请求异常", err);
             }
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
     },
 
@@ -544,8 +533,7 @@ module.exports = {
                     ], 1000);
                 }
                 // 回退到任务
-                back();
-                sleep(1000);
+                deviceService.back(1000);
             }
         });
     },
@@ -572,15 +560,13 @@ module.exports = {
             if (text("去杂货铺逛一逛 (" + i + "/3)").exists()) {
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + i + "/3)", "去完成", 5000);
                 deviceService.swipeViewTask(18000);
-                back();
-                sleep(1000);
+                deviceService.back(1000);
                 deviceService.clickNearBy("去杂货铺逛一逛 (" + (i + 1) + "/3)", "领取", 5000);
             }
             if (text("去杂货铺逛一逛(" + i + "/3)").exists()) {
                 deviceService.clickNearBy("去杂货铺逛一逛(" + i + "/3)", "去完成", 5000);
                 deviceService.swipeViewTask(18000);
-                back();
-                sleep(1000);
+                deviceService.back(1000);
                 deviceService.clickNearBy("去杂货铺逛一逛(" + (i + 1) + "/3)", "领取", 5000);
             }
         }
@@ -602,8 +588,7 @@ module.exports = {
             deviceService.combinedClickText(strollTask, 2000);
             // 等等机器人验证
             deviceService.swipeViewTask(18000);
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         });
     },
 
@@ -616,8 +601,7 @@ module.exports = {
             log("------饲料任务-庄园小视频------");
             deviceService.combinedClickText(videoTask, 2000);
             sleep(18000);
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
     },
 
@@ -646,8 +630,7 @@ module.exports = {
             }
             // 通知提醒
             deviceService.combinedClickText("取消", 800);
-            back();
-            sleep(800);
+            deviceService.back(800);
         });
     },
 
@@ -677,8 +660,7 @@ module.exports = {
                     // 施肥
                     deviceService.clickRate(720, 2585, 1000);
                     // 返回
-                    back();
-                    sleep(1000)
+                    deviceService.back(1000)
                 }
             }
             // 厨房垃圾
@@ -694,8 +676,7 @@ module.exports = {
             // 领10g食材
             deviceService.combinedClickText("领10g食材", 800);
             // 后退
-            back();
-            sleep(1000);
+            deviceService.back(1000);
             // 如果触发连续后退
             if (text("小鸡厨房").exists()) {
                 deviceService.clickNearBy("小鸡厨房", "去完成", 3500);
@@ -708,8 +689,7 @@ module.exports = {
                 deviceService.combinedClickText("关闭", 800);
             }
             // 退到任务
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         });
 
     },
@@ -728,12 +708,10 @@ module.exports = {
         text("立即捐蛋").waitFor();
         deviceService.comboTextClick(["立即捐蛋", "立即捐蛋"], 8000);
         sleep(10000);
-        back();
-        sleep(1000);
+        deviceService.back(1000);
         if (!text("去捐蛋").exists()) {
             // 回到庄园
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
         deviceService.combinedClickText("关闭", 800);
     },
@@ -777,8 +755,7 @@ module.exports = {
             if (className("android.widget.Button").depth(18).indexInParent(2).exists()) {
                 // 除草场景
                 deviceService.clickDIP("android.widget.Button", 18, 2, 800);
-                back();
-                sleep(5000);
+                deviceService.back(5000);
             } else {
                 // 找小鸡场景
                 deviceService.clickRate(550, 2188, 800);
@@ -826,8 +803,7 @@ module.exports = {
         if (text("点此逛一逛再得1000肥料>").exists()) {
             deviceService.combinedClickText("点此逛一逛再得1000肥料>", 2000);
             deviceService.swipeViewTask(18000);
-            back();
-            sleep(800);
+            deviceService.back(800);
         }
         deviceService.comboTextClick(["领取", "领取", "关闭", "取消"], 2000);
         // 做任务
@@ -865,11 +841,9 @@ module.exports = {
                     deviceService.combinedClickText("搜索", 3000);
                 }
                 deviceService.swipeViewTask(18000);
-                back();
-                sleep(800);
+                deviceService.back(800);
                 if (text("搜索后浏览立得奖励").exists()) {
-                    back();
-                    sleep(800);
+                    deviceService.back(800);
                 }
             }
         });
@@ -926,11 +900,10 @@ module.exports = {
         this.clearForestDialog();
         // 开启新图鉴/抽取物种卡
         deviceService.clickRate(955, 1900, 3000);
-        back();
-        sleep(1000);
+        deviceService.combinedClickText("再抽一次(1)", 3000);
+        deviceService.back(1000);
         if (!text(userName).exists()) {
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
         // 收取赠送能量
         for (let i = 0; i < 15; i++) {
@@ -975,11 +948,9 @@ module.exports = {
         deviceService.clickRate(360, 680, 2000);
         deviceService.combinedClickText("知道了", 2000);
         // 回退到排行榜
-        back();
-        sleep(800);
+        deviceService.back(800);
         // 回退到蚂蚁森林
-        back();
-        sleep(800);
+        deviceService.back(800);
     },
 
     /**
@@ -1083,8 +1054,7 @@ module.exports = {
             deviceService.combinedClickText("去答题", 5000);
             // 选答案
             deviceService.clickDIP("android.widget.TextView", 18, 0, 500);
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
         // 去看看
         if (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
@@ -1095,16 +1065,14 @@ module.exports = {
                 sleep(5000);
                 // 跳过的任务
                 if (text("每通过1关可获得100心情值").exists()) {
-                    back();
-                    sleep(1000);
+                    deviceService.back(1000);
                     return;
                 }
                 // 立即领取 / 如果是随机游戏任务，进入游戏中心要点击一个任务
                 deviceService.comboTextClick(["立即领取", "角色扮演"], 5000);
                 deviceService.swipeViewTask(30000)
                 this.closeSubApp();
-                back();
-                sleep(1000);
+                deviceService.back(1000);
             });
         }
         // 去逛逛
@@ -1116,7 +1084,7 @@ module.exports = {
                 sleep(5000);
                 // 跳过的任务
                 if (text("天天领现金").exists()) {
-                    this.closeSubApp();
+                    deviceService.back(1000);
                     return;
                 }
                 deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
@@ -1124,8 +1092,7 @@ module.exports = {
                 app.launchApp("支付宝");
                 sleep(1000);
                 if (!text("立即领取").exists()) {
-                    back();
-                    sleep(1000);
+                    deviceService.back(1000);
                 }
             });
         }
@@ -1182,8 +1149,7 @@ module.exports = {
             sleep(6000);
             deviceService.combinedClickText("立即捐步", 1000);
             deviceService.combinedClickText("知道了", 1000);
-            back();
-            sleep(1000);
+            deviceService.back(1000);
         }
         // 回到首页
         this.closeSubApp();

@@ -24,9 +24,7 @@ module.exports = {
         //
         deviceService.comboTextClick(["一键领取+15", "打卡", "领取+3"], 5000);
         // 回会员中心
-        back();
-        sleep(1000);
-        back();
-        sleep(1000);
+        deviceService.back(1000);
+        deviceService.back(1000);
     }
 }

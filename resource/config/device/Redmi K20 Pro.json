@@ -38,7 +38,7 @@
     {
       "userAccount": "173******96",
       "userName": "wm02",
-      "giveChanceUser": "wm01"
+      "giveChanceUser": "wm03"
     },
     {
       "userAccount": "173***@163.com",
@@ -48,11 +48,11 @@
     {
       "userAccount": "173******35",
       "userName": "wm04",
-      "giveChanceUser": "wm03"
+      "giveChanceUser": "wm01"
     }
   ],
-  "taobaoAccountList": [
-    "173****3096",
-    "173****0935"
+  "taoBaoAccountList": [
+    "cn_wm01",
+    "cn_wm02"
   ]
 }
