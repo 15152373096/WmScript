@@ -12,6 +12,7 @@
 //     log("1111")
 // }
 
+
 takeEnergy();
 // initChickenQuestion();
 function initChickenQuestion() {

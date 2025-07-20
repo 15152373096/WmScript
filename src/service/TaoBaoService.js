@@ -32,7 +32,7 @@ module.exports = {
     /**
      * 芭芭农场操作
      */
-    babaFarmOption: function (account) {
+    babaFarmTask: function (account) {
         deviceService.combinedClickDesc("芭芭农场", 1000);
         text("集肥料").waitFor();
         sleep(8000);
@@ -111,9 +111,17 @@ module.exports = {
                     // 更多肥料
                     deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
                 }
-                if(text("反馈").exists()) {
+                if(text("反馈").exists() || text("恭喜获得奖励").exists()) {
                     // 关闭任务
                     deviceService.clickDIP("android.widget.LinearLayout", 11, 0, 2000);
+                    deviceService.clickDIP("android.widget.ImageView", 11, 0, 2000);
+                    // 更多肥料
+                    deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
+                }
+                if(text("打开App体验15秒，即可获得奖励").exists()) {
+                    // 关闭任务
+                    deviceService.clickDIP("android.widget.ImageView", 10, 0, 2000);
+                    deviceService.combinedClickText("关闭广告", 1000);
                     // 更多肥料
                     deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
                 }

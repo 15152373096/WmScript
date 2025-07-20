@@ -9,10 +9,10 @@ ui.layout(
             </horizontal>
             <horizontal>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园种小麦" id="plantWheatTask"/>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园大家庭" id="chickenFamily"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="家庭和运动" id="chickenFamilyAndSport"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="庄园运动会" id="ballJob"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="待补充任务" id="ballJob"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="淘宝芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
@@ -56,11 +56,6 @@ ui.comboTask.click(function () {
         combo.mainJob();
     });
 });
-ui.ballJob.click(function () {
-    threads.start(function () {
-        combo.chickenGameJob();
-    });
-});
 ui.energyRain.click(function () {
     threads.start(function () {
         combo.energyRainJob();
@@ -76,9 +71,9 @@ ui.makeUpSignIn.click(function () {
         combo.makeUpSignInJob();
     });
 });
-ui.chickenFamily.click(function () {
+ui.chickenFamilyAndSport.click(function () {
     threads.start(function () {
-        combo.chickenFamilyJob();
+        combo.chickenFamilyAndSportJob();
     });
 });
 ui.syncStepTask.click(function () {

@@ -3,8 +3,6 @@ let deviceService = require('./DeviceService.js');
 
 // 用户配置
 let userConfig = {};
-// 小鸡睡觉标识
-let isChickenSleep;
 
 module.exports = {
 
@@ -168,8 +166,6 @@ module.exports = {
         deviceService.clickRate(55, 2385, 800);
         // 收鸡蛋
         deviceService.clickRate(250, 2245, 1500);
-        // 小鸡睡觉标识
-        isChickenSleep = false;
         // 喂食小鸡
         this.feedChicken();
         // 小鸡日记
@@ -210,6 +206,8 @@ module.exports = {
         log("------蚂蚁庄园-道具使用------");
         // 使用道具-加速卡
         this.chickenToolUse("我的道具", "加速卡", "使用道具");
+        // 使用道具-加饭卡
+        this.chickenToolUse("我的道具", "加饭卡", "使用道具");
         // 使用道具-新蛋卡
         this.chickenToolUse("我的道具", "新蛋卡", "使用道具");
         // 领取新蛋卡
@@ -230,10 +228,13 @@ module.exports = {
         // 选择道具类型
         deviceService.combinedClickText(toolType, 2800);
         // 使用道具
-        deviceService.clickNearBy(toolName, useName, 2800);
+        if (text(toolName).exists() && text(useName).exists() && text(toolName).findOne().parent().parent().findOne(text(useName))) {
+            text(toolName).findOne().parent().parent().findOne(text(useName)).click();
+            sleep(2800);
+        }
         // 立即加速
         for (let i = 20; i > 0; i--) {
-            deviceService.combinedClickText("还有" + i + "张 立即加速", 2800);
+            deviceService.comboTextClick(["还有" + i + "张 立即加速", "还有" + i + "张 立即使用"], 2800);
         }
         // 使用-未使用道具场景、确认-已使用道具场景、知道了、已使用加速卡时，补充关闭
         deviceService.comboTextClick(["使用", "确认", "知道了", "知道啦", "关闭", "关闭道具弹窗"], 2800);
@@ -246,20 +247,12 @@ module.exports = {
         log("------蚂蚁庄园-饲料任务------");
         // 领饲料
         this.clickCoordinates("collarFeed");
-        // 更新小鸡睡觉标识
-        if (text("让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 已领取").exists()) {
-            isChickenSleep = true;
-        }
         // 庄园小课堂
         this.chickenQuestion();
         // 雇佣小鸡
         this.chickenHire();
         // 抽抽乐
         this.happyLottery();
-        // 逛一逛
-        this.chickenStroll();
-        // 会员签到
-        this.chickenSign();
         // 小鸡厨房
         this.cookDishes();
         // APP跳转任务
@@ -267,7 +260,7 @@ module.exports = {
         // 浏览任务
         this.chickenBrowse();
         // 鲸探任务
-        this.jingTanTask();
+        this.whaleExplorerTask();
         // 小鸡睡觉
         this.chickenSleep();
         log("------蚂蚁庄园-收取饲料------");
@@ -338,7 +331,8 @@ module.exports = {
                 log("------饲料任务-" + browseTask + "------");
                 deviceService.combinedClickText(browseTask, 5000);
                 if (browseTask.indexOf("15s") >= 0) {
-                    sleep(18000);
+                    // 等等机器人验证
+                    deviceService.swipeViewTask(18000);
                 }
                 deviceService.back(800);
                 if (!text("x180").exists()) {
@@ -351,26 +345,39 @@ module.exports = {
     /**
      * 鲸探任务
      */
-    jingTanTask: function () {
-        if ("on" != userConfig.chickenTask.jingTanSwitch) {
+    whaleExplorerTask: function () {
+        if ("on" != userConfig.chickenTask.whaleExplorerSwitch) {
             return;
         }
-        let jingTanTextList = [
+        let whaleExplorerTextList = [
             "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼",
             "去鲸探喂鱼集福气 完成1次喂鱼，可获得90g饲料 去喂鱼"
         ];
-        jingTanTextList.forEach(jingTanText => {
-            if (!text(jingTanText).exists()) {
+        whaleExplorerTextList.forEach(whaleExplorerText => {
+            if (!text(whaleExplorerText).exists()) {
                 return;
             }
             // 需要做任务
             log("------饲料任务-去鲸探喂鱼集福气------");
-            deviceService.combinedClickText(jingTanText, 1000);
+            deviceService.combinedClickText(whaleExplorerText, 1000);
+            if (text("支付宝账号快速登录").exists()) {
+                // 授权登陆
+                deviceService.clickDIP("android.widget.TextView", 15, 0, 800);
+                deviceService.combinedClickText("支付宝账号快速登录", 1000);
+            }
             text("一个小正经的池塘").waitFor();
             sleep(2000);
+            // 放生
+            deviceService.clickDIP("android.view.View", 18, 1, 2000);
+            deviceService.combinedClickText("确定放生", 3000);
+            // 回退到池塘
+            if (text("确定放生").exists()) {
+                className("android.widget.TextView").depth(19).indexInParent(0).clickable(true).findOne().click();
+                className("android.widget.TextView").depth(20).indexInParent(0).clickable(true).findOne().click();
+                sleep(2000);
+            }
             for (let i = 9; i > 0; i--) {
-                deviceService.combinedClickText("鱼食(" + i + "/8)", 2000);
-                deviceService.combinedClickText("继续喂鱼", 500);
+                deviceService.comboTextClick(["鱼食(" + i + "/8)", "继续喂鱼"], 2000);
             }
             // 放生池点击
             for (let i = 0; i < 168; i++) {
@@ -439,19 +446,6 @@ module.exports = {
                 ;
             }
         });
-
-    },
-
-    /**
-     * 去支付宝会员签到
-     */
-    chickenSign: function () {
-        let signTask = "去支付宝会员签到 和小鸡一起签到得积分换好礼，还可获赠90g饲料哦~ 去完成";
-        if (text(signTask).exists()) {
-            log("------饲料任务-会员签到------");
-            deviceService.combinedClickText(signTask, 3800);
-            deviceService.back(800);
-        }
     },
 
     /**
@@ -573,39 +567,6 @@ module.exports = {
     },
 
     /**
-     * 逛一逛任务
-     */
-    chickenStroll: function () {
-        let strollTaskList = [
-            "去杂货铺逛一逛 和小鸡一起逛15s杂货铺，可获得90g饲料哦 去完成",
-            "去杂货铺逛一逛 浏览15s可得90g饲料 去完成"
-        ];
-        strollTaskList.forEach(strollTask => {
-            if (!text(strollTask).exists()) {
-                return;
-            }
-            log("------饲料任务-去杂货铺逛一逛------");
-            deviceService.combinedClickText(strollTask, 2000);
-            // 等等机器人验证
-            deviceService.swipeViewTask(18000);
-            deviceService.back(1000);
-        });
-    },
-
-    /**
-     * 庄园小视频
-     */
-    chickenVideo: function () {
-        let videoTask = "庄园小视频 和小鸡一起看15s公益小视频，可获得90g饲料哦 去完成";
-        if (text(videoTask).exists()) {
-            log("------饲料任务-庄园小视频------");
-            deviceService.combinedClickText(videoTask, 2000);
-            sleep(18000);
-            deviceService.back(1000);
-        }
-    },
-
-    /**
      * 小鸡睡觉
      */
     chickenSleep: function () {
@@ -720,16 +681,9 @@ module.exports = {
      * 喂食小鸡
      */
     feedChicken: function () {
-        // 小鸡睡了，跳过喂食
-        if (isChickenSleep) {
-            return;
-        }
-        let count = 0;
-        // 如果是其他零食，没有显示鸡饲料，或者超过20次
-        while (count < 10) {
+        for (let i = 0; i < 8; i++) {
             // 点击小鸡饲料
             this.clickChickenFodder();
-            count++;
         }
     },
 

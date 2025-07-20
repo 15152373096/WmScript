@@ -26,10 +26,10 @@ function run() {
             // 能量雨任务
             combo.energyRainJob();
         });
-    } else if (deviceService.containsInArray(globalConfig.chickenGameJobConfig.fixRunTime, currentTime.hourMinute)) {
+    } else if (deviceService.containsInArray(globalConfig.chickenFamilyAndSportConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
-            // 星星球任务
-            combo.chickenGameJob();
+            // 家庭和运动会
+            combo.chickenFamilyAndSportJob();
         });
     } else if (deviceService.containsInArray(globalConfig.allSignConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {

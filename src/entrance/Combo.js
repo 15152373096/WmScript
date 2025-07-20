@@ -58,31 +58,103 @@ module.exports = {
     },
 
     /**
-     * 星星球任务
+     * 庄园家庭任务
      */
-    chickenGameJob: function () {
-        log("======starBallJob start======");
+    chickenFamilyAndSportJob: function () {
+        log("======plantWheatJob start======");
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
-        // 打排球
-        this.loopPlayChickenGame(0);
-        log("======starBallJob end======");
+        // 遍历账号
+        accountList.forEach(account => {
+            aliPayService.switchAccount(account.userAccount);
+            // 打开蚂蚁庄园
+            aliPayService.launchSubApp("蚂蚁庄园");
+            // 广告
+            deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
+            // 收取赠送麦子
+            deviceService.comboTextClick(["去收取", "立即领取"], 800);
+            // 睡觉广告
+            deviceService.clickRate(55, 2385, 800);
+            // 收鸡蛋
+            deviceService.clickRate(250, 2245, 800);
+            // 小鸡运动会
+            this.playChickenSport();
+            // 小鸡家庭任务
+            this.playChickenFamily();
+            // 回到首页
+            aliPayService.closeSubApp();
+        });
+        // 切回主账号
+        aliPayService.switchAccount(accountList[0].userAccount);
+        this.afterOpt();
+        log("======plantWheatJob end======");
     },
 
     /**
-     * 循环小鸡运动会
+     * 小鸡家庭任务
      */
-    loopPlayChickenGame: function (count) {
-        // 切换账号
-        aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
-        // 打开蚂蚁庄园
-        aliPayService.launchSubApp("蚂蚁庄园");
-        // 广告
-        deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
-        deviceService.comboTextClick(["立即领取", "去收取"], 2000);
-        log("星星球");
+    playChickenFamily: function () {
+        // 家庭
+        deviceService.clickRate(640, 2950, 8000);
+        text("相亲相爱一家人").waitFor();
+        sleep(1000);
+        // 立即签到
+        deviceService.clickRate(720, 3000, 5000);
+        // 去捐蛋
+        if (text("去捐蛋").exists()) {
+            deviceService.comboTextClick(["去捐蛋", "去捐蛋", "立即捐蛋", "立即捐蛋"], 5000);
+            deviceService.back(800);
+            deviceService.back(800);
+            deviceService.combinedClickText("关闭", 2800);
+        }
+        // 去请客
+        if (text("去请客").exists() && "王明" != account.userName) {
+            deviceService.combinedClickText("去请客", 3800);
+            if (text("美食不足，去抽奖得美食").exists()) {
+                // 关闭弹框
+                className("android.widget.TextView").depth(16).indexInParent(8).findOne().click();
+            } else {
+                deviceService.combinedClickText("确认", 3800);
+            }
+        }
+        // 去分享
+        if (text("去分享").exists()) {
+            deviceService.comboTextClick([
+                "去分享",
+                "分享给Ta们 亲密度+6",
+                "分享给Ta们 亲密度+5",
+                "分享给Ta们 亲密度+4",
+                "分享给Ta们 亲密度+3",
+                "分享给Ta们 亲密度+2",
+                "分享给Ta们 亲密度+1"
+            ], 5000);
+        }
+        // 去喂食
+        if (text("去喂食").exists()) {
+            deviceService.comboTextClick(["去喂食", "确认", "确认 亲密度+1"], 5000);
+        }
+        // 去指派
+        if (text("去指派").exists()) {
+            deviceService.comboTextClick(["去指派", "确认"], 5000);
+            // 立即签到
+            deviceService.clickRate(720, 3000, 5000);
+        }
+        // 去捐步
+        if (text("去捐步").exists()) {
+            deviceService.comboTextClick(["去捐步", "去捐步数", "立即捐步", "知道了"], 3000);
+            deviceService.combinedClickDesc("关闭", 2800);
+            deviceService.combinedClickText("关闭", 2800);
+        }
+        // 回退
+        deviceService.back(800);
+    },
+
+    /**
+     * 小鸡运动会
+     */
+    playChickenSport: function () {
         // 运动会
         deviceService.clickRate(1300, 1100, 3000);
         // 欢乐揍小鸡
@@ -95,17 +167,6 @@ module.exports = {
         }
         for (let i = 10; i > 0; i--) {
             deviceService.combinedClickText("继续开宝箱 还有" + i + "个宝箱", 6000);
-        }
-        // 回到首页
-        aliPayService.closeSubApp();
-        // 计数
-        count++;
-        if (count < accountList.length) {
-            this.loopPlayChickenGame(count);
-        } else {
-            // 复原账号
-            aliPayService.switchAccount(accountList[0].userAccount);
-            this.afterOpt();
         }
     },
 
@@ -687,87 +748,6 @@ module.exports = {
     },
 
     /**
-     * 庄园家庭任务
-     */
-    chickenFamilyJob: function () {
-        log("======plantWheatJob start======");
-        this.beforeOpt();
-        // 启动支付宝
-        deviceService.launch("支付宝");
-        // 遍历账号
-        accountList.forEach(account => {
-            aliPayService.switchAccount(account.userAccount);
-            // 打开蚂蚁庄园
-            aliPayService.launchSubApp("蚂蚁庄园");
-            // 广告
-            deviceService.clickDIP("android.widget.TextView", 17, 1, 1000);
-            // 收取赠送麦子
-            deviceService.comboTextClick(["去收取", "立即领取"], 800);
-            // 睡觉广告
-            deviceService.clickRate(55, 2385, 800);
-            // 收鸡蛋
-            deviceService.clickRate(250, 2245, 800);
-            // 家庭
-            deviceService.clickRate(640, 2950, 8000);
-            text("相亲相爱一家人").waitFor();
-            sleep(1000);
-            // 立即签到
-            deviceService.clickRate(720, 3000, 5000);
-            // 去捐蛋
-            if (text("去捐蛋").exists()) {
-                deviceService.comboTextClick(["去捐蛋", "去捐蛋", "立即捐蛋", "立即捐蛋"], 5000);
-                deviceService.back(800);
-                deviceService.back(800);
-                deviceService.combinedClickText("关闭", 2800);
-            }
-            // 去请客
-            if (text("去请客").exists() && "王明" != account.userName) {
-                deviceService.combinedClickText("去请客", 3800);
-                if (text("美食不足，去抽奖得美食").exists()) {
-                    // 关闭弹框
-                    className("android.widget.TextView").depth(16).indexInParent(8).findOne().click();
-                } else {
-                    deviceService.combinedClickText("确认", 3800);
-                }
-            }
-            // 去分享
-            if (text("去分享").exists()) {
-                deviceService.comboTextClick([
-                    "去分享",
-                    "分享给Ta们 亲密度+6",
-                    "分享给Ta们 亲密度+5",
-                    "分享给Ta们 亲密度+4",
-                    "分享给Ta们 亲密度+3",
-                    "分享给Ta们 亲密度+2",
-                    "分享给Ta们 亲密度+1"
-                ], 5000);
-            }
-            // 去喂食
-            if (text("去喂食").exists()) {
-                deviceService.comboTextClick(["去喂食", "确认", "确认 亲密度+1"], 5000);
-            }
-            // 去指派
-            if (text("去指派").exists()) {
-                deviceService.comboTextClick(["去指派", "确认"], 5000);
-            }
-            // 去捐步
-            if (text("去捐步").exists()) {
-                deviceService.comboTextClick(["去捐步", "去捐步数", "立即捐步", "知道了"], 3000);
-                deviceService.combinedClickDesc("关闭", 2800);
-                deviceService.combinedClickText("关闭", 2800);
-            }
-            // 回退
-            deviceService.back(800);
-            // 回到首页
-            aliPayService.closeSubApp();
-        });
-        // 切回主账号
-        aliPayService.switchAccount(accountList[0].userAccount);
-        this.afterOpt();
-        log("======plantWheatJob end======");
-    },
-
-    /**
      * 种植小麦
      */
     plantWheatJob: function () {
@@ -943,26 +923,24 @@ module.exports = {
         let musicVolume = deviceService.mute();
         // 启动淘宝
         deviceService.launch("淘宝");
+        // 广告弹框
+        deviceService.comboDescClick(["关闭按钮", "关闭"], 3000);
         // 遍历
-        taoBaoAccountList.forEach(account => {
-            // 广告弹框
-            deviceService.combinedClickDesc("关闭按钮", 3000);
+        for (let i = 0; i <= taoBaoAccountList.length; i++) {
+            // 最后一次切回主账号
+            let account = (i == taoBaoAccountList.length ? taoBaoAccountList[0] : taoBaoAccountList[i]);
             // 切换账号
             taoBaoService.switchAccount(account);
             // 广告弹框
-            deviceService.combinedClickDesc("关闭按钮", 3000);
+            deviceService.comboDescClick(["关闭按钮", "关闭"], 3000);
             // 芭芭农场任务
-            taoBaoService.babaFarmOption(account);
-        });
-        // 切回主账号
-        taoBaoService.switchAccount(taoBaoAccountList[0]);
-        taoBaoService.syncAccount();
+            taoBaoService.babaFarmTask(account);
+        }
         // 还原声音
         deviceService.revertMute(musicVolume);
         log("======taoBaoBaBa end======");
         this.afterOpt()
     },
-
 
     /**
      * 后置操作
@@ -974,4 +952,3 @@ module.exports = {
         deviceService.lockDevice();
     }
 }
-
