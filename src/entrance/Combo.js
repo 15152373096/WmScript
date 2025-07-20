@@ -79,10 +79,10 @@ module.exports = {
             deviceService.clickRate(55, 2385, 800);
             // 收鸡蛋
             deviceService.clickRate(250, 2245, 800);
+            // 小鸡家庭任务
+            this.playChickenFamily(account);
             // 小鸡运动会
             this.playChickenSport();
-            // 小鸡家庭任务
-            this.playChickenFamily();
             // 回到首页
             aliPayService.closeSubApp();
         });
@@ -95,7 +95,11 @@ module.exports = {
     /**
      * 小鸡家庭任务
      */
-    playChickenFamily: function () {
+    playChickenFamily: function (account) {
+        // 开关
+        if (!globalConfig.chickenFamilySwitch) {
+            return;
+        }
         // 家庭
         deviceService.clickRate(640, 2950, 8000);
         text("相亲相爱一家人").waitFor();
@@ -158,7 +162,7 @@ module.exports = {
         // 运动会
         deviceService.clickRate(1300, 1100, 3000);
         // 欢乐揍小鸡
-        this.punchChichen();
+        this.punchChicken();
         // 星星球
         this.playStarBall();
         // 立即开宝箱 还有3个宝箱
@@ -173,7 +177,7 @@ module.exports = {
     /**
      * 欢乐揍小鸡
      */
-    punchChichen: function () {
+    punchChicken: function () {
         deviceService.comboTextClick([
             "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 马上玩",
             "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩",

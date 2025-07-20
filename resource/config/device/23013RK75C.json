@@ -1,5 +1,6 @@
 {
   "globalSwitch": false,
+  "chickenFamilySwitch": true,
   "energyRainConfig": {
     "fixRunTime": [
       "04:15",
