@@ -41,7 +41,6 @@ module.exports = {
         deviceService.clickRate(1290, 2000, 800);
         // 集肥料
         deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "集肥料", "集肥料", "去签到"], 3000);
-        // deviceService.comboTextClick(["集肥料", "去签到"], 3000);
         // 答题任务
         this.answerQuestion();
         // 芭芭农场的浏览任务
@@ -86,7 +85,9 @@ module.exports = {
             "看视频得肥料"
         ];
         taskArray.forEach(task => {
-            while(text(task).exists() && text(task).findOne().parent().findOne(text("去完成"))) {
+            let count = 0;
+            while (text(task).exists() && text(task).findOne().parent().findOne(text("去完成")) && count < 15) {
+                count++;
                 text(task).findOne().parent().findOne(text("去完成")).click();
                 sleep(6000);
                 // 跳转场景
@@ -95,30 +96,30 @@ module.exports = {
                 deviceService.swipeViewTask(30000);
                 // 做完任务回去
                 deviceService.launch("夸克");
-                if(id("noah_hc_close_icon").exists()) {
+                if (id("noah_hc_close_icon").exists()) {
                     id("noah_hc_close_icon").click();
                     sleep(2000);
                 }
-                if(text("奖励已发放").exists()) {
+                if (text("奖励已发放").exists()) {
                     id("noah_hc_close_button").click();
                     sleep(2000);
                     // 更多肥料
                     deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
                 }
-                if(text("进入微信小游戏自由畅玩").exists()) {
+                if (text("进入微信小游戏自由畅玩").exists()) {
                     // 关闭任务
                     deviceService.clickDIP("android.widget.FrameLayout", 8, 3, 2000);
                     // 更多肥料
                     deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
                 }
-                if(text("反馈").exists() || text("恭喜获得奖励").exists()) {
+                if (text("反馈").exists() || text("恭喜获得奖励").exists()) {
                     // 关闭任务
                     deviceService.clickDIP("android.widget.LinearLayout", 11, 0, 2000);
                     deviceService.clickDIP("android.widget.ImageView", 11, 0, 2000);
                     // 更多肥料
                     deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
                 }
-                if(text("打开App体验15秒，即可获得奖励").exists()) {
+                if (text("打开App体验15秒，即可获得奖励").exists()) {
                     // 关闭任务
                     deviceService.clickDIP("android.widget.ImageView", 10, 0, 2000);
                     deviceService.combinedClickText("关闭广告", 1000);
@@ -128,6 +129,16 @@ module.exports = {
                 deviceService.combinedClickText("跳过", 1000);
                 sleep(3000);
                 deviceService.combinedClickText("我知道啦", 1000);
+                // 没有回退到日常任务
+                if (!text("日常任务").exists()) {
+                    // 清除后台任务
+                    deviceService.clearBackground();
+                    // 启动夸克
+                    deviceService.launch("夸克");
+                    // 更多肥料
+                    deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
+                }
+
             }
         });
         // 回到首页
@@ -202,12 +213,10 @@ module.exports = {
      */
     babaFarmBrowse: function () {
         sleep(3000);
-        let browseTaskList = [
-            "浏览15秒得奖励",
-            "浏览15秒得",
-        ];
-        browseTaskList.forEach(browseTask => {
-            while (text(browseTask).exists()) {
+        ["浏览15秒得奖励", "浏览15秒得","浏览15秒 得", "浏览30秒得", "逛逛得"].forEach(browseTask => {
+            let count = 0;
+            while (text(browseTask).exists() && count < 20) {
+                count ++;
                 text(browseTask).findOne().click();
                 sleep(3000);
                 setText("山楂条");

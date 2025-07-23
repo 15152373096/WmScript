@@ -13,6 +13,8 @@
 // }
 
 
+
+
 takeEnergy();
 // initChickenQuestion();
 function initChickenQuestion() {

@@ -753,12 +753,14 @@ module.exports = {
         // 好的
         deviceService.comboTextClick(["好的", "关闭", "取消"], 800);
         // 立即领奖
-        deviceService.comboTextClick(["立即领奖", "立即领取"], 2000);
-        if (text("点此逛一逛再得1000肥料>").exists()) {
-            deviceService.combinedClickText("点此逛一逛再得1000肥料>", 2000);
-            deviceService.swipeViewTask(18000);
-            deviceService.back(800);
-        }
+        deviceService.comboTextClick(["立即领奖", "立即领肥", "立即领肥", "立即领取"], 2000);
+        ["点此逛一逛再得1000肥料>", "点此逛一逛再赚1000肥料>"].forEach(task => {
+            if (text(task).exists()) {
+                deviceService.combinedClickText(task, 2000);
+                deviceService.swipeViewTask(18000);
+                deviceService.back(800);
+            }
+        });
         deviceService.comboTextClick(["领取", "领取", "关闭", "取消"], 2000);
         // 做任务
         this.babaFarmTask();
@@ -1084,17 +1086,21 @@ module.exports = {
         // 下午5点25前，不走路线
         if (deviceService.laterThan(22, 25)) {
             if (text("马上走").exists()) {
-                deviceService.combinedClickText("马上走", 6000);
+                deviceService.combinedClickText("马上走", 8000);
             } else {
-                deviceService.clickRate(230, 2150, 6000);
+                deviceService.clickRate(230, 2150, 8000);
             }
             // 开心收下
             deviceService.comboTextClick(["立即开走", "开心收下", "打开", "可找回", "取消"], 2000);
+            if (text("当前路线已走完").exists()) {
+                deviceService.clickDIP("android.widget.Image", 15, 5, 800);
+                deviceService.clickDIP("android.widget.Image", 15, 6, 800);
+            }
             // Go、下一关
             deviceService.clickRate(720, 2976, 1000);
             deviceService.clickRate(720, 2976, 3500);
             // 立即打开
-            deviceService.comboTextClick(["立即打开"], 2000);
+            deviceService.comboTextClick(["打开", "立即打开"], 2000);
             this.closeSubApp();
         }
         // 去捐步
