@@ -611,7 +611,7 @@ module.exports = {
      * 同步手环步数
      */
     syncStepJob: function () {
-        if (!deviceService.appExists("支付宝") || !deviceService.appExists("Zepp Life")) {
+        if (!deviceService.appExists("支付宝") || !deviceService.appExists("Zepp Life") || deviceService.earlierThan(7, 0)) {
             return;
         }
         log("======syncStepJob start======");
@@ -620,37 +620,43 @@ module.exports = {
         deviceService.launch("支付宝");
         aliPayService.closeShanGouAD();
         // 遍历账号
-        accountList.forEach(account => {
+        for (let i = 0; i <= accountList.length; i++) {
+            // 最后一次切回主账号
+            let account = (i == accountList.length ? accountList[0] : accountList[i]);
             // 账号切换
             aliPayService.switchAccount(account.userAccount);
             aliPayService.closeShanGouAD();
             // 切回Zepp Life
             deviceService.launch("Zepp Life");
-            // 同步数据
-            sleep(3000);
+            // 启动加载
+            sleep(6000);
             // 我的
             deviceService.clickRate(1200, 3150, 1000);
+            // 检查是否登录
+            if (id("mine_name").exists() && '立即登录' == id("mine_name").findOne().text()) {
+                deviceService.comboTextClick(["立即登录", "登录/注册"], 2000);
+                className("android.widget.CheckBox").id("login_agreement_checkbox").click();
+                sleep(800);
+                deviceService.comboTextClick(["登录此账号", "确认授权"], 3000);
+                sleep(8000);
+                // 我的
+                deviceService.clickRate(1200, 3150, 1000);
+            }
             deviceService.comboTextClick(["第三方接入", "支付宝", "解除绑定", "确定", "绑定"], 2000);
             sleep(4000);
             deviceService.back(800);
             deviceService.back(800);
             deviceService.combinedClickText("首页", 2000);
             aliPayService.closeShanGouAD();
-            // 下拉刷新同步
-            deviceService.swipeDown(device.height);
-            sleep(5000);
-            // 下拉刷新同步
-            deviceService.swipeDown(device.height);
-            sleep(5000);
-            // 下拉刷新同步
-            deviceService.swipeDown(device.height);
-            sleep(5000);
+            for (let i = 0; i < 5; i++) {
+                // 下拉刷新同步
+                deviceService.swipeDown(device.height);
+                sleep(5000);
+            }
             // 启动支付宝
             deviceService.launch("支付宝");
             aliPayService.closeShanGouAD();
-        });
-        // 切回主账号
-        aliPayService.switchAccount(accountList[0].userAccount);
+        }
         this.afterOpt();
         log("======syncStepJob end======");
     },
@@ -842,9 +848,11 @@ module.exports = {
         // 月月赚任务
         this.monthEarnJob();
         // 芭芭农场任务
-        if (deviceService.appExists("淘宝")) {
-            this.taoBaoBaBaJob();
-        }
+        this.taoBaoBaBaJob();
+        // 家庭和运动
+        this.chickenFamilyAndSportJob();
+        // 同步步数
+        this.syncStepJob();
         this.afterOpt();
     },
 
@@ -904,25 +912,12 @@ module.exports = {
     },
 
     /**
-     * 上班签到
-     */
-    weLinkSignIn: function () {
-        if (deviceService.appExists("WeLink")) {
-            this.beforeOpt();
-            // 启动welink
-            deviceService.launch("WeLink");
-            toast("======上下班签到======");
-            text("业务").waitFor();
-            // 业务、打卡
-            deviceService.comboTextClick(["业务", "打卡"], 3000);
-            this.afterOpt();
-        }
-    },
-
-    /**
      * 淘宝芭芭农场任务
      */
     taoBaoBaBaJob: function () {
+        if (!deviceService.appExists("淘宝")) {
+            return;
+        }
         log("======taoBaoBaBa start======");
         this.beforeOpt();
         // 静音

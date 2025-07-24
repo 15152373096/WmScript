@@ -3,32 +3,23 @@
   "chickenFamilySwitch": false,
   "energyRainConfig": {
     "fixRunTime": [
-      "04:15",
-      "13:15",
-      "22:15"
+      "07:05",
+      "16:15",
+      "23:05"
     ]
   },
   "allSignConfig": {
     "fixRunTime": [
       "02:00",
-      "03:00",
-      "22:35",
-      "23:15"
-    ]
-  },
-  "weLinkConfig": {
-    "fixRunTime": [
+      "07:35",
+      "12:15",
+      "17:15",
+      "22:15"
     ]
   },
   "mainJobConfig": {
     "lastRunTime": "2024-05-13 21:55:00",
-    "timeInterval": 60
-  },
-  "chickenFamilyAndSportConfig": {
-    "fixRunTime": [
-      "22:45",
-      "23:45"
-    ]
+    "timeInterval": 90
   },
   "accountList": [
     {

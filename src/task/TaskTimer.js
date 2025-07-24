@@ -16,20 +16,10 @@ function run() {
     let now = new Date();
     let currentTime = deviceService.formatDate(now);
 
-    if (deviceService.containsInArray(globalConfig.weLinkConfig.fixRunTime, currentTime.hourMinute)) {
-        threads.start(function () {
-            // 上班签到
-            combo.weLinkSignIn();
-        });
-    } else if (deviceService.containsInArray(globalConfig.energyRainConfig.fixRunTime, currentTime.hourMinute)) {
+    if (deviceService.containsInArray(globalConfig.energyRainConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
             // 能量雨任务
             combo.forestEnergyJob();
-        });
-    } else if (deviceService.containsInArray(globalConfig.chickenFamilyAndSportConfig.fixRunTime, currentTime.hourMinute)) {
-        threads.start(function () {
-            // 家庭和运动会
-            combo.chickenFamilyAndSportJob();
         });
     } else if (deviceService.containsInArray(globalConfig.allSignConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
