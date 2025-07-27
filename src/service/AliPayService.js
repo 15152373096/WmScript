@@ -326,18 +326,19 @@ module.exports = {
         }
         // 遍历任务
         browseTaskList.forEach(browseTask => {
-            if (text(browseTask).exists()) {
-                // 需要做任务
-                log("------饲料任务-" + browseTask + "------");
-                deviceService.combinedClickText(browseTask, 5000);
-                if (browseTask.indexOf("15s") >= 0) {
-                    // 等等机器人验证
-                    deviceService.swipeViewTask(18000);
-                }
+            if (!text(browseTask).exists()) {
+                return;
+            }
+            // 需要做任务
+            log("------饲料任务-" + browseTask + "------");
+            deviceService.combinedClickText(browseTask, 5000);
+            if (browseTask.indexOf("15s") >= 0) {
+                // 等等机器人验证
+                deviceService.swipeViewTask(18000);
+            }
+            deviceService.back(800);
+            if (!text("蚂蚁庄园").exists()) {
                 deviceService.back(800);
-                if (!text("x180").exists()) {
-                    deviceService.back(800);
-                }
             }
         });
     },
