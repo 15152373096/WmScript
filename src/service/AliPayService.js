@@ -690,24 +690,20 @@ module.exports = {
         if (className("android.widget.Button").text("找小鸡").exists()) {
             className("android.widget.Button").text("找小鸡").findOne().click();
             sleep(8000);
-            if (className("android.widget.Button").depth(18).indexInParent(2).exists()) {
-                // 除草场景
-                deviceService.clickDIP("android.widget.Button", 18, 2, 800);
-                deviceService.back(5000);
-            } else {
-                // 找小鸡场景
-                deviceService.clickRate(550, 2188, 800);
-                // 下次再说
-                deviceService.combinedClickText("下次再说", 800);
-                // 确认带小鸡回家
-                deviceService.combinedClickText("确认", 5000);
-                // 点击右边
-                deviceService.clickRate(980, 2188, 800);
-                // 下次再说
-                deviceService.combinedClickText("下次再说", 800);
-                // 确认带小鸡回家
-                deviceService.combinedClickText("确认", 5000);
-            }
+            // 找小鸡场景
+            deviceService.clickRate(550, 2188, 800);
+            // 下次再说
+            deviceService.combinedClickText("下次再说", 800);
+            // 确认带小鸡回家
+            deviceService.combinedClickText("确认", 5000);
+            // 点击右边
+            deviceService.clickRate(980, 2188, 800);
+            // 下次再说
+            deviceService.combinedClickText("下次再说", 800);
+            // 确认带小鸡回家
+            deviceService.combinedClickText("确认", 5000);
+            // 找回后，喂食饲料
+            deviceService.clickRate(1115, 2970, 800);
         }
     },
 

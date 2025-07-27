@@ -213,10 +213,10 @@ module.exports = {
      */
     babaFarmBrowse: function () {
         sleep(3000);
-        ["浏览15秒得奖励", "浏览15秒得","浏览15秒 得", "浏览30秒得", "逛逛得"].forEach(browseTask => {
+        ["浏览15秒得奖励", "浏览15秒得", "浏览15秒 得", "浏览5秒得", "浏览30秒", "浏览30秒得"].forEach(browseTask => {
             let count = 0;
             while (text(browseTask).exists() && count < 20) {
-                count ++;
+                count++;
                 text(browseTask).findOne().click();
                 sleep(3000);
                 setText("山楂条");

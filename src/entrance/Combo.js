@@ -5,6 +5,7 @@ let taoBaoService = require('../service/TaoBaoService.js');
 let wyMusicService = require('../service/WYMusicService.js');
 let pddService = require('../service/PDDService.js');
 let aDriveService = require('../service/ADriveService.js');
+let doubaoService = require('../service/DoubaoService.js');
 let chinaMobileService = require('../service/ChinaMobileService.js');
 
 // 设备参数
@@ -603,7 +604,9 @@ module.exports = {
         // 启动支付宝
         deviceService.launch("支付宝");
         // 循环送道具
-        this.sendOutTools(0);
+        this.sendOutTools();
+        // 切回主账号
+        aliPayService.switchAccount(accountList[0].userAccount);
         this.afterOpt();
         log("======giveToolJob end======");
     },
@@ -658,64 +661,43 @@ module.exports = {
             deviceService.launch("支付宝");
             aliPayService.closeShanGouAD();
         }
-        this.afterOpt();
+        // 清除后台任务
+        deviceService.clearBackground();
+        // 解除后台锁定
+        deviceService.killLockedApp("Zepp Life");
+        // 锁屏
+        deviceService.lockDevice();
         log("======syncStepJob end======");
     },
 
     /**
      * 循环送道具
      */
-    sendOutTools: function (count) {
+    sendOutTools: function () {
         // 跳过主账号
-        if ("346***@qq.com" == accountList[count % accountList.length].userAccount) {
-            count++;
-        }
-        // 切换账号
-        aliPayService.switchAccount(accountList[count % accountList.length].userAccount);
-        // 打开蚂蚁森林
-        aliPayService.launchSubApp("蚂蚁森林");
-        // 关闭弹框
-        aliPayService.clearForestDialog();
-        // 上滑
-        deviceService.swipeUp(device.height / 2);
-        // 上滑
-        deviceService.swipeUp(device.height / 2);
-        // 新版本收能量
-        deviceService.comboTextClick(["查看更多好友", "王明"], 5000);
-        // 送道具
-        deviceService.clickRate(1120, 2475, 1800);
-        while (className("android.widget.Button").depth(18).text("赠送").exists()) {
-            className("android.widget.Button").depth(18).text("赠送").findOne().click();
-            sleep(3000);
-            // 确认赠送
-            if (className("android.widget.Button").depth(16).text("赠送").exists()) {
-                className("android.widget.Button").depth(16).text("赠送").findOne().click();
-                sleep(3000);
+        accountList.forEach(account => {
+            if ("346***@qq.com" == account.userAccount) {
+                return;
             }
-        }
-        while (className("android.widget.Button").depth(19).text("赠送").exists()) {
-            className("android.widget.Button").depth(19).text("赠送").findOne().click();
-            sleep(3000);
-            // 确认赠送
-            if (className("android.widget.Button").depth(16).text("赠送").exists()) {
-                className("android.widget.Button").depth(16).text("赠送").findOne().click();
-                sleep(3000);
+            // 切换账号
+            aliPayService.switchAccount(account.userAccount);
+            // 打开蚂蚁森林
+            aliPayService.launchSubApp("蚂蚁森林");
+            // 上滑
+            deviceService.swipeUp(device.height / 2);
+            // 上滑
+            deviceService.swipeUp(device.height / 2);
+            // 新版本收能量
+            deviceService.comboTextClick(["left 收我最多榜 right", "收我最多榜", "查看更多好友", "王明"], 5000);
+            // 送道具
+            deviceService.clickRate(1120, 2475, 1800);
+            // 赠送
+            while (text("赠送").exists()) {
+                text("赠送").click();
+                sleep(1000);
             }
-        }
-        deviceService.combinedClickText("关闭", 2800);
-        // 退回到列表
-        deviceService.back(800);
-        // 退回首页
-        deviceService.back(800);
-        // 退回首页
-        deviceService.back(800);
-        // 计数
-        count++;
-        if (count < accountList.length) {
-            this.sendOutTools(count);
-        } else {
-            this.afterOpt();
-        }
+            aliPayService.closeSubApp();
+        });
     },
 
     /**
@@ -824,6 +806,13 @@ module.exports = {
         }
         // 回到庄园
         deviceService.combinedClickText("关闭", 1800);
+    },
+    /**
+     * 初始化答案
+     */
+    initAnswerJob: function () {
+        // 小鸡答案
+        doubaoService.initChickenAnswer();
     },
 
     /**
