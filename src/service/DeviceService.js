@@ -160,6 +160,29 @@ module.exports = {
     },
 
     /**
+     *  清理后台锁定应用
+     */
+    killLockedApp: function (appName) {
+        // 打开最近任务
+        recents();
+        sleep(1000);
+        let target = text(appName).findOne();
+        if (target) {
+            // 获取任务卡片位置
+            let bounds = target.bounds();
+            // 如果卡片在左边，左滑关闭，卡片在右边，右滑关闭，
+            if (bounds.centerX() < device.width / 2) {
+                swipe(bounds.centerX(), bounds.centerY(), 0, bounds.centerY(), 500);
+            } else {
+                swipe(bounds.centerX(), bounds.centerY(), device.width, bounds.centerY(), 500);
+            }
+            sleep(500);
+        }
+        // 退出最近任务界面
+        back();
+    },
+
+    /**
      *  清理后台应用
      */
     clearBackground: function () {

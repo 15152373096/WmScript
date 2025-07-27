@@ -286,7 +286,7 @@ module.exports = {
         // 森林寻宝
         this.forestTreasureHunt();
         // 活力值任务
-        this.vitalityTask();
+        this.vitalityTask(account.userName);
         // 能量雨任务
         this.energyRainTask(account);
         // 关闭弹框
@@ -302,52 +302,53 @@ module.exports = {
     /**
      * 活力值任务
      */
-    vitalityTask: function () {
-        let taskList = ["逛一逛", "去逛逛", "去看看"];
+    vitalityTask: function (userName) {
+        //  获取配置
+        let jsonString = files.read("/sdcard/脚本/WmScript/resource/config/user/" + userName + ".json");
+        let userConfig = JSON.parse(jsonString);
+        let taskList = userConfig.vitalityTaskList;
         taskList.forEach(task => {
-            let buttons = text(task).find();
-            buttons.forEach(button => {
-                log("=== vitalityTask === " + task + " ===")
-                button.click();
-                sleep(2000);
-                // 如果没有跳转页面，跳过
-                if (text("我的活力值").exists()) {
-                    return;
-                }
-                // 页面加载
-                sleep(6000);
-                if (text("角色扮演").exists()) {
-                    deviceService.combinedClickText("角色扮演", 40000);
-                    aliPayService.closeSubApp();
-                } else {
-                    sleep(15000);
-                }
-                if (text("我的活力值").exists()) {
-                    return;
-                }
-                deviceService.back(1000);
-                if (text("蚂蚁森林").exists() && text("芭芭农场").exists()) {
-                    // 打开蚂蚁森林
-                    aliPayService.launchSubApp("蚂蚁森林");
-                    // 关闭弹框
-                    aliPayService.clearForestDialog();
-                    // 点击“奖励”
-                    deviceService.clickRate(585, 2100, 2000);
-                }
-                if (!text("我的活力值").exists()) {
-                    // 清除后台任务
-                    deviceService.clearBackground();
-                    // 启动支付宝
-                    deviceService.launch("支付宝");
-                    aliPayService.closeShanGouAD();
-                    // 打开蚂蚁森林
-                    aliPayService.launchSubApp("蚂蚁森林");
-                    // 关闭弹框
-                    aliPayService.clearForestDialog();
-                    // 点击“奖励”
-                    deviceService.clickRate(585, 2100, 2000);
-                }
-            });
+            if (!text(task.taskName).exists() || !text(task.taskName).findOne().parent().findOne(text(task.buttonName))) {
+                return;
+            }
+            log("=== vitalityTask === " + task.taskName + " ===")
+            text(task.taskName).findOne().parent().findOne(text(task.buttonName)).click();
+            sleep(2000);
+            // 如果没有跳转页面，跳过
+            if (text("我的活力值").exists()) {
+                return;
+            }
+            // 页面加载
+            sleep(3000);
+            if (task.taskName.indexOf("15s") >= 0 || task.taskName.indexOf("15秒") >= 0) {
+                sleep(18000);
+
+            }
+            if (text("我的活力值").exists()) {
+                return;
+            }
+            deviceService.back(1000);
+            if (text("蚂蚁森林").exists() && text("芭芭农场").exists()) {
+                // 打开蚂蚁森林
+                aliPayService.launchSubApp("蚂蚁森林");
+                // 关闭弹框
+                aliPayService.clearForestDialog();
+                // 点击“奖励”
+                deviceService.clickRate(585, 2100, 2000);
+            }
+            if (!text("我的活力值").exists()) {
+                // 清除后台任务
+                deviceService.clearBackground();
+                // 启动支付宝
+                deviceService.launch("支付宝");
+                aliPayService.closeShanGouAD();
+                // 打开蚂蚁森林
+                aliPayService.launchSubApp("蚂蚁森林");
+                // 关闭弹框
+                aliPayService.clearForestDialog();
+                // 点击“奖励”
+                deviceService.clickRate(585, 2100, 2000);
+            }
         });
     },
 
@@ -811,7 +812,7 @@ module.exports = {
                         // 种植
                         for (let i = 0; i < 3; i++) {
                             // 种麦子
-                            aliPayService.clickCoordinates("plantWheat");
+                            deviceService.clickRate(465, 2965, 800);
                             // 确认
                             deviceService.combinedClickText("确认", 2800);
                         }

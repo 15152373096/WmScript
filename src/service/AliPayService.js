@@ -246,7 +246,7 @@ module.exports = {
     chickenTask: function () {
         log("------蚂蚁庄园-饲料任务------");
         // 领饲料
-        this.clickCoordinates("collarFeed");
+        deviceService.clickRate(400, 2950, 2800);
         // 庄园小课堂
         this.chickenQuestion();
         // 雇佣小鸡
@@ -350,8 +350,7 @@ module.exports = {
             return;
         }
         let whaleExplorerTextList = [
-            "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼",
-            "去鲸探喂鱼集福气 完成1次喂鱼，可获得90g饲料 去喂鱼"
+            "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼"
         ];
         whaleExplorerTextList.forEach(whaleExplorerText => {
             if (!text(whaleExplorerText).exists()) {
@@ -367,17 +366,10 @@ module.exports = {
             }
             text("一个小正经的池塘").waitFor();
             sleep(2000);
-            // 放生
-            deviceService.clickDIP("android.view.View", 18, 1, 2000);
-            deviceService.combinedClickText("确定放生", 3000);
-            // 回退到池塘
-            if (text("确定放生").exists()) {
-                className("android.widget.TextView").depth(19).indexInParent(0).clickable(true).findOne().click();
-                className("android.widget.TextView").depth(20).indexInParent(0).clickable(true).findOne().click();
-                sleep(2000);
-            }
-            for (let i = 9; i > 0; i--) {
-                deviceService.comboTextClick(["鱼食(" + i + "/8)", "继续喂鱼"], 2000);
+            // 喂鱼
+            for (let i = 0; i < 8; i++) {
+                deviceService.clickRate(1250, 2300, 2000);
+                deviceService.combinedClickText("继续喂鱼", 2000);
             }
             // 放生池点击
             for (let i = 0; i < 168; i++) {
@@ -398,30 +390,34 @@ module.exports = {
             deviceService.combinedClickText("鱼食任务", 2000);
             // 祈福任务
             if (text("为您的好友完成一次祈福吧").exists() && text("为您的好友完成一次祈福吧").findOne().parent().findOne(text("前往"))) {
-                text("为您的好友完成一次祈福吧").findOne().parent().findOne(text("前往")).click();
-                sleep(3000);
-                text("为Ta祈福").findOne().click()
-                for (let i = 0; i < 16; i++) {
-                    deviceService.clickRate(720, 1600, 800);
-                    if (text("确定").exists()) {
-                        text("确定").click();
-                        sleep(1800);
-                        break;
+                let locate = text("为您的好友完成一次祈福吧").findOne();
+                let button = depth(locate.depth()).indexInParent(locate.indexInParent() + 2).findOne();
+                if ("前往" == button.text()) {
+                    button.click();
+                    sleep(3000);
+                    text("为Ta祈福").findOne().click()
+                    for (let i = 0; i < 16; i++) {
+                        deviceService.clickRate(720, 1600, 800);
+                        if (text("确定").exists()) {
+                            text("确定").click();
+                            sleep(1800);
+                            break;
+                        }
                     }
+                    deviceService.back(1000);
+                    deviceService.clickRate(720, 800, 1000);
                 }
-                deviceService.back(1000);
-                deviceService.clickRate(720, 800, 1000);
-            }
-            // 社区发现页面
-            if (text("前往社区发现页面").exists() && text("前往社区发现页面").findOne().parent().findOne(text("前往"))) {
-                text("前往社区发现页面").findOne().parent().findOne(text("前往")).click();
-                sleep(3000);
-                deviceService.back(1000);
             }
             // 领取
             for (let i = 7; i > 0; i--) {
                 deviceService.combinedClickText("领取", 8000);
             }
+            // 关闭任务
+            deviceService.clickRate(1250, 1450, 2000);
+            // 放生
+            deviceService.clickRate(720, 2200, 1000);
+            // 确定放生
+            deviceService.clickRate(720, 2200, 1000);
             deviceService.back(2000);
         });
     },
@@ -452,7 +448,7 @@ module.exports = {
      * 庄园小课堂
      */
     chickenQuestion: function () {
-        let answerQuestText = "庄园小课堂 每天答题最高可得180g饲料 去答题";
+        let answerQuestText = "庄园小课堂 每天和小鸡一起答题，可获得1次小鸡饲料哦 去答题";
         if (text(answerQuestText).exists()) {
             deviceService.combinedClickText(answerQuestText, 2000);
             text("题目来源 - 答答星球").waitFor();
@@ -481,8 +477,7 @@ module.exports = {
      */
     chickenHire: function () {
         let hireTextList = [
-            "雇佣小鸡拿饲料 在任务指定页面中雇佣小鸡可获得90g饲料，雇佣特定小鸡可获得180g饲料哦（1次/天） 去完成",
-            "雇佣小鸡拿饲料 指定页面雇佣可得90g饲料 去完成"
+            "雇佣小鸡拿饲料 在任务指定页面中雇佣小鸡可获得90g饲料，雇佣特定小鸡可获得180g饲料哦（1次/天） 去完成"
         ];
         hireTextList.forEach(hireText => {
             if (!text(hireText).exists()) {
@@ -491,7 +486,6 @@ module.exports = {
             deviceService.combinedClickText(hireText, 2000);
             deviceService.comboTextClick(["雇佣", "雇佣并通知", "不通知TA"], 1000);
             this.closeSubApp();
-            sleep(1000);
         });
     },
 
@@ -571,8 +565,7 @@ module.exports = {
      */
     chickenSleep: function () {
         let sleepTaskList = [
-            "让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 去完成",
-            "让小鸡去睡觉 完成可得90g饲料 去完成"
+            "让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 去完成"
         ];
         sleepTaskList.forEach(sleepTask => {
             if (deviceService.earlierThan(20, 0) || !text(sleepTask).exists()) {
@@ -601,8 +594,7 @@ module.exports = {
     cookDishes: function () {
 
         let cookTaskList = [
-            "小鸡厨房 去爱心小屋厨房让小鸡做美食得肥料，吃美食可以加速产蛋，还可以获得90g饲料哦 去完成",
-            "小鸡厨房 每天做美食可得90g饲料 去完成"
+            "小鸡厨房 去爱心小屋厨房让小鸡做美食得肥料，吃美食可以加速产蛋，还可以获得90g饲料哦 去完成"
         ];
         cookTaskList.forEach(cookTask => {
             if (!text(cookTask).exists()) {
@@ -681,22 +673,14 @@ module.exports = {
      * 喂食小鸡
      */
     feedChicken: function () {
-        for (let i = 0; i < 8; i++) {
-            // 点击小鸡饲料
-            this.clickChickenFodder();
-        }
-    },
-
-    /**
-     * 点击小鸡饲料
-     */
-    clickChickenFodder: function () {
-        // 点击喂食饲料
-        deviceService.clickRate(1255, 2970, 800);
+        // 喂食饲料
+        deviceService.clickRate(1115, 2970, 800);
         // 小鸡不在家，领回小鸡
         this.takeBackChicken();
         // 关闭饲料不足弹窗
         deviceService.combinedClickText("取消", 1800);
+        // 喂食美食
+        deviceService.clickRate(1335, 2970, 800);
     },
 
     /**
@@ -887,11 +871,8 @@ module.exports = {
         deviceService.swipeUp(device.height / 2);
         deviceService.swipeUp(device.height / 2);
         // 新版本收能量
-        if (text("查看更多好友").exists()) {
-            text("查看更多好友").findOne().click();
-            sleep(2000);
-        }
-        deviceService.combinedClickText(friendName, 5000);
+        deviceService.comboTextClick(["收我最多榜", "查看更多好友", friendName], 2000);
+        sleep(3800);
         for (let i = 0; i < 3; i++) {
             // 点击浇水
             deviceService.clickRate(1315, 2474, 1000);
@@ -926,7 +907,7 @@ module.exports = {
             // 找能量
             deviceService.clickRate(1315, 2115, 3000);
             // 如果找完了，返回森林
-            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists() || !text("展开好友动态").exists()) {
+            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists()) {
                 break;
             }
             count++;
@@ -1135,14 +1116,6 @@ module.exports = {
      */
     clickCoordinates: function (desc) {
         switch (desc) {
-            // 蚂蚁庄园-领饲料
-            case "collarFeed":
-                deviceService.clickRate(400, 2950, 2800);
-                return;
-            // 蚂蚁庄园-种麦子
-            case "plantWheat":
-                deviceService.clickRate(465, 2965, 800);
-                return;
             // 蚂蚁新村-关闭弹框
             case "closeVillageDialog":
                 deviceService.clickRate(1317, 777, 800);
