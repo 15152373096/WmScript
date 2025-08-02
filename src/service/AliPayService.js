@@ -365,7 +365,7 @@ module.exports = {
                 deviceService.clickDIP("android.widget.TextView", 15, 0, 800);
                 deviceService.combinedClickText("支付宝账号快速登录", 1000);
             }
-            text("一个小正经的池塘").waitFor();
+            text("放生池").waitFor();
             sleep(2000);
             // 喂鱼
             for (let i = 0; i < 8; i++) {
@@ -387,8 +387,7 @@ module.exports = {
                 swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
             }
             // 鱼食任务
-            deviceService.clickRate(365, 3045, 2000);
-            deviceService.combinedClickText("鱼食任务", 2000);
+            deviceService.comboTextClick(["放生池","鱼食任务"], 1000);
             // 祈福任务
             if (text("为您的好友完成一次祈福吧").exists() && text("为您的好友完成一次祈福吧").findOne().parent().findOne(text("前往"))) {
                 let locate = text("为您的好友完成一次祈福吧").findOne();
@@ -436,8 +435,7 @@ module.exports = {
             log("------饲料任务-" + appJumpTask + "------");
             deviceService.combinedClickText(appJumpTask, 20000);
             deviceService.comboTextClick(["立即领取", "点击签到", "立即签到"], 1000);
-            app.launchApp("支付宝");
-            sleep(2000);
+            deviceService.launch("支付宝");
             if (!text("去完成").exists()) {
                 deviceService.back(800);
                 ;
@@ -892,22 +890,37 @@ module.exports = {
      */
     takeEnergy: function () {
         // 关闭弹框
-        deviceService.combinedClickText("关闭", 1000);
+        deviceService.comboTextClick(["关闭", "取消"], 1000);
         toastLog("====== 开始找能量 ======");
-        // 计数
-        let count = 1;
+        // 收自己
+        let cordArray = [
+            [320, 1665],
+            [260, 964],
+            [1180, 964],
+            [444, 864],
+            [996, 864],
+            [628, 764],
+            [812, 764],
+        ];
+        cordArray.forEach(cord => {
+            deviceService.clickRate(cord[0], cord[1], 200);
+            this.clearForestDialog();
+        });
+        // 偷别人-找能量
+        deviceService.clickRate(1315, 2115, 3000);
         while (true) {
             // 取消订阅弹框
             deviceService.combinedClickText("取消", 2000);
             // 收能量
-            this.energyClick(count);
-            // 找能量
+            this.energyClick();
+            // 页面加载问题，每次回退后再找
+            deviceService.back(800);
+            // 偷别人-找能量
             deviceService.clickRate(1315, 2115, 3000);
             // 如果找完了，返回森林
             if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists()) {
                 break;
             }
-            count++;
         }
         toastLog("====== 结束找能量 ======");
     },
@@ -915,41 +928,18 @@ module.exports = {
     /**
      * 收能量的点击操作
      */
-    energyClick: function (count) {
-        // 自己不能一键收，点击收取
-        if (1 == count) {
-            let cordArray = [
-                [320, 1665],
-                [260, 964],
-                [1180, 964],
-                [444, 864],
-                [996, 864],
-                [628, 764],
-                [812, 764],
-            ];
-            cordArray.forEach(cord => {
-                deviceService.clickRate(cord[0], cord[1], 200);
-                this.clearForestDialog();
-            });
-            // 双击卡只用一次
-            // if (selfFlag) {
-            //     deviceService.clickRate(130, 2460, 500);
-            //     deviceService.combinedClickText("立即使用", 3000);
-            // }
-        } else {
-            // 别人的用一键收
-            deviceService.clickRate(720, 1860, 800);
-            deviceService.clickRate(720, 1860, 800);
-            // 种植礼包
-            deviceService.clickRate(360, 680, 2000);
-            this.clearForestDialog();
-        }
+    energyClick: function () {
+        // 别人的用一键收
+        deviceService.clickRate(720, 1810, 800);
+        deviceService.clickRate(720, 1810, 800);
+        // 种植礼包
+        deviceService.clickRate(360, 680, 2000);
+        this.clearForestDialog();
         // 打印日志
         if (className("android.widget.TextView").depth(12).indexInParent(0).exists()) {
             let forestInfo = className("android.widget.TextView").depth(12).indexInParent(0).findOne().text();
-            log("收取能量，第" + count + "个:" + forestInfo);
+            log("收取能量，:" + forestInfo);
         }
-
     },
 
     /**
@@ -1018,13 +1008,12 @@ module.exports = {
                 sleep(5000);
                 // 跳过的任务
                 if (text("天天领现金").exists()) {
-                    deviceService.back(1000);
+                    deviceService.combinedClickDesc("关闭", 800)
                     return;
                 }
                 deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
                 deviceService.swipeViewTask(18000)
-                app.launchApp("支付宝");
-                sleep(1000);
+                deviceService.launch("支付宝");
                 if (!text("立即领取").exists()) {
                     deviceService.back(1000);
                 }

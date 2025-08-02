@@ -18,7 +18,7 @@ module.exports = {
         // 签到
         deviceService.comboTextClick(["当月热销", "签到有惊喜", "签到", "签 到"], 5000);
         // 返回签到
-        app.launchApp("中国移动");
+        deviceService.launch("中国移动");
         // 立即抽奖
         deviceService.combinedClickText("立即抽奖", 1000);
         // 回“首页”

@@ -40,7 +40,13 @@ module.exports = {
             deviceService.clickRate(1280, 3100, 1000);
             deviceService.clickRate(720, 2240, 1000);
             // 答案
-            let answerArray = className("android.widget.EditText").find()[1].text().split(",");
+            let answers = className("android.widget.EditText").find()[1].text();
+            // 没有答案的，跳过
+            if (answers.indexOf("无法提供") > 0) {
+                return;
+            }
+            // 分割答案
+            let answerArray = answers.split(",");
             // 日期
             let submitDate = deviceService.formatDate(new Date()).formatDay;
             // 遍历提交答案
@@ -60,6 +66,6 @@ module.exports = {
                 deviceService.swipeDown(device.height);
             }
         });
-
+        home();
     }
 }

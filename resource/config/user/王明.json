@@ -127,6 +127,16 @@
   "magicSeaTask": {
     "jumpAppSwitch": "on"
   },
+  "magicSeaTaskList": [
+    {"taskName":"随机任务：去保护海洋项目","buttonName":"去看看"},
+    {"taskName":"随机任务：去攒芝麻粒兑权益","buttonName":"去看看"},
+    {"taskName":"每日任务：答题学海洋知识","buttonName":"逛一逛"},
+    {"taskName":"每日任务：帮好友清理垃圾","buttonName":"逛一逛"},
+    {"taskName":"每日任务：连续3天来海洋","buttonName":"逛一逛"},
+    {"taskName":"随机任务：去逛淘宝芭芭农场","buttonName":"逛一逛"},
+    {"taskName":"随机任务：逛一逛闲鱼","buttonName":"逛一逛"},
+    {"taskName":"随机任务：逛一逛点淘","buttonName":"逛一逛"}
+  ],
   "vitalityTaskList":[
     {"taskName":"去神奇物种看一看 完成可得10g能量","buttonName":"逛一逛"},
     {"taskName":"逛支付宝会员 积分可换道具，完成得10g能量","buttonName":"逛一逛"},
@@ -143,12 +153,12 @@
     {"taskName":"逛绿色租赁得能量 逛5s可得绿色能量和10活力值","buttonName":"去逛逛"},
     {"taskName":"绿色支付有好礼 逛一逛得支付红包和10g能量","buttonName":"去看看"},
     {"taskName":"逛一逛领大额外卖券 逛一逛可得20活力值","buttonName":"去看看"},
-    {"taskName":"去闲鱼领红包 逛一逛可得10活力值","buttonName":"逛一逛"},
     {"taskName":"逛一逛今日头条 完成可得20活力值","buttonName":"去看看"},
     {"taskName":"逛一逛投教基地 逛一逛可得10活力值","buttonName":"去看看"},
     {"taskName":"去淘宝看科普视频 看15秒可得10活力值","buttonName":"逛一逛"},
     {"taskName":"去淘宝人生装扮自己 换新装扮得10活力值","buttonName":"去完成"},
     {"taskName":"逛一逛淘金币 逛一逛可得10活力值","buttonName":"去看看"},
-    {"taskName":"来天猫领福气红包 完成可得10活力值","buttonName":"逛一逛"}
+    {"taskName":"来天猫领福气红包 完成可得10活力值","buttonName":"逛一逛"},
+    {"taskName":"逛一逛出行领红包 逛一逛可得10活力值","buttonName":"去看看"}
   ]
 }

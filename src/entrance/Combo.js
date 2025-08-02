@@ -320,10 +320,9 @@ module.exports = {
                 return;
             }
             // 页面加载
-            sleep(3000);
+            sleep(5000);
             if (task.taskName.indexOf("15s") >= 0 || task.taskName.indexOf("15秒") >= 0) {
-                sleep(18000);
-
+                sleep(24000);
             }
             if (text("我的活力值").exists()) {
                 return;

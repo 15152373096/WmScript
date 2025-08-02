@@ -74,7 +74,9 @@ module.exports = {
         // 点击领取
         deviceService.clickDIP("android.widget.TextView", 20, 0, 2000);
         // 提醒我领取,取消订阅每日肥料提醒
-        deviceService.comboTextClick(["提醒我领取", "取消订阅每日肥料提醒"], 3000);
+        if(text("提醒我领取").exists() || text("取消订阅每日肥料提醒").exists()) {
+            deviceService.back(800);
+        }
         // 更多肥料
         deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
         // 可领取
@@ -154,10 +156,10 @@ module.exports = {
      */
     syncAccount: function () {
         // 点击菜单
-        id("home_toolbar_menu").desc("菜单").click();
+        deviceService.clickRate(1218, 3096, 2000);
         sleep(2000);
         // 点击头像
-        deviceService.clickRate(180, 540, 2000);
+        deviceService.clickRate(135, 280, 2000);
         // 如果是登陆的，退出登陆
         if (text("退出登录").exists()) {
             deviceService.comboTextClick(["退出登录", "退出登录"], 1000);
@@ -245,7 +247,7 @@ module.exports = {
                 deviceService.clickNearBy(jumpTaskList[i], "去完成", 15000);
                 setText("山楂条");
                 deviceService.combinedClickText("搜索", 3000);
-                app.launchApp("淘宝");
+                deviceService.launch("淘宝");
                 if (!text("集肥料").exists()) {
                     deviceService.back(1800);
                 }
