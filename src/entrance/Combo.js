@@ -195,7 +195,7 @@ module.exports = {
                     press(device.width / 8 * i, device.height / 10, 10);
                 }
                 count += 80;
-                if (text("回到蚂蚁庄园 >").exists() || count > 24000) {
+                if (text("回到蚂蚁庄园 >").exists() || count > 28000) {
                     text("回到蚂蚁庄园 >").click();
                     sleep(2000);
                     break;
