@@ -380,7 +380,7 @@ module.exports = {
             // 喂鱼
             for (let i = 0; i < 8; i++) {
                 deviceService.clickRate(1250, 2300, 2000);
-                deviceService.combinedClickText("继续喂鱼", 2000);
+                deviceService.comboTextClick(["喂鱼", "继续喂鱼"], 2000);
             }
             // 放生池点击
             for (let i = 0; i < 168; i++) {
