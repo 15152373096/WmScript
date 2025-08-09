@@ -12,7 +12,7 @@ ui.layout(
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="家庭和运动" id="chickenFamilyAndSport"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="初始化答案" id="initAnswerTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="待定的功能" id="initAnswerTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
             </horizontal>
             <horizontal>
@@ -93,7 +93,7 @@ ui.plantWheatTask.click(function () {
 });
 ui.initAnswerTask.click(function () {
     threads.start(function () {
-        combo.initAnswerJob();
+
     });
 });
 ui.allSignTask.click(function () {

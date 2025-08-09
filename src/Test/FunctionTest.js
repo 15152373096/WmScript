@@ -19,33 +19,14 @@ combo.takeEnergyRain("王明", false);
 // 蚂蚁森林
 // showText("android.widget.TextView", 17, 1);
 
+
+
+
 // log(device.width)
 // humanSwipe(100, 2000, 1400, 3000)
-// 17-12
-
-// let text = id("action_button_icon").findOne().parent().parent().parent().parent().parent().findOne(className("android.widget.TextView").depth(15).indexInParent(0)).text()
-// log(text)
-
-// let chickenLessonPath = "/sdcard/脚本/WmScript/resource/config/answer/chickenLession.json";
-// let jsonString = files.read(chickenLessonPath);
-//
-// log(jsonString);
-//
-//
-// let json = JSON.parse(jsonString);
-//
-//
-//
-// let now = new Date();
-// let currentTime = deviceService.formatDate(now);
-// let key = currentTime.formatDay;
-//
-// log("key====", key);
-// log(json[currentTime.formatDay] == undefined);
-// json[currentTime.formatDay] = "999,666".split(",");
 
 
-// files.write(chickenLessonPath, JSON.stringify(json));
+
 
 
 

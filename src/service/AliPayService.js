@@ -1,8 +1,12 @@
 // 加载设备操作公共方法
 let deviceService = require('./DeviceService.js');
+let doubaoService = require('./DoubaoService.js');
 
 // 用户配置
 let userConfig = {};
+// 小鸡课堂答案
+let chickenLessonFilePath = "/sdcard/脚本/WmScript/resource/config/answer/chickenLesson.json";
+let chickenLesson = {};
 
 module.exports = {
 
@@ -144,6 +148,12 @@ module.exports = {
         log("======用户配置 start======");
         log(userConfig);
         log("======用户配置 end======");
+
+        let chickenLessonString = files.read(chickenLessonFilePath);
+        chickenLesson = JSON.parse(chickenLessonString);
+        log("======小鸡课堂答案 start======");
+        log(chickenLesson);
+        log("======小鸡课堂答案 end======");
     },
 
     /**
@@ -451,21 +461,22 @@ module.exports = {
         if (text(answerQuestText).exists()) {
             deviceService.combinedClickText(answerQuestText, 2000);
             text("题目来源 - 答答星球").waitFor();
-            try {
-                let queryDate = deviceService.formatDate(new Date());
-                let response = http.get("http://101.126.83.165:8080/entertainment/alipay/queryQuestionAnswer/" + queryDate.formatDay);
-                sleep(1000);
-                if (response.statusCode != 200) {
-                    log("请求失败: " + response.statusCode + " " + response.statusMessage);
-                } else {
-                    let resultList = response.body.json();
-                    log("请求成功: resultList =" + resultList);
-                    for (let i = 0; i < resultList.length; i++) {
-                        deviceService.combinedClickText(resultList[i], 1000);
-                    }
-                }
-            } catch (err) {
-                log("请求异常", err);
+            let queryDate = deviceService.formatDate(new Date());
+            let resultList = chickenLesson[queryDate.formatDay];
+            // 没有答案，去找答案
+            if (resultList == undefined) {
+                resultList = doubaoService.queryTodayChickenAnswer();
+                log("豆包返回答案: resultList =" + resultList);
+                // 保存
+                chickenLesson[queryDate.formatDay] = resultList
+                files.write(chickenLessonFilePath, JSON.stringify(chickenLesson));
+                sleep(800);
+                // 回到支付宝
+                deviceService.launch("支付宝");
+            }
+            // 匹配答案
+            for (let i = 0; i < resultList.length; i++) {
+                deviceService.combinedClickText(resultList[i], 1000);
             }
             deviceService.back(1000);
         }
@@ -1049,7 +1060,7 @@ module.exports = {
             return;
         }
         this.launchSubApp("运动");
-        deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数"], 2000);
+        deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数", "步数奖励"], 2000);
         // 下午5点25前，不走路线
         if (deviceService.laterThan(22, 25)) {
             if (text("马上走").exists()) {
@@ -1128,6 +1139,11 @@ module.exports = {
      */
     closeShanGouAD: function () {
         deviceService.combinedClickDesc("关闭", 2000);
+        // 不识别模块时，坐标点击后回退
+        deviceService.clickRate(720, 2358, 2000);
+        if(!text("扫一扫").exists()) {
+            deviceService.back(1000);
+        }
     },
 
     /**

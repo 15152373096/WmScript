@@ -806,13 +806,6 @@ module.exports = {
         // 回到庄园
         deviceService.combinedClickText("关闭", 1800);
     },
-    /**
-     * 初始化答案
-     */
-    initAnswerJob: function () {
-        // 小鸡答案
-        doubaoService.initChickenAnswer();
-    },
 
     /**
      * 天天来签到
