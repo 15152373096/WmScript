@@ -392,7 +392,7 @@ module.exports = {
         }
         // 可以能量雨才操作
         let rainText = "玩一场能量雨 一起拯救绿色能量吧";
-        if (text(rainText).findOne()) {
+        if (text(rainText).exists()) {
             deviceService.clickNearBy(rainText, "去拯救", 10000);
             deviceService.clickNearBy(rainText, "去赠送", 10000);
             deviceService.clickNearBy(rainText, "去看看", 10000);

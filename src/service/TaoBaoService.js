@@ -193,7 +193,7 @@ module.exports = {
         // 开始答题
         deviceService.combinedClickText("去答题", 3000);
         // 选第一答案
-        deviceService.clickDIP("android.widget.Button", 18, 1, 2000);
+        deviceService.clickDIP("android.widget.Button", 17, 1, 2000);
         // 如果答对了
         if (text("领取奖励 500").exists()) {
             text("领取奖励 500").click();
@@ -203,7 +203,7 @@ module.exports = {
             sleep(1000);
             deviceService.comboTextClick(["集肥料", "集肥料", "去答题"], 3000);
             // 选第二答案
-            deviceService.clickDIP("android.widget.Button", 18, 2, 2000);
+            deviceService.clickDIP("android.widget.Button", 17, 2, 2000);
             deviceService.combinedClickText("领取奖励 500", 2000);
         }
         // 回到集肥料任务

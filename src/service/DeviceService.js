@@ -673,6 +673,19 @@ module.exports = {
     },
 
     /**
+     * 任意一个text存在
+     * @param textArray
+     */
+    anyTextExists: function (textArray) {
+        for (let textItem of textArray) {
+            if (text(textItem).exists()) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
      * 后退并等待
      * @param sleepTime 等待时长
      */

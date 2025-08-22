@@ -397,7 +397,7 @@ module.exports = {
                 swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
             }
             // 鱼食任务
-            deviceService.comboTextClick(["放生池","鱼食任务"], 1000);
+            deviceService.comboTextClick(["放生池", "鱼食任务"], 1000);
             // 祈福任务
             if (text("为您的好友完成一次祈福吧").exists() && text("为您的好友完成一次祈福吧").findOne().parent().findOne(text("前往"))) {
                 let locate = text("为您的好友完成一次祈福吧").findOne();
@@ -465,21 +465,39 @@ module.exports = {
             let resultList = chickenLesson[queryDate.formatDay];
             // 没有答案，去找答案
             if (resultList == undefined) {
-                resultList = doubaoService.queryTodayChickenAnswer();
-                log("豆包返回答案: resultList =" + resultList);
-                // 保存
-                chickenLesson[queryDate.formatDay] = resultList
-                files.write(chickenLessonFilePath, JSON.stringify(chickenLesson));
-                sleep(800);
-                // 回到支付宝
-                deviceService.launch("支付宝");
+                resultList = this.getChickenQuestionAnswer(queryDate);
             }
             // 匹配答案
+            let getAnswerFlag = false;
             for (let i = 0; i < resultList.length; i++) {
-                deviceService.combinedClickText(resultList[i], 1000);
+                if (text(resultList[i]).exists()) {
+                    text(resultList[i]).click();
+                    sleep(1000);
+                    getAnswerFlag = true;
+                }
+                // deviceService.combinedClickText(resultList[i], 1000);
+            }
+            // 之前找的答案没有匹配，重新获取
+            if (!getAnswerFlag) {
+                this.getChickenQuestionAnswer(queryDate);
             }
             deviceService.back(1000);
         }
+    },
+
+    /**
+     * 获取答案
+     */
+    getChickenQuestionAnswer: function (queryDate) {
+        let resultList = doubaoService.queryTodayChickenAnswer();
+        log("豆包返回答案: resultList =" + resultList);
+        // 保存
+        chickenLesson[queryDate.formatDay] = resultList
+        files.write(chickenLessonFilePath, JSON.stringify(chickenLesson));
+        sleep(800);
+        // 回到支付宝
+        deviceService.launch("支付宝");
+        return resultList;
     },
 
     /**
@@ -929,7 +947,8 @@ module.exports = {
             // 偷别人-找能量
             deviceService.clickRate(1315, 2115, 3000);
             // 如果找完了，返回森林
-            if (text("返回森林首页").exists() || text("返回我的森林").exists() || text("还有更多能量待你收取").exists()) {
+            if (deviceService.anyTextExists(["返回森林首页", "去看看", "领取"])) {
+                deviceService.combinedClickText("领取", 800);
                 break;
             }
         }
@@ -949,7 +968,7 @@ module.exports = {
         // 打印日志
         if (className("android.widget.TextView").depth(12).indexInParent(0).exists()) {
             let forestInfo = className("android.widget.TextView").depth(12).indexInParent(0).findOne().text();
-            log("收取能量，:" + forestInfo);
+            log("收取他人能量:" + forestInfo);
         }
     },
 
@@ -1141,7 +1160,7 @@ module.exports = {
         deviceService.combinedClickDesc("关闭", 2000);
         // 不识别模块时，坐标点击后回退
         deviceService.clickRate(720, 2358, 2000);
-        if(!text("扫一扫").exists()) {
+        if (!text("扫一扫").exists()) {
             deviceService.back(1000);
         }
     },
