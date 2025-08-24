@@ -363,6 +363,15 @@ module.exports = {
         // 去逛逛
         while (text("去逛逛").exists()) {
             deviceService.combinedClickText("去逛逛", 3000);
+            // 实名认证的跳出
+            if (text("实名认证").exists()) {
+                deviceService.back(1000);
+                // 森林寻宝
+                if (text("我的活力值").exists()) {
+                    deviceService.clickRate(1225, 915, 3000);
+                }
+                break;
+            }
             deviceService.swipeViewTask(18000);
             deviceService.back(1000);
             deviceService.combinedClickText("领取", 1000);

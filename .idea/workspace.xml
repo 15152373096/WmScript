@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BookmarksViewState">
     <option name="rewriteBookmarkType" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/resource/config/user/coco.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/coco.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/config/user/olly.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/olly.json" afterDir="false" />
+    <list default="true" id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="update sub account job">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm01.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm01.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm02.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm02.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/config/user/王明.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/王明.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/user/wm03.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm03.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/user/wm04.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm04.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entrance/Combo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/entrance/Combo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DeviceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DeviceService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/TaoBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaoBaoService.js" afterDir="false" />
     </list>
+    <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +25,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;15152373096&quot;
+  }
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -32,17 +39,27 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/15152373096/WmScript.git&quot;,
+    &quot;accountId&quot;: &quot;8b8a1830-b64a-4528-a271-89460e617cfb&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="$PROJECT_DIR$/../../../Maven/apache-maven-3.5.2" />
+        <option name="customMavenHome" value="$PROJECT_DIR$/../../../Maven/apache-maven-3.5.2" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
         <option name="userSettingsFile" value="D:\Maven\apache-maven-3.5.2\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2o4Lfi6HO7cKYTGePUBptIxXGgb" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -51,18 +68,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/service" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Workspaces/AutoJsProject/WmScript&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Workspaces\AutoJsProject\WmScript\src\service" />
@@ -71,10 +95,19 @@
       <recent name="D:\Workspaces\AutoJsProject\WmScript" />
     </key>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="" />
+      <changelist id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
       <created>1730124006903</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -122,104 +155,25 @@
       <workItem from="1751123932213" duration="42747000" />
       <workItem from="1751294667621" duration="2320000" />
       <workItem from="1751679967038" duration="4459000" />
-    </task>
-    <task id="LOCAL-00025" summary="更新">
-      <created>1736693896206</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1736693896206</updated>
-    </task>
-    <task id="LOCAL-00026" summary="更新">
-      <created>1736693936078</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1736693936078</updated>
-    </task>
-    <task id="LOCAL-00027" summary="更新">
-      <created>1737215757676</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1737215757676</updated>
-    </task>
-    <task id="LOCAL-00028" summary="更新">
-      <created>1737464060080</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1737464060096</updated>
-    </task>
-    <task id="LOCAL-00029" summary="更新">
-      <created>1737469309597</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1737469309597</updated>
-    </task>
-    <task id="LOCAL-00030" summary="更新">
-      <created>1738042650347</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1738042650347</updated>
-    </task>
-    <task id="LOCAL-00031" summary="去除截图操作">
-      <created>1739602595280</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1739602595280</updated>
-    </task>
-    <task id="LOCAL-00032" summary="双击卡操作">
-      <created>1739605096813</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1739605096813</updated>
-    </task>
-    <task id="LOCAL-00033" summary="删除废弃任务">
-      <created>1739808752764</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1739808752764</updated>
-    </task>
-    <task id="LOCAL-00034" summary="更新小鸡任务">
-      <created>1740409665612</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1740409665612</updated>
-    </task>
-    <task id="LOCAL-00035" summary="更新小鸡任务">
-      <created>1740497142476</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1740497142476</updated>
-    </task>
-    <task id="LOCAL-00036" summary="更新小鸡任务">
-      <created>1740759058758</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1740759058758</updated>
-    </task>
-    <task id="LOCAL-00037" summary="更新小鸡任务">
-      <created>1741187864230</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1741187864230</updated>
-    </task>
-    <task id="LOCAL-00038" summary="更新小鸡任务">
-      <created>1741620314479</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1741620314479</updated>
+      <workItem from="1752911562826" duration="27377000" />
+      <workItem from="1753030415705" duration="683000" />
+      <workItem from="1753143981928" duration="779000" />
+      <workItem from="1753288419983" duration="1710000" />
+      <workItem from="1753366392635" duration="2415000" />
+      <workItem from="1753460267907" duration="1031000" />
+      <workItem from="1753537084597" duration="39125000" />
+      <workItem from="1753634634745" duration="532000" />
+      <workItem from="1753713954527" duration="4224000" />
+      <workItem from="1753885332003" duration="2378000" />
+      <workItem from="1753974759090" duration="483000" />
+      <workItem from="1754066126327" duration="8998000" />
+      <workItem from="1754408792167" duration="1330000" />
+      <workItem from="1754742429063" duration="7951000" />
+      <workItem from="1755271738525" duration="5998000" />
+      <workItem from="1755440795379" duration="895000" />
+      <workItem from="1755873949733" duration="2140000" />
+      <workItem from="1755876142201" duration="1371000" />
+      <workItem from="1756049208763" duration="241000" />
     </task>
     <task id="LOCAL-00039" summary="更新小鸡任务">
       <created>1741693951857</created>
@@ -466,7 +420,105 @@
       <option name="project" value="LOCAL" />
       <updated>1751294723275</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="更新小鸡任务">
+      <created>1752972866826</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1752972866827</updated>
+    </task>
+    <task id="LOCAL-00075" summary="更新小鸡任务">
+      <created>1752996456963</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1752996456963</updated>
+    </task>
+    <task id="LOCAL-00076" summary="更新小鸡任务">
+      <created>1753024152392</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1753024152393</updated>
+    </task>
+    <task id="LOCAL-00077" summary="更新小鸡任务">
+      <created>1753027304225</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1753027304225</updated>
+    </task>
+    <task id="LOCAL-00078" summary="更新小鸡任务">
+      <created>1753288563116</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1753288563117</updated>
+    </task>
+    <task id="LOCAL-00079" summary="更新小鸡任务">
+      <created>1753582668318</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1753582668319</updated>
+    </task>
+    <task id="LOCAL-00080" summary="更新小鸡任务">
+      <created>1753615511980</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1753615511980</updated>
+    </task>
+    <task id="LOCAL-00081" summary="更新小鸡任务">
+      <created>1753616532102</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1753616532102</updated>
+    </task>
+    <task id="LOCAL-00082" summary="更新小鸡任务">
+      <created>1753617435132</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1753617435132</updated>
+    </task>
+    <task id="LOCAL-00083" summary="更新小鸡任务">
+      <created>1753631805260</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1753631805260</updated>
+    </task>
+    <task id="LOCAL-00084" summary="更新小鸡任务">
+      <created>1754148525388</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1754148525388</updated>
+    </task>
+    <task id="LOCAL-00085" summary="更新小鸡任务">
+      <created>1754409503397</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1754409503397</updated>
+    </task>
+    <task id="LOCAL-00086" summary="更新小鸡任务">
+      <created>1754761756312</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1754761756312</updated>
+    </task>
+    <task id="LOCAL-00087" summary="更新小鸡任务">
+      <created>1754765298880</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1754765298880</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -481,6 +533,17 @@
         <option value="Default.Subject" />
         <option value="Space.CommitStatus" />
       </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
@@ -500,6 +563,7 @@
     <MESSAGE value="双击卡操作" />
     <MESSAGE value="删除废弃任务" />
     <MESSAGE value="更新小鸡任务" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新小鸡任务" />
+    <MESSAGE value="update sub account job" />
+    <option name="LAST_COMMIT_MESSAGE" value="update sub account job" />
   </component>
 </project>

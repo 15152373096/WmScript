@@ -5,7 +5,7 @@ let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/Tao
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
 // 能量雨
-combo.takeEnergyRain("王明", false);
+// combo.takeEnergyRain("王明", false);
 
 // // 海洋森林
 // showText("android.widget.Button", 22, 1);
@@ -24,6 +24,29 @@ combo.takeEnergyRain("王明", false);
 
 // log(device.width)
 // humanSwipe(100, 2000, 1400, 3000)
+
+
+
+// 请求屏幕截图权限（如果尚未授予）
+if (!requestScreenCapture()) {
+    toast("请求截图权限失败");
+    exit();
+}
+sleep(1000);
+// 截取屏幕
+let img = captureScreen();
+
+// 指定保存路径（例如：/sdcard/Pictures/screenshot.png）
+let path = "/sdcard/脚本/WmScript/resource/temp/Pictures/screenshot.png";
+
+// 保存图片到指定路径
+images.save(img, path);
+
+// 回收图片资源
+img.recycle();
+
+// 提示保存成功
+toast("截图已保存至 " + path);
 
 
 
