@@ -19,6 +19,8 @@ function run() {
     if (deviceService.containsInArray(globalConfig.energyRainConfig.fixRunTime, currentTime.hourMinute)) {
         threads.start(function () {
             // 能量雨任务
+            combo.energyRainJob();
+            // 赚能量
             combo.forestEnergyJob();
         });
     } else if (deviceService.containsInArray(globalConfig.allSignConfig.fixRunTime, currentTime.hourMinute)) {

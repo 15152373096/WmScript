@@ -132,7 +132,7 @@ module.exports = {
                 if (className("android.widget.Button").text("立即开始").exists()) {
                     className("android.widget.Button").text("立即开始").findOne().click();
                     allowFlag = true;
-                } else if (text("要开始使用Autox.js v6录制或投放吗？").exists() && className("android.widget.Button").text("取消").exists()) {
+                } else if (text("要开始使用Auto.js录制或投放吗？").exists() && className("android.widget.Button").text("取消").exists()) {
                     let bounds1 = text("单个应用").findOne().bounds();
                     click(bounds1.centerX(), bounds1.centerY());
                     sleep(800);
@@ -142,7 +142,7 @@ module.exports = {
                     let bounds = className("android.widget.Button").text("取消").findOne().bounds();
                     click(bounds.centerX() + device.width * 5 / 10, bounds.centerY());
                     allowFlag = true;
-                } else if (text("要开始使用Autox.js v6录制或投放内容吗？").exists() && className("android.widget.Button").text("取消").exists()) {
+                } else if (text("要开始使用Auto.js录制或投放内容吗？").exists() && className("android.widget.Button").text("取消").exists()) {
                     let bounds = className("android.widget.Button").text("取消").findOne().bounds();
                     click(bounds.centerX() + device.width * 5 / 10, bounds.centerY());
                     allowFlag = true;
@@ -152,11 +152,22 @@ module.exports = {
                 }
                 sleep(2000)
             }
+            if (text("要开始使用Auto.js录制或投放吗？").exists() && className("android.widget.Button").text("取消").exists()) {
+                let bounds1 = text("单个应用").findOne().bounds();
+                click(bounds1.centerX(), bounds1.centerY());
+                sleep(800);
+                let bounds2 = text("整个屏幕").findOne().bounds();
+                click(bounds2.centerX(), bounds2.centerY());
+                sleep(800);
+                let bounds = className("android.widget.Button").text("取消").findOne().bounds();
+                click(bounds.centerX() + device.width * 5 / 10, bounds.centerY());
+            }
             log("--允许截图线程--end--");
         });
         if (!requestScreenCapture()) {
             toastLog("---请求截图失败---");
         }
+        sleep(5000)
     },
 
     /**
@@ -200,8 +211,8 @@ module.exports = {
         recents();
         sleep(2000);
         // 清理任务
-        if (id("clearAnimView").exists()) {
-            id("clearAnimView").findOne().click();
+        if (id("com.miui.home:id/clearAnimView").exists()) {
+            id("com.miui.home:id/clearAnimView").findOne().click();
         } else {
             click(deviceWidth / 2, deviceHeight / 100 * 92)
         }

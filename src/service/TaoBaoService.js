@@ -40,7 +40,7 @@ module.exports = {
         // 点击领取
         deviceService.clickRate(1290, 2000, 800);
         // 集肥料
-        deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "集肥料", "集肥料", "去签到"], 3000);
+        deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "继续施肥", "集肥料", "集肥料", "去签到"], 3000);
         // 答题任务
         this.answerQuestion();
         // 芭芭农场的浏览任务

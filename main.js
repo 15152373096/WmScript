@@ -12,16 +12,16 @@ ui.layout(
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="家庭和运动" id="chickenFamilyAndSport"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="待定的功能" id="initAnswerTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
-            </horizontal>
-            <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="手环计步器" id="syncStepTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="淘芭芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商一零五" id="netBank"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="手环计步器" id="syncStepTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="森林赚能量" id="forestEnergy"/>
+            </horizontal>
+            <horizontal>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="网商一零五" id="netBank"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="森林能量雨" id="energyRain"/>
             </horizontal>
             <horizontal>
                 <button w="{{Math.floor(device.width*0.98)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="一整套连招" id="comboTask"/>
@@ -61,6 +61,11 @@ ui.forestEnergy.click(function () {
         combo.forestEnergyJob();
     });
 });
+ui.energyRain.click(function () {
+    threads.start(function () {
+        combo.energyRainJob();
+    });
+});
 ui.netBank.click(function () {
     threads.start(function () {
         combo.netBankJob();
@@ -89,11 +94,6 @@ ui.giveToolTask.click(function () {
 ui.plantWheatTask.click(function () {
     threads.start(function () {
         combo.plantWheatJob();
-    });
-});
-ui.initAnswerTask.click(function () {
-    threads.start(function () {
-
     });
 });
 ui.allSignTask.click(function () {

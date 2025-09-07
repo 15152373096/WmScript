@@ -23,7 +23,6 @@ module.exports = {
         if (className("android.widget.TextView").text(account).exists()) {
             // 回到首页
             deviceService.combinedClickText("首页", 2000);
-            this.closeShanGouAD();
         } else {
             // 设置
             deviceService.combinedClickDesc("设置", 3500);
@@ -51,7 +50,6 @@ module.exports = {
         deviceService.combinedClickDesc("一键清除", 1000);
         // 首页
         deviceService.combinedClickText("首页", 2000);
-        this.closeShanGouAD();
     },
 
     /**
@@ -83,7 +81,6 @@ module.exports = {
         deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 5000);
         // 首页
         deviceService.combinedClickText("首页", 2000);
-        this.closeShanGouAD();
     },
 
     /**
@@ -199,7 +196,8 @@ module.exports = {
      * 小鸡日记
      */
     chickenDiary: function () {
-        deviceService.clickRate(144, 1152, 3800)
+        deviceService.clickRate(1298, 440, 1000)
+        deviceService.clickRate(860, 660, 3800)
         // 贴贴小鸡
         deviceService.clickRate(720, 3040, 3800)
         if (text("点赞").exists()) {
@@ -935,23 +933,17 @@ module.exports = {
             deviceService.clickRate(cord[0], cord[1], 200);
             this.clearForestDialog();
         });
-        // 偷别人-找能量
-        deviceService.clickRate(1315, 2115, 3000);
-        while (true) {
-            // 取消订阅弹框
-            deviceService.combinedClickText("取消", 2000);
-            // 收能量
-            this.energyClick();
-            // 页面加载问题，每次回退后再找
-            deviceService.back(800);
+        do {
             // 偷别人-找能量
             deviceService.clickRate(1315, 2115, 3000);
+            // 收能量
+            this.energyClick();
             // 如果找完了，返回森林
             if (deviceService.anyTextExists(["返回森林首页", "去看看", "领取"])) {
                 deviceService.combinedClickText("领取", 800);
                 break;
             }
-        }
+        } while (textEndsWith("的蚂蚁森林").exists());
         toastLog("====== 结束找能量 ======");
     },
 
@@ -1148,9 +1140,14 @@ module.exports = {
      * @param {string} subApp
      */
     launchSubApp: function (subApp) {
-        this.closeShanGouAD();
         toastLog("====== 打开" + subApp + " ======");
-        deviceService.combinedClickText(subApp, 8000);
+        id("com.alipay.android.phone.openplatform:id/home_app_view").find().forEach(appView => {
+            let target = appView.children().findOne(text(subApp));
+            if (target) {
+                appView.click()
+            }
+        });
+        sleep(8000);
     },
 
     /**

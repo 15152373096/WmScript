@@ -42,7 +42,6 @@ module.exports = {
         let musicVolume = deviceService.mute();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 遍历账号
         accountList.forEach(account => {
             aliPayService.switchAccount(account.userAccount);
@@ -66,7 +65,6 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 遍历账号
         accountList.forEach(account => {
             aliPayService.switchAccount(account.userAccount);
@@ -247,7 +245,7 @@ module.exports = {
     },
 
     /**
-     * 能量雨任务
+     * 赚能量任务
      */
     forestEnergyJob: function () {
         log("======forestEnergyJob start======");
@@ -256,15 +254,13 @@ module.exports = {
         let musicVolume = deviceService.mute();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 遍历
         for (let i = 0; i <= accountList.length; i++) {
             // 最后一次切回主账号
             let account = (i == accountList.length ? accountList[0] : accountList[i]);
             // 切换账号
             aliPayService.switchAccount(account.userAccount);
-            aliPayService.closeShanGouAD();
-            // 收集能量雨
+            // 森林能量
             this.doForestEnergyTask(account);
         }
         // 还原声音
@@ -274,7 +270,49 @@ module.exports = {
     },
 
     /**
-     * 循环能量雨
+     * 能量雨任务
+     */
+    energyRainJob: function () {
+        log("======forestEnergyJob start======");
+        this.beforeOpt();
+        // 静音
+        let musicVolume = deviceService.mute();
+        // 启动支付宝
+        deviceService.launch("支付宝");
+        // 遍历
+        for (let i = 0; i <= accountList.length; i++) {
+            // 最后一次切回主账号
+            let account = (i == accountList.length ? accountList[0] : accountList[i]);
+            // 切换账号
+            aliPayService.switchAccount(account.userAccount);
+            // 打开蚂蚁森林
+            aliPayService.launchSubApp("蚂蚁森林");
+            // 关闭弹框
+            aliPayService.clearForestDialog();
+            // 能量雨
+            deviceService.comboTextClick(["拼手速赢", "限时抢收", "天降能量", "能量雨"], 5000);
+            // 能量雨任务
+            let giveChanceUser = account.giveChanceUser;
+            this.takeEnergyRain(giveChanceUser, false);
+            // 回到森林
+            deviceService.back(800);
+            // 关闭弹框
+            deviceService.comboTextClick(["关闭", "关闭奖励弹窗"], 800);
+            // 给主账号浇水
+            if ("346***@qq.com" != account.userAccount) {
+                aliPayService.waterFriend("王明");
+            }
+            // 回到首页
+            aliPayService.closeSubApp();
+        }
+        // 还原声音
+        deviceService.revertMute(musicVolume);
+        log("======forestEnergyJob end======");
+        this.afterOpt()
+    },
+
+    /**
+     * 森林能量
      */
     doForestEnergyTask: function (account) {
         // 打开蚂蚁森林
@@ -288,8 +326,12 @@ module.exports = {
         this.forestTreasureHunt();
         // 活力值任务
         this.vitalityTask(account.userName);
-        // 能量雨任务
-        this.energyRainTask(account);
+        // 签到领取活力值、知道了、立即领取、打卡
+        deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
+        while (text("立即领取").exists()) {
+            text("立即领取").click();
+            sleep(1000);
+        }
         // 关闭弹框
         deviceService.comboTextClick(["关闭", "关闭奖励弹窗"], 800);
         // 给主账号浇水
@@ -328,20 +370,11 @@ module.exports = {
                 return;
             }
             deviceService.back(1000);
-            if (text("蚂蚁森林").exists() && text("芭芭农场").exists()) {
-                // 打开蚂蚁森林
-                aliPayService.launchSubApp("蚂蚁森林");
-                // 关闭弹框
-                aliPayService.clearForestDialog();
-                // 点击“奖励”
-                deviceService.clickRate(585, 2100, 2000);
-            }
             if (!text("我的活力值").exists()) {
                 // 清除后台任务
                 deviceService.clearBackground();
                 // 启动支付宝
                 deviceService.launch("支付宝");
-                aliPayService.closeShanGouAD();
                 // 打开蚂蚁森林
                 aliPayService.launchSubApp("蚂蚁森林");
                 // 关闭弹框
@@ -362,7 +395,7 @@ module.exports = {
         deviceService.combinedClickText("签到", 1000);
         // 去逛逛
         while (text("去逛逛").exists()) {
-            deviceService.combinedClickText("去逛逛", 3000);
+            deviceService.combinedClickText("去逛逛", 8000);
             // 实名认证的跳出
             if (text("实名认证").exists()) {
                 deviceService.back(1000);
@@ -387,30 +420,6 @@ module.exports = {
             deviceService.clickRate(720, 2980, 2000);
         }
         deviceService.back(1000);
-    },
-
-    /**
-     * 能量雨任务
-     */
-    energyRainTask: function (account) {
-        // 签到领取活力值、知道了、立即领取、打卡
-        deviceService.comboTextClick(["领取", "知道了", "立即领取", "立即领取", "去打卡"], 800);
-        while (text("立即领取").exists()) {
-            text("立即领取").click();
-            sleep(1000);
-        }
-        // 可以能量雨才操作
-        let rainText = "玩一场能量雨 一起拯救绿色能量吧";
-        if (text(rainText).exists()) {
-            deviceService.clickNearBy(rainText, "去拯救", 10000);
-            deviceService.clickNearBy(rainText, "去赠送", 10000);
-            deviceService.clickNearBy(rainText, "去看看", 10000);
-            // 收能量
-            let giveChanceUser = account.giveChanceUser;
-            this.takeEnergyRain(giveChanceUser, false);
-            // 回到森林
-            deviceService.back(800);
-        }
     },
 
     /**
@@ -484,10 +493,8 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 切换账号
         aliPayService.switchAccount("346***@qq.com");
-        aliPayService.closeShanGouAD();
         // 打开网商银行
         aliPayService.launchSubApp("网商银行");
         sleep(3000);
@@ -593,7 +600,6 @@ module.exports = {
         deviceService.clearBackground();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 点击搜索
         deviceService.combinedClickText("搜索", 1000);
         // 输入月月赚
@@ -630,14 +636,12 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 遍历账号
         for (let i = 0; i <= accountList.length; i++) {
             // 最后一次切回主账号
             let account = (i == accountList.length ? accountList[0] : accountList[i]);
             // 账号切换
             aliPayService.switchAccount(account.userAccount);
-            aliPayService.closeShanGouAD();
             // 切回Zepp Life
             deviceService.launch("Zepp Life");
             // 启动加载
@@ -645,9 +649,9 @@ module.exports = {
             // 我的
             deviceService.clickRate(1200, 3150, 1000);
             // 检查是否登录
-            if (id("mine_name").exists() && '立即登录' == id("mine_name").findOne().text()) {
+            if (id("com.xiaomi.hm.health:id/mine_name").exists() && '立即登录' == id("com.xiaomi.hm.health:id/mine_name").findOne().text()) {
                 deviceService.comboTextClick(["立即登录", "登录/注册"], 2000);
-                className("android.widget.CheckBox").id("login_agreement_checkbox").click();
+                className("android.widget.CheckBox").id("com.xiaomi.hm.health:id/login_agreement_checkbox").click();
                 sleep(800);
                 deviceService.comboTextClick(["登录此账号", "确认授权"], 3000);
                 sleep(8000);
@@ -659,7 +663,6 @@ module.exports = {
             deviceService.back(800);
             deviceService.back(800);
             deviceService.combinedClickText("首页", 2000);
-            aliPayService.closeShanGouAD();
             for (let i = 0; i < 5; i++) {
                 // 下拉刷新同步
                 deviceService.swipeDown(device.height);
@@ -667,7 +670,6 @@ module.exports = {
             }
             // 启动支付宝
             deviceService.launch("支付宝");
-            aliPayService.closeShanGouAD();
         }
         // 清除后台任务
         deviceService.clearBackground();
@@ -716,7 +718,6 @@ module.exports = {
         this.beforeOpt();
         // 启动支付宝
         deviceService.launch("支付宝");
-        aliPayService.closeShanGouAD();
         // 我的 - 支付宝会员
         deviceService.comboTextClick(["我的", "支付宝会员"], 2000);
         // 关闭广告
@@ -744,7 +745,6 @@ module.exports = {
         }
         // 首页
         deviceService.combinedClickText("首页", 2000);
-        aliPayService.closeShanGouAD();
         this.afterOpt();
         log("======makeUpSignInJob end======");
 
