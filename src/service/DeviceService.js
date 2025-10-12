@@ -234,7 +234,7 @@ module.exports = {
     launch: function (appName) {
         toast("打开" + appName);
         app.launchApp(appName);
-        sleep(5000);
+        sleep(8000);
     },
 
     /**

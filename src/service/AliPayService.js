@@ -32,10 +32,15 @@ module.exports = {
                 className("android.widget.TextView").text("登录其他账号").findOne().click();
                 sleep(1800);
             } else {
-                deviceService.clickRate(720, 2650, 1800);
+                deviceService.clickRate(720, 2520, 1800);
+            }
+            // 点击退出登陆后的兜底
+            if (!className("android.widget.TextView").text("轻触头像以切换账号").exists() && className("android.widget.TextView").text("登录其他账号").exists()) {
+                className("android.widget.TextView").text("登录其他账号").findOne().click();
+                sleep(1800);
             }
             // 选择账号
-            deviceService.combinedClickText(account, 5000);
+            deviceService.combinedClickText(account, 8000);
         }
     },
 
@@ -344,7 +349,7 @@ module.exports = {
                 // 等等机器人验证
                 deviceService.swipeViewTask(18000);
             }
-            deviceService.back(800);
+            deviceService.back(1800);
             if (!text("蚂蚁庄园").exists()) {
                 deviceService.back(800);
             }
@@ -898,6 +903,10 @@ module.exports = {
         for (let i = 0; i < 3; i++) {
             // 点击浇水
             deviceService.clickRate(1315, 2474, 1000);
+            // 去掉提醒
+            if (i == 0) {
+                deviceService.combinedClickText("提醒TA来收（7天不收会退回）", 1000);
+            }
             // 选择66g
             deviceService.combinedClickText("66克", 600);
             // 浇水
@@ -917,7 +926,7 @@ module.exports = {
      */
     takeEnergy: function () {
         // 关闭弹框
-        deviceService.comboTextClick(["关闭", "取消"], 1000);
+        deviceService.comboTextClick(["关闭", "取消", "我知道了"], 1000);
         toastLog("====== 开始找能量 ======");
         // 收自己
         let cordArray = [

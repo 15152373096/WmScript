@@ -71,7 +71,7 @@ function punchEnergy() {
         press(720 * deviceWidth / 1440, 2540 * deviceHeight / 3200, 100);
         press(1165 * deviceWidth / 1440, 2540 * deviceHeight / 3200, 100);
         playTime += 180;
-        if (playTime > 8000) {
+        if (playTime > 8000 || text("恭喜获得").exists()) {
             toast("停止敲打");
             break;
         }
