@@ -33,7 +33,9 @@ module.exports = {
      * 芭芭农场操作
      */
     babaFarmTask: function (account) {
-        deviceService.combinedClickDesc("芭芭农场", 1000);
+        desc("芭芭农场").click();
+        sleep(1000);
+        // deviceService.combinedClickDesc("芭芭农场", 1000);
         text("集肥料").waitFor();
         sleep(8000);
         deviceService.combinedClickText("参与比赛", 1000);

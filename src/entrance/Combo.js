@@ -171,6 +171,9 @@ module.exports = {
         for (let i = 10; i > 0; i--) {
             deviceService.combinedClickText("继续开宝箱 还有" + i + "个宝箱", 6000);
         }
+        for (let i = 10; i > 0; i--) {
+            deviceService.combinedClickText("继续开宝箱 还剩" + i + "次机会", 6000);
+        }
     },
 
     /**
@@ -653,7 +656,7 @@ module.exports = {
                 deviceService.comboTextClick(["立即登录", "登录/注册"], 2000);
                 className("android.widget.CheckBox").id("com.xiaomi.hm.health:id/login_agreement_checkbox").click();
                 sleep(800);
-                deviceService.comboTextClick(["登录此账号", "确认授权"], 3000);
+                deviceService.comboTextClick(["登录此账号", "确认授权"], 6000);
                 sleep(8000);
                 // 我的
                 deviceService.clickRate(1200, 3150, 1000);
@@ -916,7 +919,7 @@ module.exports = {
         // 启动淘宝
         deviceService.launch("淘宝");
         // 广告弹框
-        deviceService.comboDescClick(["关闭按钮", "关闭"], 3000);
+        // deviceService.comboDescClick(["关闭按钮", "关闭"], 3000);
         // 遍历
         for (let i = 0; i <= taoBaoAccountList.length; i++) {
             // 最后一次切回主账号
@@ -924,7 +927,7 @@ module.exports = {
             // 切换账号
             taoBaoService.switchAccount(account);
             // 广告弹框
-            deviceService.comboDescClick(["关闭按钮", "关闭"], 3000);
+            // deviceService.comboDescClick(["关闭按钮", "关闭"], 3000);
             // 芭芭农场任务
             taoBaoService.babaFarmTask(account);
         }

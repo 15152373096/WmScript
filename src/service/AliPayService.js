@@ -466,9 +466,11 @@ module.exports = {
             text("题目来源 - 答答星球").waitFor();
             let queryDate = deviceService.formatDate(new Date());
             let resultList = chickenLesson[queryDate.formatDay];
+            let questionText = this.intQuestionText();
             // 没有答案，去找答案
             if (resultList == undefined) {
-                resultList = this.getChickenQuestionAnswer(queryDate);
+                resultList = this.getChickenQuestionAnswer(resultList, queryDate, questionText);
+                log("豆包返回答案: resultList = " + resultList);
             }
             // 匹配答案
             let getAnswerFlag = false;
@@ -478,11 +480,10 @@ module.exports = {
                     sleep(1000);
                     getAnswerFlag = true;
                 }
-                // deviceService.combinedClickText(resultList[i], 1000);
             }
             // 之前找的答案没有匹配，重新获取
             if (!getAnswerFlag) {
-                this.getChickenQuestionAnswer(queryDate);
+                this.getChickenQuestionAnswer(resultList, queryDate, questionText);
             }
             deviceService.back(1000);
         }
@@ -491,9 +492,12 @@ module.exports = {
     /**
      * 获取答案
      */
-    getChickenQuestionAnswer: function (queryDate) {
-        let resultList = doubaoService.queryTodayChickenAnswer();
-        log("豆包返回答案: resultList =" + resultList);
+    getChickenQuestionAnswer: function (resultList, queryDate, questionText) {
+        if (resultList == undefined) {
+            resultList = [];
+        }
+        let result = doubaoService.queryTodayChickenAnswer(questionText);
+        resultList.push(result)
         // 保存
         chickenLesson[queryDate.formatDay] = resultList
         files.write(chickenLessonFilePath, JSON.stringify(chickenLesson));
@@ -501,6 +505,22 @@ module.exports = {
         // 回到支付宝
         deviceService.launch("支付宝");
         return resultList;
+    },
+
+    /**
+     * 拼装提问文本
+     * @returns questionText
+     */
+    intQuestionText: function () {
+        let array = className("android.widget.TextView").depth(17).indexInParent(0).find();
+        let question;
+        array.forEach(item => {
+            if (item.text() && item.text().trim() !== "") {
+                question = item.text();
+            }
+        });
+        let answerArray = className("android.widget.TextView").depth(18).find().map(item => item.text());
+        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果，不要任何多余的字';
     },
 
     /**
@@ -903,10 +923,6 @@ module.exports = {
         for (let i = 0; i < 3; i++) {
             // 点击浇水
             deviceService.clickRate(1315, 2474, 1000);
-            // 去掉提醒
-            if (i == 0) {
-                deviceService.combinedClickText("提醒TA来收（7天不收会退回）", 1000);
-            }
             // 选择66g
             deviceService.combinedClickText("66克", 600);
             // 浇水
@@ -1042,7 +1058,7 @@ module.exports = {
                     deviceService.combinedClickDesc("关闭", 800)
                     return;
                 }
-                deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
+                deviceService.comboTextClick(["点击签到", "立即签到", "立即领取"], 1000);
                 deviceService.swipeViewTask(18000)
                 deviceService.launch("支付宝");
                 if (!text("立即领取").exists()) {

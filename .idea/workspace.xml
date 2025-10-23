@@ -8,15 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="update sub account job">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entrance/Combo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/entrance/Combo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DeviceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DeviceService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/task/TaskTimer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/task/TaskTimer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/DoubaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DoubaoService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/TaoBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaoBaoService.js" afterDir="false" />
     </list>
-    <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
+    <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -176,6 +176,14 @@
       <workItem from="1756049208763" duration="3955000" />
       <workItem from="1756604105956" duration="8483000" />
       <workItem from="1757001813152" duration="2276000" />
+      <workItem from="1759155925211" duration="1969000" />
+      <workItem from="1759282074351" duration="307000" />
+      <workItem from="1759508035350" duration="738000" />
+      <workItem from="1760106636425" duration="1196000" />
+      <workItem from="1760250814300" duration="97000" />
+      <workItem from="1761060089292" duration="441000" />
+      <workItem from="1761147878920" duration="914000" />
+      <workItem from="1761228320644" duration="300000" />
     </task>
     <task id="LOCAL-00039" summary="更新小鸡任务">
       <created>1741693951857</created>

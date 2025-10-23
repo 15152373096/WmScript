@@ -5,10 +5,9 @@ let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/Tao
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
 // 能量雨
-combo.takeEnergyRain("王明", false);
+combo.takeEnergyRain("coco", false);
 // punchEnergy()
-
-
+// aliPayService.takeEnergy()
 
 // // 海洋森林
 // showText("android.widget.Button", 22, 1);
@@ -26,25 +25,6 @@ combo.takeEnergyRain("王明", false);
 // log(device.width)
 // humanSwipe(100, 2000, 1400, 3000)
 
-// aliPayService.chickenDiary()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -54,7 +34,7 @@ combo.takeEnergyRain("王明", false);
 
 
 function punchEnergy() {
-    deviceService.combinedClickText("赚能量", 3000);
+    deviceService.comboTextClick(["赚能量", "大丰收！"], 3000);
     let playTime = 0;
     while (true) {
         let deviceWidth = device.width;
