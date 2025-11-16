@@ -35,14 +35,13 @@ module.exports = {
     babaFarmTask: function (account) {
         desc("芭芭农场").click();
         sleep(1000);
-        // deviceService.combinedClickDesc("芭芭农场", 1000);
         text("集肥料").waitFor();
         sleep(8000);
-        deviceService.combinedClickText("参与比赛", 1000);
+        deviceService.textMatchesArrayClick(["立即领取", "立即领取", "立即领取", "立即领取", "领取奖励", "参与比赛"], 2000)
         // 点击领取
         deviceService.clickRate(1290, 2000, 800);
         // 集肥料
-        deviceService.comboTextClick(["提醒我明天领", "取消订阅每日肥料提醒", "继续施肥", "集肥料", "集肥料", "去签到"], 3000);
+        deviceService.textMatchesArrayClick(["提醒我明天领", "取消订阅每日肥料提醒", "继续施肥", "集肥料", "集肥料", "去签到"], 2000);
         // 答题任务
         this.answerQuestion();
         // 芭芭农场的浏览任务
@@ -51,7 +50,7 @@ module.exports = {
             // 芭芭农场的跳转任务
             this.babaFarmJump();
         }
-        deviceService.comboTextClick(["立即领取", "立即领取"], 5000);
+        deviceService.textMatchesArrayClick(["立即领取", "立即领取"], 5000);
         deviceService.combinedClickDesc("返回首页", 1000);
         // 夸克芭芭农场任务
         this.quarkBaBaFarmTask();
@@ -66,7 +65,7 @@ module.exports = {
         // 同步淘宝账号
         this.syncAccount();
         // 赚取肥料
-        this.quarkEarnFertilizer()
+        // this.quarkEarnFertilizer()
     },
 
     /**
@@ -74,13 +73,13 @@ module.exports = {
      */
     quarkEarnFertilizer: function () {
         // 点击领取
-        deviceService.clickDIP("android.widget.TextView", 20, 0, 2000);
+        deviceService.clickRate(1290, 1860, 2000);
         // 提醒我领取,取消订阅每日肥料提醒
-        if(text("提醒我领取").exists() || text("取消订阅每日肥料提醒").exists()) {
+        if (text("提醒我领取").exists() || text("取消订阅每日肥料提醒").exists()) {
             deviceService.back(800);
         }
         // 更多肥料
-        deviceService.clickDIP("android.widget.TextView", 19, 3, 2000);
+        deviceService.clickRate(1265, 2500, 2000);
         // 可领取
         deviceService.comboTextClick(["可领取", "我知道啦", "取消订阅每日肥料提醒"], 3000);
         // 浏览广告任务
@@ -145,6 +144,21 @@ module.exports = {
 
             }
         });
+
+        // for (let i = 0; i < 10; i++) {
+        //     // 看视频
+        //     deviceService.clickRate(1220, 1800, 3000);
+        //     sleep(8000);
+        //     deviceService.comboTextClick(["继续看视频", "看视频领奖励"], 2000);
+        //     sleep(20000);
+        //     deviceService.comboTextClick(["放弃福利"], 2000);
+        //     sleep(10000);
+        //     deviceService.clickRate(1315, 200, 2000);
+        //     deviceService.comboTextClick(["跳过"], 1000);
+        //     back();
+        //     sleep(800);
+        // }
+
         // 回到首页
         deviceService.back(800);
         deviceService.back(800);
@@ -173,11 +187,17 @@ module.exports = {
         deviceService.back(1000);
         // 点击芭芭农场
         deviceService.combinedClickText("芭芭农场", 6000);
-        // 勾选协议
-        className("android.widget.TextView").depth(23).indexInParent(0).clickable(true).click();
-        sleep(800);
-        // 选择同步淘宝账号
-        deviceService.comboTextClick(["淘宝", "确认授权", "确认绑定并同意协议"], 4000);
+        if (text("淘宝").exists()) {
+            // 勾选协议
+            className("android.widget.TextView").depth(23).indexInParent(0).clickable(true).click();
+            sleep(800);
+            // 选择同步淘宝账号
+            deviceService.combinedClickText("淘宝", 4000);
+        } else {
+            // 勾选协议
+            deviceService.clickRate(280, 2175, 800)
+        }
+        deviceService.textMatchesArrayClick(["确认授权", "确认绑定并同意协议"], 4000);
         if (text("绑定手机号").exists()) {
             deviceService.back(800);
         }
@@ -193,7 +213,7 @@ module.exports = {
             return;
         }
         // 开始答题
-        deviceService.combinedClickText("去答题", 3000);
+        deviceService.textMatchesArrayClick(["去答题", "立即领取"], 3000);
         // 选第一答案
         deviceService.clickDIP("android.widget.Button", 17, 1, 2000);
         // 如果答对了
@@ -217,22 +237,40 @@ module.exports = {
      */
     babaFarmBrowse: function () {
         sleep(3000);
-        ["浏览15秒得奖励", "浏览15秒得", "浏览15秒 得", "浏览5秒得", "浏览30秒", "浏览30秒得"].forEach(browseTask => {
-            let count = 0;
-            while (text(browseTask).exists() && count < 20) {
-                count++;
-                text(browseTask).findOne().click();
+        for (let i = 0; i < 10; i++) {
+            let components = textMatches("浏览.*得.*").find();
+            components.forEach(component => {
+                let componentText = component.text();
+                // 防止任务变动
+                if (!text(componentText).exists()) {
+                    return
+                }
+                log("babaFarmBrowse.componentText is " + componentText);
+                text(componentText).findOne().click();
                 sleep(3000);
                 setText("山楂条");
-                deviceService.combinedClickText("搜索", 3000);
-                deviceService.comboTextClick(["点击签到", "立即签到"], 1000);
-                deviceService.swipeViewTask(18000);
+                deviceService.textMatchesArrayClick(["搜索", "点击签到", "立即签到"], 3000);
+                // 浏览任务
+                let waitTime = componentText.indexOf("15") > 0 ? 25000 : 5000;
+                deviceService.swipeViewTask(waitTime);
                 deviceService.back(1800);
                 if (!text("去完成").exists()) {
                     deviceService.back(1800);
                 }
-            }
-        });
+                if (!text("去完成").exists()) {
+                    // 清除后台任务
+                    deviceService.clearBackground();
+                    // 启动支付宝
+                    deviceService.launch("淘宝");
+                    desc("芭芭农场").click();
+                    sleep(1000);
+                    text("集肥料").waitFor();
+                    sleep(8000);
+                    deviceService.textMatchesArrayClick(["立即领取", "立即领取", "立即领取", "立即领取", "领取奖励", "集肥料"], 2000)
+                }
+            });
+        }
+
     },
 
     /**

@@ -298,7 +298,31 @@ module.exports = {
     },
 
     /**
-     * 连续多文本
+     * 连续多文本-正则匹配
+     * @param textNameArray
+     * @param sleepTime
+     */
+    textMatchesArrayClick: function (textNameArray, sleepTime) {
+        textNameArray.forEach(textValue => {
+            this.textMatchesClick(textValue, sleepTime);
+        });
+    },
+
+    /**
+     * 文本-正则匹配
+     * @param textNameArray
+     * @param sleepTime
+     */
+    textMatchesClick: function (textValue, sleepTime) {
+        if (textMatches(textValue).exists()) {
+            log("textMatchesClick; text=" + textValue + "; exists!");
+            textMatches(textValue).find().click();
+            sleep(sleepTime);
+        }
+    },
+
+    /**
+     * 连续多文本-全文匹配
      * @param textNameArray
      * @param sleepTime
      */
@@ -716,9 +740,8 @@ module.exports = {
             "浏览完成，下单再得积分",
             "已完成浏览任务",
             "恭喜获得奖励",
+            "立即下单最高得",
         ]
-        // 等等机器人验证
-        this.robotCheck();
         let duration = 0;
         while (duration < keepTime) {
             gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);

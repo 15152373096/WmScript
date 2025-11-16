@@ -21,6 +21,10 @@ module.exports = {
         id("action_send").click();
         sleep(10000);
         // 返回答案
-        return id("action_button_icon").findOne().parent().parent().parent().parent().parent().findOne(className("android.widget.TextView").depth(15).indexInParent(0)).text().trim();
+        let answer = id("action_button_icon").findOne().parent().parent().parent().parent().parent().findOne(className("android.widget.TextView").depth(15).indexInParent(0)).text().trim();
+        if(answer.indexOf('\n') > 0) {
+            answer = answer.substring(0, answer.indexOf('\n'));
+        }
+        return answer
     }
 }

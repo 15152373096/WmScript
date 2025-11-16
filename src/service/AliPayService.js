@@ -70,17 +70,18 @@ module.exports = {
         deviceService.comboTextClick(["我的", "支付宝会员"], 2000);
         // 关闭广告
         deviceService.combinedClickDesc("关闭", 800);
-        // 全部领取积分 - 每日签到
-        deviceService.comboTextClick(["全部领取", "每日签到"], 2000);
-        // 等等机器人验证
-        deviceService.robotCheck();
-        if (text("逛一逛赚积分").exists() && !text("限时福利：已完成浏览任务，得 5 积分").exists()) {
-            deviceService.combinedClickText("逛一逛赚积分", 1000);
+        // 领取积分- 每日签到
+        deviceService.textMatchesArrayClick(["^领取\\d+积分$", "^全部领取\\w+", "每日签到"], 2000);
+        // 逛一逛赚积分
+        if (text("逛一逛赚积分").exists() && textMatches("^滑动浏览以下内容\\S+得5积分\\S+").exists()) {
+            deviceService.textMatchesClick("逛一逛赚积分", 1000);
             deviceService.swipeViewTask(3600);
         }
-        deviceService.combinedClickText("做任务赚积分", 1000);
+        deviceService.textMatchesClick("做任务赚积分", 1000);
         // 积分任务
         this.scoreMission();
+        // 领取积分
+        deviceService.textMatchesClick("领取", 1000);
         // 关闭签到
         deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 1000);
         deviceService.clickDIP("android.widget.FrameLayout", 9, 0, 5000);
@@ -92,26 +93,49 @@ module.exports = {
      * 积分任务
      */
     scoreMission: function () {
-        if (deviceService.laterThan(12, 0)) {
-            return;
-        }
         log("===== 积分任务 START =====");
         let browseTaskList = userConfig.signBrowseTaskList;
         for (let i = 0; i < 6; i++) {
             browseTaskList.forEach(browseTask => {
-                if (className("android.widget.TextView").text(browseTask).exists()) {
-                    className("android.widget.TextView").text(browseTask).findOne().click();
+                if (!textMatches(browseTask).exists()) {
+                    return;
+                }
+                let components = textMatches(browseTask).find();
+                components.forEach(component => {
+                    let componentText = component.text();
+                    if ("逛一逛赚积分" == componentText || "逛一逛高德打车小程序" == componentText
+                        || "逛一逛快手" == componentText || componentText.indexOf("滑动浏览以下内容") > -1) {
+                        return
+                    }
+                    // 防止任务变动
+                    if (!text(componentText).exists()) {
+                        return
+                    }
+                    log("scoreMission.componentText is " + componentText);
+                    text(componentText).findOne().click();
                     sleep(800);
-                    deviceService.combinedClickText("去完成", 2000);
-                    // 等等机器人验证
-                    deviceService.swipeViewTask(18000);
+                    deviceService.textMatchesClick("去完成", 2000);
+                    // 浏览任务
+                    let waitTime = componentText.indexOf("15") > 0 ? 18000 : 5000;
+                    deviceService.swipeViewTask(waitTime);
                     deviceService.back(3000);
+                    if (!text("换一换").exists()) {
+                        deviceService.launch("支付宝");
+                    }
                     if (!text("换一换").exists()) {
                         deviceService.back(3000);
                     }
-                }
+                    if (!text("换一换").exists()) {
+                        // 清除后台任务
+                        deviceService.clearBackground();
+                        // 启动支付宝
+                        deviceService.launch("支付宝");
+                        // 我的 - 支付宝会员
+                        deviceService.comboTextClick(["我的", "支付宝会员", "每日签到"], 2000);
+                    }
+                });
             });
-            deviceService.combinedClickText("换一换", 1000);
+            deviceService.textMatchesClick("换一换", 1000);
         }
         log("===== 积分任务 END =====");
     },
@@ -731,7 +755,7 @@ module.exports = {
         // 关闭饲料不足弹窗
         deviceService.combinedClickText("取消", 1800);
         // 喂食美食
-        deviceService.clickRate(1335, 2970, 800);
+        // deviceService.clickRate(1335, 2970, 800);
     },
 
     /**
@@ -822,7 +846,9 @@ module.exports = {
         // 遍历任务
         browseTaskList.forEach(browseTask => {
             if (text(browseTask).exists()) {
-                deviceService.combinedClickText(browseTask, 5000);
+                // 点击任务
+                text(browseTask).click();
+                sleep(5000);
                 if (text("搜索后浏览立得奖励").exists()) {
                     setText("山楂条");
                     deviceService.combinedClickText("搜索", 3000);
@@ -981,6 +1007,8 @@ module.exports = {
         deviceService.clickRate(720, 1810, 800);
         // 种植礼包
         deviceService.clickRate(360, 680, 2000);
+        // 复活能量
+        deviceService.clickRate(720, 2060, 2800);
         this.clearForestDialog();
         // 打印日志
         if (className("android.widget.TextView").depth(12).indexInParent(0).exists()) {
@@ -1096,7 +1124,7 @@ module.exports = {
             return;
         }
         this.launchSubApp("运动");
-        deviceService.comboTextClick(["知道了", "暂不允许", "暂不开启", "步数", "步数奖励"], 2000);
+        deviceService.textMatchesArrayClick(["知道了", "暂不允许", "暂不开启", "步数", "步数奖励"], 2000);
         // 下午5点25前，不走路线
         if (deviceService.laterThan(22, 25)) {
             if (text("马上走").exists()) {

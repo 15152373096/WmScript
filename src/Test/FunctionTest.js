@@ -9,32 +9,43 @@ combo.takeEnergyRain("coco", false);
 // punchEnergy()
 // aliPayService.takeEnergy()
 
-// // 海洋森林
+// 海洋森林
 // showText("android.widget.Button", 22, 1);
-// // 蚂蚁庄园
+// 蚂蚁庄园
 // showText("android.widget.Button", 20, 0);
 // 芭芭农场
-// showText("android.widget.TextView", 19, 0);
-// showText("android.widget.TextView", 20, 0);
+// showText("android.view.View", 17, 0);
 // 蚂蚁森林
 // showText("android.widget.Button", 22, 1);
 // 蚂蚁森林
-// showText("android.widget.TextView", 17, 1);
+// showText("android.widget.Button", 22, 1);
+// 签到任务
+// showText("android.widget.TextView", 18, 1);
 
 
-// log(device.width)
-// humanSwipe(100, 2000, 1400, 3000)
+// deviceService.comboTextClick(["跳过"], 2000);
+// deviceService.clickRate(1300, 200, 2000);
 
-
-
-
-
+// deviceService.clickRate(1315, 200, 2000);
+// functionTest();
+function functionTest(){
+    // 看视频
+    deviceService.clickRate(1220, 1800, 3000);
+    sleep(8000);
+    deviceService.comboTextClick(["继续看视频", "看视频领奖励"], 2000);
+    sleep(20000);
+    deviceService.comboTextClick(["放弃福利"], 2000);
+    sleep(10000);
+    deviceService.clickRate(1315, 200, 2000);
+    back();
+    sleep(800);
+}
 
 
 
 
 function punchEnergy() {
-    deviceService.comboTextClick(["赚能量", "大丰收！"], 3000);
+    deviceService.comboTextClick(["赚能量", "大丰收！", "能量++", "限时UP↑"], 3000);
     let playTime = 0;
     while (true) {
         let deviceWidth = device.width;
