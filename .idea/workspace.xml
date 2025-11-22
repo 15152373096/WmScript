@@ -18,8 +18,6 @@
       <change beforePath="$PROJECT_DIR$/resource/config/user/王明.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/王明.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DeviceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DeviceService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DoubaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DoubaoService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/TaoBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaoBaoService.js" afterDir="false" />
     </list>
     <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
@@ -194,6 +192,7 @@
       <workItem from="1761749469653" duration="1627000" />
       <workItem from="1761988667023" duration="6533000" />
       <workItem from="1763170508547" duration="16812000" />
+      <workItem from="1763793947637" duration="2184000" />
     </task>
     <task id="LOCAL-00039" summary="更新小鸡任务">
       <created>1741693951857</created>

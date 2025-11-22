@@ -1048,11 +1048,11 @@ module.exports = {
         // 奖励
         deviceService.clickRate(1220, 3000, 2000);
         // 去答题
-        while (text("去答题").exists()) {
+        if (text("去答题").exists()) {
             // 去答题
             deviceService.combinedClickText("去答题", 5000);
             // 选答案
-            deviceService.clickDIP("android.widget.TextView", 18, 0, 500);
+            deviceService.clickRate(720, 2000, 500);
             deviceService.back(1000);
         }
         // 去看看
@@ -1124,7 +1124,7 @@ module.exports = {
             return;
         }
         this.launchSubApp("运动");
-        deviceService.textMatchesArrayClick(["知道了", "暂不允许", "暂不开启", "步数", "步数奖励"], 2000);
+        deviceService.textMatchesArrayClick(["知道了", "暂不允许", "暂不开启", "步数", "步数奖励"], 1000);
         // 下午5点25前，不走路线
         if (deviceService.laterThan(22, 25)) {
             if (text("马上走").exists()) {
@@ -1149,10 +1149,11 @@ module.exports = {
         if (text("捐步做公益").exists()) {
             text("捐步做公益").click();
             sleep(6000);
-            deviceService.combinedClickText("立即捐步", 1000);
-            deviceService.combinedClickText("知道了", 1000);
-            deviceService.back(1000);
+        }else {
+            deviceService.clickRate(250, 1045, 6000);
         }
+        deviceService.textMatchesArrayClick(["立即捐步", "知道了"], 1000);
+        deviceService.back(1000);
         // 回到首页
         this.closeSubApp();
     },
@@ -1193,6 +1194,13 @@ module.exports = {
      * @param {string} subApp
      */
     launchSubApp: function (subApp) {
+        // 确认在首页
+        if (!text("扫一扫").exists()) {
+            // 清除后台任务
+            deviceService.clearBackground();
+            // 启动支付宝
+            deviceService.launch("支付宝");
+        }
         toastLog("====== 打开" + subApp + " ======");
         id("com.alipay.android.phone.openplatform:id/home_app_view").find().forEach(appView => {
             let target = appView.children().findOne(text(subApp));

@@ -5,9 +5,36 @@ let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/Tao
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
 // 能量雨
-combo.takeEnergyRain("coco", false);
+// combo.takeEnergyRain("coco", false);
 // punchEnergy()
 // aliPayService.takeEnergy()
+
+functionTest();
+function functionTest() {
+    if(text("去完成").exists()) {
+        log(111111111111)
+    }else {
+        log(22222222222)
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 海洋森林
 // showText("android.widget.Button", 22, 1);
@@ -23,23 +50,28 @@ combo.takeEnergyRain("coco", false);
 // showText("android.widget.TextView", 18, 1);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // deviceService.comboTextClick(["跳过"], 2000);
 // deviceService.clickRate(1300, 200, 2000);
 
 // deviceService.clickRate(1315, 200, 2000);
-// functionTest();
-function functionTest(){
-    // 看视频
-    deviceService.clickRate(1220, 1800, 3000);
-    sleep(8000);
-    deviceService.comboTextClick(["继续看视频", "看视频领奖励"], 2000);
-    sleep(20000);
-    deviceService.comboTextClick(["放弃福利"], 2000);
-    sleep(10000);
-    deviceService.clickRate(1315, 200, 2000);
-    back();
-    sleep(800);
-}
 
 
 

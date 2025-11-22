@@ -53,7 +53,7 @@ module.exports = {
         deviceService.textMatchesArrayClick(["立即领取", "立即领取"], 5000);
         deviceService.combinedClickDesc("返回首页", 1000);
         // 夸克芭芭农场任务
-        this.quarkBaBaFarmTask();
+        // this.quarkBaBaFarmTask();
     },
 
     /**
@@ -65,7 +65,7 @@ module.exports = {
         // 同步淘宝账号
         this.syncAccount();
         // 赚取肥料
-        // this.quarkEarnFertilizer()
+        this.quarkEarnFertilizer()
     },
 
     /**
@@ -145,19 +145,19 @@ module.exports = {
             }
         });
 
-        // for (let i = 0; i < 10; i++) {
-        //     // 看视频
-        //     deviceService.clickRate(1220, 1800, 3000);
-        //     sleep(8000);
-        //     deviceService.comboTextClick(["继续看视频", "看视频领奖励"], 2000);
-        //     sleep(20000);
-        //     deviceService.comboTextClick(["放弃福利"], 2000);
-        //     sleep(10000);
-        //     deviceService.clickRate(1315, 200, 2000);
-        //     deviceService.comboTextClick(["跳过"], 1000);
-        //     back();
-        //     sleep(800);
-        // }
+        for (let i = 0; i < 10; i++) {
+            // 看视频
+            deviceService.clickRate(1220, 1800, 3000);
+            sleep(8000);
+            deviceService.comboTextClick(["继续看视频", "看视频领奖励"], 2000);
+            sleep(20000);
+            deviceService.comboTextClick(["放弃福利"], 2000);
+            sleep(10000);
+            deviceService.clickRate(1315, 200, 2000);
+            deviceService.comboTextClick(["跳过"], 1000);
+            back();
+            sleep(800);
+        }
 
         // 回到首页
         deviceService.back(800);
