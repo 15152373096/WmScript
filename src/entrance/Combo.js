@@ -5,7 +5,7 @@ let taoBaoService = require('../service/TaoBaoService.js');
 let wyMusicService = require('../service/WYMusicService.js');
 let pddService = require('../service/PDDService.js');
 let aDriveService = require('../service/ADriveService.js');
-let doubaoService = require('../service/DoubaoService.js');
+let douBaoService = require('../service/DouBaoService.js');
 let chinaMobileService = require('../service/ChinaMobileService.js');
 
 // 设备参数

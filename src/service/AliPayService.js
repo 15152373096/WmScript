@@ -1,6 +1,6 @@
 // 加载设备操作公共方法
 let deviceService = require('./DeviceService.js');
-let doubaoService = require('./DoubaoService.js');
+let douBaoService = require('./DouBaoService.js');
 
 // 用户配置
 let userConfig = {};
@@ -520,7 +520,7 @@ module.exports = {
         if (resultList == undefined) {
             resultList = [];
         }
-        let result = doubaoService.queryTodayChickenAnswer(questionText);
+        let result = douBaoService.queryTodayChickenAnswer(questionText);
         resultList.push(result)
         // 保存
         chickenLesson[queryDate.formatDay] = resultList

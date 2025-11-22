@@ -1,6 +1,6 @@
 let deviceService = require("/storage/emulated/0/脚本/WmScript/src/service/DeviceService.js");
 let aliPayService = require("/storage/emulated/0/脚本/WmScript/src/service/AliPayService.js");
-let doubaoService = require("/storage/emulated/0/脚本/WmScript/src/service/DoubaoService.js");
+let douBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/DouBaoService.js");
 let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/TaoBaoService.js");
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
