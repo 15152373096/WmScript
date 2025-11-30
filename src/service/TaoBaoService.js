@@ -43,7 +43,7 @@ module.exports = {
         // 集肥料
         deviceService.textMatchesArrayClick(["提醒我明天领", "取消订阅每日肥料提醒", "继续施肥", "集肥料", "集肥料", "去签到"], 2000);
         // 答题任务
-        this.answerQuestion();
+        // this.answerQuestion();
         // 芭芭农场的浏览任务
         this.babaFarmBrowse();
         if (account == "家人留名") {

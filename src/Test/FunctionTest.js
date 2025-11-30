@@ -5,16 +5,18 @@ let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/Tao
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
 // 能量雨
-// combo.takeEnergyRain("coco", false);
+combo.takeEnergyRain("coco", false);
 // punchEnergy()
 // aliPayService.takeEnergy()
 
 functionTest();
 function functionTest() {
-    if(text("去完成").exists()) {
-        log(111111111111)
-    }else {
-        log(22222222222)
+    if (text("去答题").exists()) {
+        // 去答题
+        deviceService.combinedClickText("去答题", 5000);
+        // 选答案
+        deviceService.clickRate(720, 2000, 500);
+        deviceService.back(1000);
     }
 
 }
