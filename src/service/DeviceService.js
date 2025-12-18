@@ -524,7 +524,7 @@ module.exports = {
      * @param {String} lookupImage
      */
     imageExist: function (lookupImage) {
-        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
+        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
         if (p) {
             return true;
         } else {
@@ -538,7 +538,7 @@ module.exports = {
      * @param {number} sleepTime
      */
     clickImage: function (lookupImage, sleepTime) {
-        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
+        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);
             sleep(sleepTime);
@@ -733,6 +733,11 @@ module.exports = {
      * 下滑浏览任务
      */
     swipeViewTask: function (keepTime) {
+        // 进行中标识
+        let processingArray = [
+            "滑动浏览得.*"
+        ];
+        // 完成标识
         let finishTextArray = [
             "已完成 可领奖励",
             "已完成 可领饲料",
@@ -741,18 +746,27 @@ module.exports = {
             "已完成浏览任务",
             "恭喜获得奖励",
             "立即下单最高得",
-        ]
+            "下单最高可得.*"
+        ];
         let duration = 0;
         while (duration < keepTime) {
             gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
             // 完成的，提前跳出
             for (let i = 0; i < finishTextArray.length; i++) {
-                if (text(finishTextArray[i]).exists()) {
+                if (textMatches(finishTextArray[i]).exists()) {
+                    log("检测到任务完成，提前结束");
                     return;
                 }
             }
             sleep(3000);
             duration += 3000;
+            // 还在进行中
+            for (let i = 0; i < processingArray.length; i++) {
+                if (textMatches(processingArray[i]).exists() && duration >= keepTime) {
+                    duration = keepTime - 3000;
+                    break;
+                }
+            }
         }
     },
 

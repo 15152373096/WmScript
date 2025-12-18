@@ -311,23 +311,13 @@ module.exports = {
      * 领取饲料
      */
     takeFodder: function () {
+        let fodderMatcher = "领取.*克饲料";
         // 领取饲料
-        let fodderList = [
-            "领取540克饲料",
-            "领取360克饲料",
-            "领取270克饲料",
-            "领取180克饲料",
-            "领取180克饲料",
-            "领取180克饲料",
-            "领取120克饲料",
-            "领取90克饲料",
-            "领取90克饲料",
-            "领取90克饲料",
-            "领取60克饲料",
-            "领取30克饲料"
-        ];
-        for (let fodder of fodderList) {
-            deviceService.combinedClickText(fodder, 1800);
+        while (textMatches(fodderMatcher).exists()) {
+            let fodderBtn = textMatches(fodderMatcher).findOne();
+            log("收取饲料>>>" + fodderBtn.text());
+            fodderBtn.click()
+            sleep(1800);
             //  满了就跳出
             if (this.checkFodderFull()) {
                 break;
@@ -490,10 +480,11 @@ module.exports = {
             text("题目来源 - 答答星球").waitFor();
             let queryDate = deviceService.formatDate(new Date());
             let resultList = chickenLesson[queryDate.formatDay];
-            let questionText = this.intQuestionText();
+            let randomKey = deviceService.getRandomNumber(1, 100);
+            let questionText = this.intQuestionText(randomKey);
             // 没有答案，去找答案
             if (resultList == undefined) {
-                resultList = this.getChickenQuestionAnswer(resultList, queryDate, questionText);
+                resultList = this.getChickenQuestionAnswer(resultList, queryDate, questionText, randomKey);
                 log("豆包返回答案: resultList = " + resultList);
             }
             // 匹配答案
@@ -516,11 +507,11 @@ module.exports = {
     /**
      * 获取答案
      */
-    getChickenQuestionAnswer: function (resultList, queryDate, questionText) {
+    getChickenQuestionAnswer: function (resultList, queryDate, questionText, randomKey) {
         if (resultList == undefined) {
             resultList = [];
         }
-        let result = douBaoService.queryTodayChickenAnswer(questionText);
+        let result = douBaoService.queryTodayChickenAnswer(questionText, queryDate, randomKey);
         resultList.push(result)
         // 保存
         chickenLesson[queryDate.formatDay] = resultList
@@ -535,7 +526,7 @@ module.exports = {
      * 拼装提问文本
      * @returns questionText
      */
-    intQuestionText: function () {
+    intQuestionText: function (randomKey) {
         let array = className("android.widget.TextView").depth(17).indexInParent(0).find();
         let question;
         array.forEach(item => {
@@ -544,7 +535,7 @@ module.exports = {
             }
         });
         let answerArray = className("android.widget.TextView").depth(18).find().map(item => item.text());
-        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果，不要任何多余的字';
+        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果拼接上当前日期（格式为yyyy-MM-dd）-' + randomKey +'，不要任何多余的字';
     },
 
     /**
@@ -578,19 +569,13 @@ module.exports = {
                 // 任务
                 this.lotteryTask();
                 // 抽奖
-                for (let i = 24; i > 0; i--) {
-                    deviceService.combinedClickText("还剩" + i + "次机会", 6000);
+                for (let i = 2; i > 0; i--) {
+                    deviceService.combinedClickText("一键连抽", 800);
+                    deviceService.combinedClickText("还剩", 6000);
                     deviceService.comboTextClick([
                         "继续抽奖",
                         "继续抽",
-                        "继续抽还剩8次机会",
-                        "继续抽还剩7次机会",
-                        "继续抽还剩6次机会",
-                        "继续抽还剩5次机会",
-                        "继续抽还剩4次机会",
-                        "继续抽还剩3次机会",
-                        "继续抽还剩2次机会",
-                        "继续抽还剩1次机会",
+                        "我知道了",
                         "开心收下",
                         "知道啦"
                     ], 1000);
@@ -972,7 +957,7 @@ module.exports = {
         toastLog("====== 开始找能量 ======");
         // 收自己
         let cordArray = [
-            [320, 1665],
+            // [320, 1665],
             [260, 964],
             [1180, 964],
             [444, 864],
@@ -984,6 +969,8 @@ module.exports = {
             deviceService.clickRate(cord[0], cord[1], 200);
             this.clearForestDialog();
         });
+        // 使用双击卡
+        // this.useDoubleClick();
         do {
             // 偷别人-找能量
             deviceService.clickRate(1315, 2115, 3000);
@@ -996,6 +983,19 @@ module.exports = {
             }
         } while (textEndsWith("的蚂蚁森林").exists());
         toastLog("====== 结束找能量 ======");
+    },
+
+    /**
+     * 使用双击卡
+     */
+    useDoubleClick: function () {
+        // 背包
+        deviceService.clickRate(370, 2080, 2000);
+        // 双击卡
+        textMatches("能量双击卡.*").findOne().parent().parent().findOne(className("android.widget.Button").text("使用")).click();
+        sleep(800);
+        // 立即使用-关闭弹框
+        deviceService.textMatchesArrayClick(["立即使用", "关闭"], 800)
     },
 
     /**
@@ -1149,7 +1149,7 @@ module.exports = {
         if (text("捐步做公益").exists()) {
             text("捐步做公益").click();
             sleep(6000);
-        }else {
+        } else {
             deviceService.clickRate(250, 1045, 6000);
         }
         deviceService.textMatchesArrayClick(["立即捐步", "知道了"], 1000);

@@ -6,7 +6,7 @@ module.exports = {
     /**
      * 获得蚂蚁庄园进入答案
      */
-    queryTodayChickenAnswer: function (questionText) {
+    queryTodayChickenAnswer: function (questionText, queryDate, randomKey) {
         if (!deviceService.appExists("豆包")) {
             return [];
         }
@@ -21,10 +21,12 @@ module.exports = {
         id("action_send").click();
         sleep(10000);
         // 返回答案
-        let answer = id("action_button_icon").findOne().parent().parent().parent().parent().parent().findOne(className("android.widget.TextView").depth(15).indexInParent(0)).text().trim();
+        let matchKey = queryDate.formatDay + '-' + randomKey;
+        let answer =  textMatches('.*' + matchKey + '.*').findOne().text().trim().replace(matchKey,'');
         if(answer.indexOf('\n') > 0) {
             answer = answer.substring(0, answer.indexOf('\n'));
         }
+        log('queryTodayChickenAnswer >> answer is ' + answer);
         return answer
     }
 }

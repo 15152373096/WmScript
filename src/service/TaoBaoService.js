@@ -50,7 +50,7 @@ module.exports = {
             // 芭芭农场的跳转任务
             this.babaFarmJump();
         }
-        deviceService.textMatchesArrayClick(["立即领取", "立即领取"], 5000);
+        deviceService.textMatchesArrayClick(["立即领取", "立即领取", "去领取"], 5000);
         deviceService.combinedClickDesc("返回首页", 1000);
         // 夸克芭芭农场任务
         // this.quarkBaBaFarmTask();

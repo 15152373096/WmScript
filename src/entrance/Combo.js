@@ -834,7 +834,7 @@ module.exports = {
         // 阿里云盘签到
         aDriveService.signIn();
         // 星空内网传递签到
-        this.starryFrpSignIn();
+        // this.starryFrpSignIn();
         // 网上国网签到
         this.wsgwSignIn();
         // 88VIP抽茅台

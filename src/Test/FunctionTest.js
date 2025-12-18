@@ -9,16 +9,10 @@ combo.takeEnergyRain("coco", false);
 // punchEnergy()
 // aliPayService.takeEnergy()
 
-functionTest();
-function functionTest() {
-    if (text("去答题").exists()) {
-        // 去答题
-        deviceService.combinedClickText("去答题", 5000);
-        // 选答案
-        deviceService.clickRate(720, 2000, 500);
-        deviceService.back(1000);
-    }
+// functionTest();
 
+function functionTest() {
+    
 }
 
 

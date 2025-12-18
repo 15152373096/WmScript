@@ -17,6 +17,10 @@
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm04.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm04.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/王明.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/王明.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entrance/Combo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/entrance/Combo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/DeviceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DeviceService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/DouBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DouBaoService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/TaoBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaoBaoService.js" afterDir="false" />
     </list>
     <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
@@ -193,7 +197,10 @@
       <workItem from="1763170508547" duration="16812000" />
       <workItem from="1763793947637" duration="4200000" />
       <workItem from="1764418771515" duration="710000" />
-      <workItem from="1764514354421" duration="82000" />
+      <workItem from="1764514354421" duration="1161000" />
+      <workItem from="1765035034008" duration="1599000" />
+      <workItem from="1765205143454" duration="2635000" />
+      <workItem from="1766057755315" duration="2973000" />
     </task>
     <task id="LOCAL-00039" summary="更新小鸡任务">
       <created>1741693951857</created>
@@ -538,7 +545,7 @@
       <option name="project" value="LOCAL" />
       <updated>1754765298880</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
