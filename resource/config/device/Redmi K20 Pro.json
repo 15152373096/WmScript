@@ -25,22 +25,26 @@
     {
       "userAccount": "cn_***@163.com",
       "userName": "wm01",
-      "giveChanceUser": "wm02"
+      "giveChanceUser": "wm02",
+      "nextUserAccount": "173******96"
     },
     {
       "userAccount": "173******96",
       "userName": "wm02",
-      "giveChanceUser": "wm03"
+      "giveChanceUser": "wm03",
+      "nextUserAccount": "173***@163.com"
     },
     {
       "userAccount": "173***@163.com",
       "userName": "wm03",
-      "giveChanceUser": "wm04"
+      "giveChanceUser": "wm04",
+      "nextUserAccount": "173******35"
     },
     {
       "userAccount": "173******35",
       "userName": "wm04",
-      "giveChanceUser": "wm01"
+      "giveChanceUser": "wm01",
+      "nextUserAccount": "cn_***@163.com"
     }
   ],
   "taoBaoAccountList": [

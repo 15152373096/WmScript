@@ -32,7 +32,7 @@ module.exports = {
                 className("android.widget.TextView").text("登录其他账号").findOne().click();
                 sleep(1800);
             } else {
-                deviceService.clickRate(720, 2520, 1800);
+                deviceService.clickRate(720, 2548, 1800);
             }
             // 点击退出登陆后的兜底
             if (!className("android.widget.TextView").text("轻触头像以切换账号").exists() && className("android.widget.TextView").text("登录其他账号").exists()) {
@@ -527,15 +527,15 @@ module.exports = {
      * @returns questionText
      */
     intQuestionText: function (randomKey) {
-        let array = className("android.widget.TextView").depth(17).indexInParent(0).find();
+        let array = className("android.widget.TextView").depth(16).indexInParent(1).find();
         let question;
         array.forEach(item => {
             if (item.text() && item.text().trim() !== "") {
                 question = item.text();
             }
         });
-        let answerArray = className("android.widget.TextView").depth(18).find().map(item => item.text());
-        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果拼接上当前日期（格式为yyyy-MM-dd）-' + randomKey +'，不要任何多余的字';
+        let answerArray = className("android.widget.TextView").depth(17).find().map(item => item.text());
+        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果拼接上当前日期（格式为yyyy-MM-dd）-' + randomKey + '，不要任何多余的字';
     },
 
     /**
@@ -570,8 +570,8 @@ module.exports = {
                 this.lotteryTask();
                 // 抽奖
                 for (let i = 2; i > 0; i--) {
-                    deviceService.combinedClickText("一键连抽", 800);
-                    deviceService.combinedClickText("还剩", 6000);
+                    deviceService.textMatchesClick("一键连抽.*", 800);
+                    deviceService.textMatchesClick("还剩.*", 6000);
                     deviceService.comboTextClick([
                         "继续抽奖",
                         "继续抽",
@@ -977,7 +977,7 @@ module.exports = {
             // 收能量
             this.energyClick();
             // 如果找完了，返回森林
-            if (deviceService.anyTextExists(["返回森林首页", "去看看", "领取"])) {
+            if (deviceService.anyTextExists(["返回森林首页", "去看看", "一键浇水", "放弃收取", "领取"])) {
                 deviceService.combinedClickText("领取", 800);
                 break;
             }
@@ -1195,12 +1195,7 @@ module.exports = {
      */
     launchSubApp: function (subApp) {
         // 确认在首页
-        if (!text("扫一扫").exists()) {
-            // 清除后台任务
-            deviceService.clearBackground();
-            // 启动支付宝
-            deviceService.launch("支付宝");
-        }
+        this.confirmHomePage();
         toastLog("====== 打开" + subApp + " ======");
         id("com.alipay.android.phone.openplatform:id/home_app_view").find().forEach(appView => {
             let target = appView.children().findOne(text(subApp));
@@ -1212,21 +1207,24 @@ module.exports = {
     },
 
     /**
-     * 临时闪购广告
-     */
-    closeShanGouAD: function () {
-        deviceService.combinedClickDesc("关闭", 2000);
-        // 不识别模块时，坐标点击后回退
-        deviceService.clickRate(720, 2358, 2000);
-        if (!text("扫一扫").exists()) {
-            deviceService.back(1000);
-        }
-    },
-
-    /**
      * 关闭SubApp
      */
     closeSubApp: function () {
         deviceService.combinedClickDesc("关闭", 2000);
+        // 确认在首页
+        this.confirmHomePage();
+    },
+
+    /**
+     * 确保主页
+     */
+    confirmHomePage: function () {
+        if (!text("扫一扫").exists()) {
+            // 清除后台任务
+            deviceService.clearBackground();
+            // 启动支付宝
+            deviceService.launch("支付宝");
+        }
+
     }
 }

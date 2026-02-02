@@ -25,17 +25,20 @@
     {
       "userAccount": "346***@qq.com",
       "userName": "王明",
-      "giveChanceUser": "olly"
+      "giveChanceUser": "olly",
+      "nextUserAccount": "383***@qq.com"
     },
     {
       "userAccount": "383***@qq.com",
       "userName": "olly",
-      "giveChanceUser": "coco"
+      "giveChanceUser": "coco",
+      "nextUserAccount": "142***@qq.com"
     },
     {
       "userAccount": "142***@qq.com",
       "userName": "coco",
-      "giveChanceUser": "王明"
+      "giveChanceUser": "王明",
+      "nextUserAccount": "346***@qq.com"
     }
   ],
   "taoBaoAccountList": [

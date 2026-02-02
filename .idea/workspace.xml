@@ -9,6 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="update sub account job">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/device/23013RK75C.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/device/23013RK75C.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/config/device/Redmi K20 Pro.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/device/Redmi K20 Pro.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/coco.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/coco.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/olly.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/olly.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm01.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm01.json" afterDir="false" />
@@ -17,11 +19,7 @@
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm04.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm04.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/王明.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/王明.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entrance/Combo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/entrance/Combo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DeviceService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DeviceService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/DouBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DouBaoService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/TaoBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TaoBaoService.js" afterDir="false" />
     </list>
     <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +88,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -200,7 +198,11 @@
       <workItem from="1764514354421" duration="1161000" />
       <workItem from="1765035034008" duration="1599000" />
       <workItem from="1765205143454" duration="2635000" />
-      <workItem from="1766057755315" duration="2973000" />
+      <workItem from="1766057755315" duration="5056000" />
+      <workItem from="1766929781821" duration="3131000" />
+      <workItem from="1767627817459" duration="11000" />
+      <workItem from="1769781949104" duration="7245000" />
+      <workItem from="1769862722358" duration="15814000" />
     </task>
     <task id="LOCAL-00039" summary="更新小鸡任务">
       <created>1741693951857</created>
@@ -545,7 +547,7 @@
       <option name="project" value="LOCAL" />
       <updated>1754765298880</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
