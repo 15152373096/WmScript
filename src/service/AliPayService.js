@@ -102,6 +102,7 @@ module.exports = {
                 }
                 let components = textMatches(browseTask).find();
                 components.forEach(component => {
+                    deviceService.comboTextClick(["领取", "领取"], 1000);
                     let componentText = component.text();
                     if ("逛一逛赚积分" == componentText || "逛一逛高德打车小程序" == componentText
                         || "逛一逛快手" == componentText || componentText.indexOf("滑动浏览以下内容") > -1) {
@@ -114,7 +115,7 @@ module.exports = {
                     log("scoreMission.componentText is " + componentText);
                     text(componentText).findOne().click();
                     sleep(800);
-                    deviceService.textMatchesClick("去完成", 2000);
+                    deviceService.textMatchesArrayClick(["去完成", "去观看"], 2000);
                     // 浏览任务
                     let waitTime = componentText.indexOf("15") > 0 ? 18000 : 5000;
                     deviceService.swipeViewTask(waitTime);
@@ -349,17 +350,18 @@ module.exports = {
         // 所有浏览任务
         let browseTaskList = userConfig.chickenBrowseTaskList;
         for (let i = 1; i <= 12; i++) {
-            browseTaskList.push(i + "月数字公仔上新啦 和小鸡一起，去生活号看数字公仔攻略，可获得90g饲料哦 去完成");
+            browseTaskList.push(i + "月数字公仔上新啦.*去完成");
         }
         // 遍历任务
         browseTaskList.forEach(browseTask => {
-            if (!text(browseTask).exists()) {
+            if (!textMatches(browseTask).exists()) {
                 return;
             }
+            let taskFullName = textMatches(browseTask).findOne().text();
             // 需要做任务
-            log("------饲料任务-" + browseTask + "------");
-            deviceService.combinedClickText(browseTask, 5000);
-            if (browseTask.indexOf("15s") >= 0) {
+            log("------饲料任务-" + taskFullName + "------");
+            deviceService.textMatchesClick(taskFullName, 5000);
+            if (taskFullName.indexOf("15s") >= 0) {
                 // 等等机器人验证
                 deviceService.swipeViewTask(18000);
             }
@@ -378,15 +380,15 @@ module.exports = {
             return;
         }
         let whaleExplorerTextList = [
-            "去鲸探喂鱼集福气 和小鸡一起去鲸探用饲料换鱼食，完成1次喂鱼，可获得90g饲料 去喂鱼"
+            "去鲸探喂鱼集福气.*去喂鱼"
         ];
         whaleExplorerTextList.forEach(whaleExplorerText => {
-            if (!text(whaleExplorerText).exists()) {
+            if (!textMatches(whaleExplorerText).exists()) {
                 return;
             }
             // 需要做任务
             log("------饲料任务-去鲸探喂鱼集福气------");
-            deviceService.combinedClickText(whaleExplorerText, 1000);
+            deviceService.textMatchesClick(whaleExplorerText, 1000);
             if (text("支付宝账号快速登录").exists()) {
                 // 授权登陆
                 deviceService.clickDIP("android.widget.TextView", 15, 0, 800);
@@ -456,16 +458,16 @@ module.exports = {
         // 所有APP跳转任务
         let appJumpTaskList = userConfig.chickenAppJumpList;
         appJumpTaskList.forEach(appJumpTask => {
-            if (!text(appJumpTask).exists()) {
+            if (!textMatches(appJumpTask).exists()) {
                 return;
             }
-            log("------饲料任务-" + appJumpTask + "------");
-            deviceService.combinedClickText(appJumpTask, 20000);
+            let taskFullName = textMatches(appJumpTask).findOne().text();
+            log("------饲料任务-" + taskFullName + "------");
+            deviceService.textMatchesClick(taskFullName, 20000);
             deviceService.comboTextClick(["立即领取", "点击签到", "立即签到"], 1000);
             deviceService.launch("支付宝");
             if (!text("去完成").exists()) {
                 deviceService.back(800);
-                ;
             }
         });
     },
@@ -535,7 +537,7 @@ module.exports = {
             }
         });
         let answerArray = className("android.widget.TextView").depth(17).find().map(item => item.text());
-        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果拼接上当前日期（格式为yyyy-MM-dd）-' + randomKey + '，不要任何多余的字';
+        return '问题：' + question + '； 答案选项：' + answerArray + '；请给出答案，直接原文返回答案选项中的正确结果,拼接上-当前日期（格式为yyyy-MM-dd）-' + randomKey + '，不要任何多余的字,最终格式是:{答案}-{日期}-'+ randomKey;
     },
 
     /**
@@ -563,9 +565,9 @@ module.exports = {
         let happyLotteryList = userConfig.chickenHappyLottery;
         // 遍历任务
         happyLotteryList.forEach(happyLottery => {
-            if (text(happyLottery).exists()) {
+            if (textMatches(happyLottery).exists()) {
                 // 抽抽乐
-                deviceService.combinedClickText(happyLottery, 2000);
+                deviceService.textMatchesClick(happyLottery, 2000);
                 // 任务
                 this.lotteryTask();
                 // 抽奖
@@ -625,14 +627,14 @@ module.exports = {
      */
     chickenSleep: function () {
         let sleepTaskList = [
-            "让小鸡去睡觉 每晚20点-次日6点，去爱心小屋让小鸡睡觉，可以产爱心蛋和肥料，还可获得90g饲料哦 去完成"
+            "让小鸡去睡觉.*去完成"
         ];
         sleepTaskList.forEach(sleepTask => {
-            if (deviceService.earlierThan(20, 0) || !text(sleepTask).exists()) {
+            if (deviceService.earlierThan(20, 0) || !textMatches(sleepTask).exists()) {
                 return;
             }
             log("------饲料任务-小鸡睡觉------");
-            deviceService.combinedClickText(sleepTask, 5000);
+            deviceService.textMatchesClick(sleepTask, 5000);
             // 点击睡觉
             deviceService.clickRate(720, 1066, 800);
             // 去睡觉
@@ -654,14 +656,14 @@ module.exports = {
     cookDishes: function () {
 
         let cookTaskList = [
-            "小鸡厨房 去爱心小屋厨房让小鸡做美食得肥料，吃美食可以加速产蛋，还可以获得90g饲料哦 去完成"
+            "小鸡厨房.*去完成"
         ];
         cookTaskList.forEach(cookTask => {
-            if (!text(cookTask).exists()) {
+            if (!textMatches(cookTask).exists()) {
                 return;
             }
             log("------饲料任务-小鸡厨房------");
-            deviceService.combinedClickText(cookTask, 3500);
+            deviceService.textMatchesClick(cookTask, 3500);
             for (let i = 0; i < 2; i++) {
                 // 没有开通芭芭农场，不收集农场食材
                 if ("off" == userConfig.babaFarmSwitch) {
@@ -1018,6 +1020,24 @@ module.exports = {
     },
 
     /**
+     * 确认神奇海洋
+     */
+    confirmMagicSea: function () {
+        if (!textMatches("每日任务.*").exists()) {
+            // 清除后台任务
+            deviceService.clearBackground();
+            // 启动支付宝
+            deviceService.launch("支付宝");
+            // 神奇海洋
+            this.launchSubApp("神奇海洋");
+            // 知道了
+            deviceService.combinedClickText("知道了", 2000);
+            // 奖励
+            deviceService.clickRate(1220, 3000, 2000);
+        }
+    },
+
+    /**
      * 神奇海洋操作
      */
     magicSeaOption: function () {
@@ -1072,6 +1092,7 @@ module.exports = {
                 deviceService.swipeViewTask(30000)
                 this.closeSubApp();
                 deviceService.back(1000);
+                this.confirmMagicSea();
             });
         }
         // 去逛逛
@@ -1092,6 +1113,7 @@ module.exports = {
                 if (!text("立即领取").exists()) {
                     deviceService.back(1000);
                 }
+                this.confirmMagicSea();
             });
         }
         sleep(1000);

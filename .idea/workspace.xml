@@ -9,8 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="43732faa-a103-4bd6-9142-81191815f937" name="Changes" comment="update sub account job">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/config/device/23013RK75C.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/device/23013RK75C.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/config/device/Redmi K20 Pro.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/device/Redmi K20 Pro.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/coco.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/coco.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/olly.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/olly.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm01.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm01.json" afterDir="false" />
@@ -19,7 +18,9 @@
       <change beforePath="$PROJECT_DIR$/resource/config/user/wm04.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/wm04.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resource/config/user/王明.json" beforeDir="false" afterPath="$PROJECT_DIR$/resource/config/user/王明.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test/FunctionTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test/FunctionTest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entrance/Combo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/entrance/Combo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/AliPayService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AliPayService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/DouBaoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/DouBaoService.js" afterDir="false" />
     </list>
     <list id="82379970-290d-409a-a304-488d99f20c8f" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -203,6 +204,14 @@
       <workItem from="1767627817459" duration="11000" />
       <workItem from="1769781949104" duration="7245000" />
       <workItem from="1769862722358" duration="15814000" />
+      <workItem from="1770044194090" duration="5596000" />
+      <workItem from="1770128068391" duration="5134000" />
+      <workItem from="1770213287973" duration="816000" />
+      <workItem from="1770389778441" duration="12274000" />
+      <workItem from="1770557741887" duration="3037000" />
+      <workItem from="1770636884181" duration="2823000" />
+      <workItem from="1770815371886" duration="3560000" />
+      <workItem from="1771461707396" duration="2130000" />
     </task>
     <task id="LOCAL-00039" summary="更新小鸡任务">
       <created>1741693951857</created>
@@ -547,7 +556,7 @@
       <option name="project" value="LOCAL" />
       <updated>1754765298880</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,5 +603,16 @@
     <MESSAGE value="更新小鸡任务" />
     <MESSAGE value="update sub account job" />
     <option name="LAST_COMMIT_MESSAGE" value="update sub account job" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/Test/FunctionTest.js</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

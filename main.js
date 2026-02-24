@@ -12,7 +12,7 @@ ui.layout(
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="家庭和运动" id="chickenFamilyAndSport"/>
             </horizontal>
             <horizontal>
-                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="天天来签到" id="allSignTask"/>
+                <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="新年集五福" id="collectFiveBlessingsTask"/>
                 <button w="{{Math.floor(device.width*0.48)}}px" h="{{Math.floor(device.width*0.2)}}px" margin="{{Math.floor(device.width*0.01)}}px" textSize="20sp" bg="#90EE90" text="淘芭芭农场" id="taoBaoBaBa"/>
             </horizontal>
             <horizontal>
@@ -96,9 +96,9 @@ ui.plantWheatTask.click(function () {
         combo.plantWheatJob();
     });
 });
-ui.allSignTask.click(function () {
+ui.collectFiveBlessingsTask.click(function () {
     threads.start(function () {
-        combo.allSignJob();
+        combo.collectFiveBlessingsJob();
     });
 });
 ui.taoBaoBaBa.click(function () {

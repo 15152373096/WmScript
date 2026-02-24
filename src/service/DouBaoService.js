@@ -21,7 +21,7 @@ module.exports = {
         id("action_send").click();
         sleep(10000);
         // 返回答案
-        let matchKey = queryDate.formatDay + '-' + randomKey;
+        let matchKey = '-' + queryDate.formatDay + '-' + randomKey;
         let answer =  textMatches('.*' + matchKey + '.*').findOne().text().trim().replace(matchKey,'');
         if(answer.indexOf('\n') > 0) {
             answer = answer.substring(0, answer.indexOf('\n'));

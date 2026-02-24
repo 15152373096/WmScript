@@ -315,6 +315,50 @@ module.exports = {
     },
 
     /**
+     * 新年集五福
+     */
+    collectFiveBlessingsJob: function () {
+        log("======collectFiveBlessingsJob start======");
+        this.beforeOpt();
+        // 静音
+        let musicVolume = deviceService.mute();
+        // 启动支付宝
+        deviceService.launch("支付宝");
+        // 集五福
+        deviceService.combinedClickText("搜索", 1000);
+        setText("集五福");
+        deviceService.combinedClickText("搜索", 6000);
+        text("做任务得福卡").waitFor();
+        sleep(2000);
+        deviceService.comboTextClick(["做任务得福卡", "做任务得福卡"], 2000);
+        let count = 0;
+        while (text("浏览15s集福卡").exists() && count < 10) {
+            count ++;
+            deviceService.combinedClickText("浏览15s集福卡", 5000);
+            deviceService.swipeViewTask(18000);
+            deviceService.combinedClickText("开心收下", 1000);
+            deviceService.back(1000);
+            if (!text("去集福").exists()) {
+                // 清除后台任务
+                deviceService.clearBackground();
+                // 启动支付宝
+                deviceService.launch("支付宝");
+                // 集五福
+                deviceService.combinedClickText("搜索", 1000);
+                setText("集五福");
+                deviceService.combinedClickText("搜索", 8000);
+                // text("做任务得福卡").waitFor();
+                sleep(2000);
+                deviceService.comboTextClick(["做任务得福卡", "做任务得福卡"], 2000);
+            }
+        }
+        // 还原声音
+        deviceService.revertMute(musicVolume);
+        log("======collectFiveBlessingsJob end======");
+        this.afterOpt()
+    },
+
+    /**
      * 森林能量
      */
     doForestEnergyTask: function (account) {
@@ -354,21 +398,18 @@ module.exports = {
         let userConfig = JSON.parse(jsonString);
         let taskList = userConfig.vitalityTaskList;
         taskList.forEach(task => {
-            if (!text(task.taskName).exists() || !text(task.taskName).findOne().parent().findOne(text(task.buttonName))) {
+            if (!text(task).exists()) {
                 return;
             }
-            log("=== vitalityTask === " + task.taskName + " ===")
-            text(task.taskName).findOne().parent().findOne(text(task.buttonName)).click();
+            log("=== vitalityTask === " + task + " ===")
+            text(task).click();
             sleep(2000);
             // 如果没有跳转页面，跳过
             if (text("我的活力值").exists()) {
                 return;
             }
             // 页面加载
-            sleep(5000);
-            if (task.taskName.indexOf("15s") >= 0 || task.taskName.indexOf("15秒") >= 0) {
-                sleep(24000);
-            }
+            sleep(28000);
             if (text("我的活力值").exists()) {
                 return;
             }
@@ -394,11 +435,24 @@ module.exports = {
     forestTreasureHunt: function () {
         // 森林寻宝
         deviceService.clickRate(1225, 915, 3000);
+        this.doTreasureHuntTask();
+        // 活动任务
+        if (className("android.widget.TextView").depth(17).indexInParent(1).exists()) {
+            className("android.widget.TextView").depth(17).indexInParent(1).findOne().click();
+            this.doTreasureHuntTask();
+        }
+        deviceService.back(1000);
+    },
+
+    /**
+     * 森林寻宝执行任务
+     */
+    doTreasureHuntTask: function () {
         // 签到
         deviceService.combinedClickText("签到", 1000);
         // 去逛逛
         while (text("去逛逛").exists()) {
-            deviceService.combinedClickText("去逛逛", 8000);
+            deviceService.combinedClickText("去逛逛", 5000);
             // 实名认证的跳出
             if (text("实名认证").exists()) {
                 deviceService.back(1000);
@@ -417,12 +471,11 @@ module.exports = {
             deviceService.combinedClickText("领取", 1000);
         }
         // 立即抽奖
-        while (text("次机会").exists()) {
+        for (let i = 0; i < 8; i++) {
             deviceService.combinedClickText("次机会", 1000);
             // 关闭
             deviceService.clickRate(720, 2980, 2000);
         }
-        deviceService.back(1000);
     },
 
     /**
@@ -456,7 +509,7 @@ module.exports = {
                 deviceService.back(500);
             }
         }
-        deviceService.comboTextClick(["立即开启", "开启能量拯救之旅"], 2000);
+        deviceService.textMatchesArrayClick(["立即开启", "开启能量拯救之旅"], 2000);
         let count = 0;
         while (true) {
             for (let i = 1; i < 8; i++) {

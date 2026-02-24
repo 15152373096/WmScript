@@ -4,12 +4,42 @@ let douBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/Dou
 let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/TaoBaoService.js");
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
-
-// punchEnergy()
-// aliPayService.takeEnergy()
-
 // 能量雨
-takeEnergyRain()
+takeEnergyRain();
+// for (let i = 0; i < 60; i++) {
+//     press(1200, 2300, 60000);
+// }
+
+// log(getCurrentUser())
+
+// 赚能量
+// punchEnergy();
+
+// 收能量
+// aliPayService.takeEnergy();
+
+// functionTest();
+function functionTest() {
+    deviceService.combinedClickText("跳过", 1000);
+}
+
+
+function goWuFuTask() {
+    // 清除后台任务
+    deviceService.clearBackground();
+    // 启动支付宝
+    deviceService.launch("支付宝");
+    // 集五福
+    deviceService.combinedClickText("搜索", 1000);
+    setText("集五福");
+    deviceService.combinedClickText("搜索", 1000);
+    text("做任务得福卡").waitFor();
+    sleep(1000);
+    deviceService.comboTextClick(["做任务得福卡", "做任务得福卡"], 3000);
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 function takeEnergyRain() {
     let globalConfig = deviceService.getGlobalConfig()
@@ -43,79 +73,144 @@ function takeEnergyRain() {
 
 function getCurrentUser() {
     if (className("android.widget.TextView").depth(20).indexInParent(0).exists()) {
-        return className("android.widget.TextView").depth(20).indexInParent(0).findOne().text();
+        let userName = className("android.widget.TextView").depth(20).indexInParent(0).findOne().text();
+        return userName.length == 0 ? "王明" :  userName;
     }
     if (className("android.widget.TextView").depth(19).indexInParent(1).exists()) {
-        return className("android.widget.TextView").depth(19).indexInParent(1).findOne().text();
+        let userName = className("android.widget.TextView").depth(19).indexInParent(1).findOne().text();
+        return userName.length == 0 ? "王明" :  userName;
     }
     return "olly";
 }
 
-// functionTest();
-function functionTest() {
+// ---------------------------------------------------------------------------------------------------------------------
+// verifyPicture();
+function verifyPicture() {
     // 截图保存
     deviceService.allowScreenCapture();
     let count = 0
     while (text("为保障您的正常访问请进行验证").exists() && count < 5) {
-        // 解锁
+        count ++;
+        // 截图验证区域
+        // captureVerification();
+        // 识别解锁
         slideVerification();
     }
 }
+function captureVerification() {
+    // 截取屏幕
+    let screenshot  = captureScreen();
+    // 验证区域
+    let bounds = className("android.view.View").depth(16).indexInParent(0).findOne().bounds();
+    // 裁剪指定区域
+    let clippedImage = images.clip(screenshot, bounds.left, bounds.top, bounds.width(), bounds.height());
+    // 保存图片到指定路径
+    images.save(clippedImage , "/sdcard/DCIM/Camera/autoJsTemp.png");
+    // log(findGapX(clippedImage))
+    // 释放图片内存
+    screenshot.recycle();
+    clippedImage.recycle();
+}
+
 
 function slideVerification() {
+
     // 截取屏幕
-    let img = captureScreen();
-    // 保存图片到指定路径
-    images.save(img, "/sdcard/DCIM/Camera/autoJsTemp.png");
-    // 回收图片资源
-    img.recycle();
-
-    app.launchApp("相册");
-    sleep(3600);
-    deviceService.back(1000);
-    app.launchApp("相册");
-    sleep(3600);
-    // 点击文件
-    deviceService.clickRate(200, 800, 1800)
-    // 发送
-    deviceService.combinedClickText("发送", 1800)
-    deviceService.combinedClickDesc("豆包", 5000);
-
-    let queryDate = deviceService.formatDate(new Date());
-    let randomKey = deviceService.getRandomNumber(1, 100);
-
-    // 找答案
-    let questionText = "这是一个滑块验证码的图片，你计算一下拼图滑块缺口目标位置到拼图滑块的距离相对整个截图宽度的比例发给我，" +
-        "给我格式是：{日期}-" + randomKey + "-with-{滑动距离比例}。" +
-        "其中{日期}和{滑动距离比例}是需要替换的部分，" +
-        "{日期}替换成当前日期格式为yyyy-MM-dd，" +
-        "{滑动距离比例}是拼图滑块缺口目标位置最左边到拼图滑块最左边的距离除以整个截图宽度的比例，保留两位小数";
-    setText(questionText);
-    sleep(1800);
-    if (id("action_send").exists()) {
-        id("action_send").click();
-    } else {
-        click(1295, 1815);
-    }
-    sleep(6000);
-    // 返回答案
-    let matchKey = queryDate.formatDay + '-' + randomKey + '-with-';
-    let answer = textMatches('.*' + matchKey + '.*').findOne().text().trim().replace(matchKey, '');
-    if (answer.indexOf('\n') > 0) {
-        answer = answer.substring(0, answer.indexOf('\n'));
-    }
-    log('queryTodayChickenAnswer >> answer is ' + answer);
-    deviceService.launch("支付宝");
-    // let distance = answer * device.width;
-    let distance = answer * 1064;
+    let screenshot  = captureScreen();
+    // 验证区域
+    let clippedBounds = className("android.view.View").depth(16).indexInParent(0).findOne().bounds();
+    // 裁剪指定区域
+    let clippedImage = images.clip(screenshot, clippedBounds.left, clippedBounds.top, clippedBounds.width(), clippedBounds.height());
+    log("-------------------222--------------------------------------");
+    let distance = findGapX(clippedImage);
+    log("--------------------333-------------------------------------");
+    log("distance", distance);
+    log("-----------------------444----------------------------------");
+    // 释放图片内存
+    screenshot.recycle();
+    clippedImage.recycle();
     let bounds = className("android.widget.TextView").depth(18).indexInParent(2).findOne().bounds();
     let fromX = bounds.centerX();
     let y = bounds.centerY();
-
-    // swipe(fromX, y, toX, y, 1800);
-    humanSwipe(fromX, y, fromX + distance, y)
-    // gesture(2400, [fromX, y], [(fromX + toX) / 2, y - 25], [fromX + ((toX - fromX) * 3 / 4), y + 25], [toX, y]);
+    humanSwipe(fromX, y, bounds.left + distance, y)
     sleep(3600);
+}
+
+/**
+ * 高精度通用滑块缺口识别（基于横向梯度）
+ * @param {Image} img - 滑块背景图
+ * @returns {number} 缺口最左侧X坐标
+ */
+function findGapX(img) {
+    var width = img.getWidth();
+    var height = img.getHeight();
+
+    // 分析区域：避开顶部/底部UI
+    var startY = Math.floor(height * 0.25);
+    var endY = Math.floor(height * 0.75);
+    var h = endY - startY;
+
+    // 采样提速
+    var stepY = 3; // 每3行采一个点
+
+    // 计算每一列的平均亮度
+    var brightness = [];
+    for (var x = 0; x < width; x++) {
+        var sumY = 0, count = 0;
+        for (var y = startY; y < endY; y += stepY) {
+            var c = images.pixel(img, x, y);
+            var r = (c >> 16) & 0xFF;
+            var g = (c >> 8) & 0xFF;
+            var b = c & 0xFF;
+            var Y = 0.299 * r + 0.587 * g + 0.114 * b;
+            sumY += Y;
+            count++;
+        }
+        brightness[x] = count > 0 ? sumY / count : 0;
+    }
+
+    // 计算横向梯度（当前列 - 左侧列）
+    var gradient = [];
+    for (var x = 1; x < width; x++) {
+        gradient[x] = brightness[x] - brightness[x - 1];
+    }
+
+    // 找“正向跳变最大”的位置（缺口左侧：右边比左边亮 or 结构突变）
+    var bestX = -1;
+    var maxGrad = -Infinity;
+
+    // 搜索范围：避开滑块和右边缘
+    var startX = Math.floor(width * 0.35);
+    var endX = Math.floor(width * 0.85);
+
+    for (var x = startX; x <= endX; x++) {
+        // 使用局部最大值（避免噪声）
+        if (x >= 5 && x < width - 5) {
+            var isPeak = true;
+            for (var dx = 1; dx <= 3; dx++) {
+                if (gradient[x] <= gradient[x - dx] || gradient[x] <= gradient[x + dx]) {
+                    isPeak = false;
+                    break;
+                }
+            }
+            if (isPeak && gradient[x] > maxGrad) {
+                maxGrad = gradient[x];
+                bestX = x;
+            }
+        }
+    }
+
+    // 如果没找到峰值，回退到最大梯度
+    if (bestX === -1) {
+        for (var x = startX; x <= endX; x++) {
+            if (gradient[x] > maxGrad) {
+                maxGrad = gradient[x];
+                bestX = x;
+            }
+        }
+    }
+
+    return bestX;
 }
 
 
@@ -133,7 +228,7 @@ function humanSwipe(fromX, fromY, toX, toY) {
     var distance = Math.sqrt(dx * dx + dy * dy);
 
     // 滑动时间：距离越长，耗时越长（但非线性）
-    var duration = Math.min(1200, Math.max(600, distance * 1.8)); // 单位：毫秒
+    var duration = Math.min(2400, Math.max(1200, distance * 3.6)); // 单位：毫秒
 
     // 生成贝塞尔控制点（模拟人手先快后慢）
     var cx1 = fromX + dx * 0.3 + randomOffset(10);
@@ -158,7 +253,7 @@ function randomOffset(max) {
     return (Math.random() * 2 - 1) * max;
 }
 
-
+// ---------------------------------------------------------------------------------------------------------------------
 function punchEnergy() {
     deviceService.comboTextClick(["赚能量", "大丰收！", "能量++", "限时UP↑"], 3000);
     let playTime = 0;
@@ -185,6 +280,7 @@ function punchEnergy() {
 
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
 
 // 海洋森林
 // showText("android.widget.Button", 22, 1);
@@ -195,7 +291,7 @@ function punchEnergy() {
 // 蚂蚁森林
 // showText("android.widget.Button", 22, 1);
 // 蚂蚁森林
-// showText("android.widget.Button", 22, 1);
+// showText("android.widget.Button", 21, 0);
 // 签到任务
 // showText("android.widget.TextView", 18, 1);
 
