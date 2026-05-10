@@ -180,11 +180,7 @@ module.exports = {
      * 欢乐揍小鸡
      */
     punchChicken: function () {
-        deviceService.comboTextClick([
-            "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 马上玩",
-            "欢乐揍小鸡 暴揍偷吃小鸡 每日首次得60g饲料可得1个宝箱 继续玩",
-            "欢乐揍小鸡 首次得60g饲料+1 去玩"
-        ], 6000);
+        deviceService.textMatchesClick("欢乐揍小鸡.*玩", 6000);
         if (text("回到蚂蚁庄园 >").exists()) {
             text("回到蚂蚁庄园 >").click();
             sleep(1000);
@@ -210,11 +206,7 @@ module.exports = {
      */
     playStarBall: function () {
         // 星星球
-        deviceService.comboTextClick([
-            "星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 马上玩",
-            "星星球 我的球拍得老棒了 每日首次得300分可得1个宝箱 继续玩",
-            "星星球 首次得300分+1 去玩"
-        ], 2000);
+        deviceService.textMatchesClick("星星球.*玩", 2000);
         // 等待页面加载
         desc("返回").waitFor();
         sleep(3000);
@@ -450,6 +442,8 @@ module.exports = {
     doTreasureHuntTask: function () {
         // 签到
         deviceService.combinedClickText("签到", 1000);
+        // 去兑换
+        deviceService.comboTextClick(["去兑换", "确认兑换", "去兑换", "确认兑换"], 1000);
         // 去逛逛
         while (text("去逛逛").exists()) {
             deviceService.combinedClickText("去逛逛", 5000);
@@ -471,7 +465,8 @@ module.exports = {
             deviceService.combinedClickText("领取", 1000);
         }
         // 立即抽奖
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 2; i++) {
+            deviceService.textMatchesClick("一键连抽.*", 800);
             deviceService.combinedClickText("次机会", 1000);
             // 关闭
             deviceService.clickRate(720, 2980, 2000);
@@ -518,6 +513,11 @@ module.exports = {
             count += 80;
             if (text("恭喜获得").exists() || text("送TA机会").exists() || count > 30000) {
                 break;
+            }
+            while (text("为保障您的正常访问请进行验证").exists()) {
+                let mp = deviceService.playNotice();
+                sleep(5000);
+                mp.stop();
             }
         }
         sleep(1800);

@@ -4,23 +4,85 @@ let douBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/Dou
 let taoBaoService = require("/storage/emulated/0/脚本/WmScript/src/service/TaoBaoService.js");
 let combo = require("/storage/emulated/0/脚本/WmScript/src/entrance/Combo.js");
 
+
 // 能量雨
-takeEnergyRain();
-// for (let i = 0; i < 60; i++) {
-//     press(1200, 2300, 60000);
+// takeEnergyRain();
+// 赚能量
+// punchEnergy();
+// 收能量
+// aliPayService.takeEnergy();
+// 种小麦
+// combo.batchPlantWheat();
+
+// engines.stopAll();
+// deviceService.textMatchesClick(".*关闭震动.*", 800);
+// log(device.width);
+
+
+// if (textMatches("滑动浏览得.*").exists()) {
+//     log("1111");
 // }
+// gamePlay(3)
 
 // log(getCurrentUser())
 
-// 赚能量
-// punchEnergy();
 
-// 收能量
-// aliPayService.takeEnergy();
 
-// functionTest();
+
+
+functionTest();
 function functionTest() {
-    deviceService.combinedClickText("跳过", 1000);
+    // 运动会
+    // combo.playChickenSport()
+    // aliPayService.initUserConfig("王明");
+    // aliPayService.chickenTask()
+    // aliPayService.happyLottery();
+    // 鲸探任务
+    // aliPayService.whaleExplorerTask()
+    // deviceService.swipeViewTask(18000);
+
+    // 冥想
+    deviceService.back(6000);
+    deviceService.textCoordinateClick("冥想", 945, 1380, 3000);
+    deviceService.clickRate(720, 2550, 5000);
+    deviceService.clickRate(720, 2865, 185000);
+    deviceService.back(1000);
+    deviceService.back(1000);
+}
+
+function gamePlay(mission) {
+    // 拍摄
+    if (mission == 1) {
+        for (let i = 0; i < 60; i++) {
+            press(1200, 2300, 60000);
+        }
+    }
+    // 鼓舞
+    if (mission == 2) {
+        for (let i = 0; i < 600; i++) {
+            click(720, 2165);
+        }
+
+    }
+    // 叫号
+    if (mission == 3) {
+        for (let i = 0; i < 60; i++) {
+            click(1200, 2720);
+        }
+    }
+}
+
+function isDeviceLocked() {
+    try {
+        importClass(android.app.KeyguardManager);
+        importClass(android.content.Context);
+
+        var km = context.getSystemService(Context.KEYGUARD_SERVICE);
+        return km.isKeyguardLocked();
+    } catch (e) {
+        log("错误: " + e);
+        return true; // 出错时默认返回锁定状态
+    }
 }
 
 
@@ -74,11 +136,11 @@ function takeEnergyRain() {
 function getCurrentUser() {
     if (className("android.widget.TextView").depth(20).indexInParent(0).exists()) {
         let userName = className("android.widget.TextView").depth(20).indexInParent(0).findOne().text();
-        return userName.length == 0 ? "王明" :  userName;
+        return userName.length == 0 ? "王明" : userName;
     }
     if (className("android.widget.TextView").depth(19).indexInParent(1).exists()) {
         let userName = className("android.widget.TextView").depth(19).indexInParent(1).findOne().text();
-        return userName.length == 0 ? "王明" :  userName;
+        return userName.length == 0 ? "王明" : userName;
     }
     return "olly";
 }
@@ -90,22 +152,23 @@ function verifyPicture() {
     deviceService.allowScreenCapture();
     let count = 0
     while (text("为保障您的正常访问请进行验证").exists() && count < 5) {
-        count ++;
+        count++;
         // 截图验证区域
         // captureVerification();
         // 识别解锁
         slideVerification();
     }
 }
+
 function captureVerification() {
     // 截取屏幕
-    let screenshot  = captureScreen();
+    let screenshot = captureScreen();
     // 验证区域
     let bounds = className("android.view.View").depth(16).indexInParent(0).findOne().bounds();
     // 裁剪指定区域
     let clippedImage = images.clip(screenshot, bounds.left, bounds.top, bounds.width(), bounds.height());
     // 保存图片到指定路径
-    images.save(clippedImage , "/sdcard/DCIM/Camera/autoJsTemp.png");
+    images.save(clippedImage, "/sdcard/DCIM/Camera/autoJsTemp.png");
     // log(findGapX(clippedImage))
     // 释放图片内存
     screenshot.recycle();
@@ -116,7 +179,7 @@ function captureVerification() {
 function slideVerification() {
 
     // 截取屏幕
-    let screenshot  = captureScreen();
+    let screenshot = captureScreen();
     // 验证区域
     let clippedBounds = className("android.view.View").depth(16).indexInParent(0).findOne().bounds();
     // 裁剪指定区域

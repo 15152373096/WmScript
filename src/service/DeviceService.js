@@ -50,6 +50,20 @@ module.exports = {
         if (device.isScreenOn()) {
             return;
         }
+        let count = 0;
+        // 重试五次解锁
+        while (this.isDeviceLocked() && count < 5) {
+            this.unlockDevice();
+            count++;
+        }
+        // 停止其他脚本
+        this.stopOtherJob();
+    },
+
+    /**
+     * 解锁设备
+     */
+    unlockDevice: function () {
         // 唤醒
         device.wakeUp();
         sleep(1000);
@@ -79,7 +93,24 @@ module.exports = {
             gesture(1000, [xLeft, yBottom], [xLeft, yTop], [deviceWidth / 2, yMiddle], [deviceWidth - xLeft, yTop], [deviceWidth - xLeft, yBottom]);
         }
         sleep(2000);
-        this.stopOtherJob();
+    },
+
+    /**
+     * 判断设备是否已经解锁
+     * @returns {*|boolean}
+     */
+    isDeviceLocked: function () {
+        try {
+            importClass(android.app.KeyguardManager);
+            importClass(android.content.Context);
+
+            var km = context.getSystemService(Context.KEYGUARD_SERVICE);
+            return km.isKeyguardLocked();
+        } catch (e) {
+            log("错误: " + e);
+            // 出错时默认返回锁定状态
+            return true;
+        }
     },
 
     /**
@@ -310,7 +341,7 @@ module.exports = {
 
     /**
      * 文本-正则匹配
-     * @param textNameArray
+     * @param textValue
      * @param sleepTime
      */
     textMatchesClick: function (textValue, sleepTime) {
@@ -319,6 +350,27 @@ module.exports = {
             textMatches(textValue).find().click();
             sleep(sleepTime);
         }
+    },
+
+    /**
+     * 文本-坐标点击
+     *
+     * @param textValue
+     * @param k60X
+     * @param k60Y
+     * @param sleepTime
+     */
+    textCoordinateClick: function (textValue, k60X, k60Y, sleepTime) {
+        if (textMatches(textValue).exists()) {
+            log("textMatchesClick; text=" + textValue + "; exists!");
+            textMatches(textValue).find().click();
+        }else {
+            // 设备参数
+            let deviceWidth = device.width;
+            let deviceHeight = device.height;
+            click(deviceWidth * k60X / 1440, deviceHeight * k60Y / 3200);
+        }
+        sleep(sleepTime);
     },
 
     /**
@@ -475,6 +527,7 @@ module.exports = {
         if (!mp.isPlaying()) {
             mp.start();
         }
+        return mp;
         // if (mp.isPlaying()) {
         //     mp.stop();
         // }
@@ -524,7 +577,7 @@ module.exports = {
      * @param {String} lookupImage
      */
     imageExist: function (lookupImage) {
-        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
+        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
         if (p) {
             return true;
         } else {
@@ -538,7 +591,7 @@ module.exports = {
      * @param {number} sleepTime
      */
     clickImage: function (lookupImage, sleepTime) {
-        let p = images.findImage(images.captureScreen(), lookupImage, { threshold: 0.9 });
+        let p = images.findImage(images.captureScreen(), lookupImage, {threshold: 0.9});
         if (p) {
             click(p.x + lookupImage.getWidth() / 2, p.y + lookupImage.getHeight() / 2);
             sleep(sleepTime);
@@ -739,24 +792,25 @@ module.exports = {
         ];
         // 完成标识
         let finishTextArray = [
-            "已完成 可领奖励",
-            "已完成 可领饲料",
-            "任务已完成，恭喜获得奖励！",
+            "已完成 可领.*",
+            "任务已完成.*",
             "浏览完成，下单再得积分",
-            "已完成浏览任务",
+            ".*已完成浏览任务.*",
             "恭喜获得奖励",
-            "立即下单最高得",
-            "下单最高可得.*"
+            "下单最高.*",
+            "返回领积分"
         ];
         let duration = 0;
-        while (duration < keepTime) {
-            gesture(3000, [device.width / 2, device.height / 4 * 3], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
+        let count = 0;
+        while (duration < keepTime && count < 10) {
+            gesture(3000, [device.width / 2, device.height / 100 * 88], [device.width / 2, device.height / 4], [device.width / 2, device.height / 4 * 3]);
             // 完成的，提前跳出
             for (let i = 0; i < finishTextArray.length; i++) {
                 if (textMatches(finishTextArray[i]).exists()) {
                     log("检测到任务完成，提前结束");
                     return;
                 }
+                this.textMatchesClick("放弃奖励", 500);
             }
             sleep(3000);
             duration += 3000;
@@ -764,6 +818,8 @@ module.exports = {
             for (let i = 0; i < processingArray.length; i++) {
                 if (textMatches(processingArray[i]).exists() && duration >= keepTime) {
                     duration = keepTime - 3000;
+                    count++;
+                    log("swipeViewTask count is " + count);
                     break;
                 }
             }

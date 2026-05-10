@@ -68,6 +68,7 @@ module.exports = {
         toastLog("====== 支付宝签到 ======");
         // 我的 - 支付宝会员
         deviceService.comboTextClick(["我的", "支付宝会员"], 2000);
+        text("每日签到").waitFor();
         // 关闭广告
         deviceService.combinedClickDesc("关闭", 800);
         // 领取积分- 每日签到
@@ -380,7 +381,7 @@ module.exports = {
             return;
         }
         let whaleExplorerTextList = [
-            "去鲸探喂鱼集福气.*去喂鱼"
+            "去鲸探.*去喂鱼"
         ];
         whaleExplorerTextList.forEach(whaleExplorerText => {
             if (!textMatches(whaleExplorerText).exists()) {
@@ -388,30 +389,34 @@ module.exports = {
             }
             // 需要做任务
             log("------饲料任务-去鲸探喂鱼集福气------");
-            deviceService.textMatchesClick(whaleExplorerText, 1000);
+            deviceService.textMatchesClick(whaleExplorerText, 8000);
             if (text("支付宝账号快速登录").exists()) {
                 // 授权登陆
                 deviceService.clickDIP("android.widget.TextView", 15, 0, 800);
                 deviceService.combinedClickText("支付宝账号快速登录", 1000);
             }
-            text("放生池").waitFor();
-            sleep(2000);
+            // 放生
+            deviceService.clickRate(980, 2560, 2000);
+            deviceService.clickRate(720, 2300, 5000);
             // 喂鱼
             for (let i = 0; i < 8; i++) {
-                deviceService.clickRate(1250, 2300, 2000);
-                deviceService.comboTextClick(["喂鱼", "继续喂鱼"], 2000);
+                deviceService.clickRate(830, 2775, 2000);
+                deviceService.clickRate(1000, 2050, 2000);
             }
             // 放生池点击
             for (let i = 0; i < 168; i++) {
-                deviceService.clickRate(720, 1600, 200);
+                deviceService.clickRate(720, 2500, 200);
             }
-            // 敲木鱼
-            deviceService.combinedClickText("敲一敲", 1000);
+            // 日历
+            deviceService.clickRate(1300, 920, 5000);
+            // 敲一敲
+            deviceService.textCoordinateClick("敲一敲", 460, 1380, 3000);
             for (let i = 0; i < 168; i++) {
                 deviceService.clickRate(720, 1600, 200);
             }
-            // 盘珠子
-            deviceService.combinedClickText("盘一盘", 1000);
+            // 盘一盘
+            deviceService.back(6000);
+            deviceService.textCoordinateClick("盘一盘", 700, 1380, 3000);
             for (let i = 0; i < 168; i++) {
                 swipe(device.width / 2, device.height / 2, device.width / 2, device.height, 200);
             }
@@ -567,7 +572,7 @@ module.exports = {
         happyLotteryList.forEach(happyLottery => {
             if (textMatches(happyLottery).exists()) {
                 // 抽抽乐
-                deviceService.textMatchesClick(happyLottery, 2000);
+                deviceService.textMatchesClick(happyLottery, 3000);
                 // 任务
                 this.lotteryTask();
                 // 抽奖
@@ -972,7 +977,7 @@ module.exports = {
             this.clearForestDialog();
         });
         // 使用双击卡
-        // this.useDoubleClick();
+        this.useDoubleClick();
         do {
             // 偷别人-找能量
             deviceService.clickRate(1315, 2115, 3000);
@@ -1078,9 +1083,24 @@ module.exports = {
         // 去看看
         if (text("去看看").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             let buttons = text("去看看").find();
+            // 获取任务
+            let taskNames = [];
             buttons.forEach(button => {
-                // 去看看
-                button.click();
+                let taskText = button.parent().findOne(className("android.widget.TextView").depth(17).indexInParent(1)).text();
+                taskNames.push(taskText);
+            });
+            // 遍历文本数组进行操作
+            taskNames.forEach(taskName => {
+                log("正在处理任务: " + taskName);
+                var targetBtn = text(taskName).findOne().parent().findOne(text("去看看"));
+
+                if (targetBtn) {
+                    targetBtn.click();
+                    log("已点击: " + taskName);
+                } else {
+                    log("未找到按钮: " + taskName + "，可能已完成或页面未加载");
+                    return; // 跳过本次循环
+                }
                 sleep(5000);
                 // 跳过的任务
                 if (text("每通过1关可获得100心情值").exists()) {
@@ -1088,29 +1108,46 @@ module.exports = {
                     return;
                 }
                 // 立即领取 / 如果是随机游戏任务，进入游戏中心要点击一个任务
-                deviceService.comboTextClick(["立即领取", "角色扮演"], 5000);
+                deviceService.comboTextClick(["立即领取", "收下", "角色扮演"], 5000);
                 deviceService.swipeViewTask(30000)
                 this.closeSubApp();
-                deviceService.back(1000);
+                if (!textMatches("每日任务.*").exists()) {
+                    deviceService.back(1000);
+                }
                 this.confirmMagicSea();
             });
         }
         // 去逛逛
         if (text("去逛逛").exists() && "on" == userConfig.magicSeaTask.jumpAppSwitch) {
             let buttons = text("去逛逛").find();
+            // 获取任务
+            let taskNames = [];
             buttons.forEach(button => {
-                // 去逛逛
-                button.click();
+                let taskText = button.parent().findOne(className("android.widget.TextView").depth(17).indexInParent(1)).text();
+                taskNames.push(taskText);
+            });
+            // 遍历文本数组进行操作
+            taskNames.forEach(taskName => {
+                log("正在处理任务: " + taskName);
+                var targetBtn = text(taskName).findOne().parent().findOne(text("去看看"));
+
+                if (targetBtn) {
+                    targetBtn.click();
+                    log("已点击: " + taskName);
+                } else {
+                    log("未找到按钮: " + taskName + "，可能已完成或页面未加载");
+                    return; // 跳过本次循环
+                }
                 sleep(5000);
                 // 跳过的任务
                 if (text("天天领现金").exists()) {
                     deviceService.combinedClickDesc("关闭", 800)
                     return;
                 }
-                deviceService.comboTextClick(["点击签到", "立即签到", "立即领取"], 1000);
+                deviceService.comboTextClick(["点击签到", "立即签到", "立即领取", "收下"], 1000);
                 deviceService.swipeViewTask(18000)
                 deviceService.launch("支付宝");
-                if (!text("立即领取").exists()) {
+                if (!textMatches("每日任务.*").exists()) {
                     deviceService.back(1000);
                 }
                 this.confirmMagicSea();
